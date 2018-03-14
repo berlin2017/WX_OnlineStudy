@@ -1,0 +1,4 @@
+<!--pages/loading/loading.wxml-->
+<view class='loading_container'> 
+  <image class='loading_image' src='../../resources/logo.jpg' mode='scaleToFill'></image>
+</view>
