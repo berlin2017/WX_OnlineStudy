@@ -8,8 +8,9 @@
   "window":{
     "backgroundColor":"#F6F6F6",
     "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "Wafer Quick Start",
-    "navigationBarTextStyle":"black"
+    "navigationBarBackgroundColor": "#7647a0",
+    "navigationBarTitleText": "优微课之名师到家",
+    "navigationBarTextStyle":"white",
+    "navigationStyle":"custom"
   }
 }

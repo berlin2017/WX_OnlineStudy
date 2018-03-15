@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "双人音视频",
+  "usingComponents": {
+    "cameraview": "/pages/cameraview/cameraview"
+  }
+}

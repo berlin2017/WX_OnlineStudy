@@ -1,0 +1,126 @@
+/* pages/liveroom/room/room.wxss */
+.container-box {
+  background-color: #12161d;
+  height: 100vh;
+}
+.video-box {
+  font-size: 0;
+}
+.audio-box {
+  position: relative; 
+  font-size: 0;
+  width: 100vw;
+	height: calc(100vh - 10vw - 1.4rem); 
+}
+.audio-box image {
+  position: absolute;  
+  width: 82vw;
+  height: 7vh;
+  left: 9vw;
+  top:24vh;
+}
+
+.list-box {
+	position: relative; 
+	display: inline-block; 
+	overflow: hidden;
+	width: 100vw;
+	height: calc(100vh - 10vw - 1.4rem); 
+	text-align: center;
+  vertical-align: top;
+}
+
+.poster {
+	position: absolute;    
+	width: 100vw;
+	height: calc(100vh - 6vw - 1.4rem); 
+	background-image: url(https://mc.qcloudimg.com/static/img/2215c303b9a0d38ac4697708cd250dbc/people%402x.png);
+	background-repeat: no-repeat;
+	background-position:center;
+	background-color: #000;  
+}
+live-pusher {
+  width: 100vw;
+  height: calc(100vh - 10vw - 1.4rem); 
+
+}
+live-player {
+  width: 100vw;
+  height: calc(100vh - 10vw - 1.4rem); 
+}
+.character {
+  position: absolute;
+  left: 0;
+  bottom: 10vh;
+  z-index: 1000;
+  font-size: 16px;
+  color: #999;
+  width: 100vw;
+  height: 10vw;
+  line-height: 10vw;
+  text-align: left;
+}
+
+
+.img-box {
+  position: relative;
+  /* display:inline-block; */
+  height: 90rpx;
+  width: 80rpx;
+  vertical-align: middle;
+}
+.img-box cover-image {
+  position: absolute;
+  width: 60rpx;
+  height: 60rpx;
+  /* top: 1vh; 
+  left: calc(12.5vw - 4vh); */
+}
+.img-box cover-image :active{
+  opacity: 0.55
+}
+.operate {
+   position: absolute; 
+   /* width: 55rpx; */
+   /* height: 260rpx; */
+   right: 0; 
+   bottom: 0;
+}
+.comment-box {
+  position: relative;
+  width: 100vw;
+}
+.comment {
+  position: absolute;
+  bottom: 20rpx;
+  z-index: 1000;
+  /* background-color: #262626;  */
+  width: calc(100vw - 130rpx);
+  height: 500rpx;
+  font-size: 28rpx; 
+  text-align: left;
+
+}
+.comment .comment-detail {
+  margin: 15rpx 30rpx;
+  color: #fff;
+  /* opacity: 0.5; */
+}
+.comment .comment-detail cover-view {
+  white-space: pre-wrap;
+}
+/* .comment .comment-detail cover-view:first-child {
+  color: #00ecfe;
+} */
+.color-blue {
+  color: #00ecfe;
+}
+.color-org {
+  color: #fe9500;
+}
+.comment-input {
+  width: 90vw; 
+  background-color: #fff;
+  color: #b8b8b8;
+  padding: 5vw 5vw;
+}

@@ -1,0 +1,28 @@
+{
+	"description": "项目配置文件。",
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "1.5.4",
+	"appid": "wx1365d5f200558a90",
+	"projectname": "%E6%96%B0%E7%9A%84sdk%E4%BD%93%E9%AA%8Cdemo",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": []
+		}
+	}
+}
