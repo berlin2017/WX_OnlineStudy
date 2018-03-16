@@ -6,13 +6,13 @@ const CONF = {
   rootPathname: '',
 
   // 微信小程序 App ID
-  appId: 'wx72667dd95df8c05d',
+  appId: 'wxxxxxxxxxxxxxxxxxx',
 
   // 微信小程序 App Secret
-  appSecret: '8510fc6db3dffb55636d769d5bf79a8f',
+  appSecret: 'xxxxxxxxxxxxxxxxxxxwxxxxxxxxxxx',
 
   // 是否使用腾讯云代理登录小程序,没有用到腾讯云代理,这里默认填false
-  useQcloudLogin: true,
+  useQcloudLogin: false,
 
   /**
    * 需要开通云直播服务 
@@ -58,16 +58,16 @@ const CONF = {
      *  云通信 sdkAppID: accountType 和 privateKey 是云通信独立模式下，为您的独立账号 identifer，
      *  派发访问云通信服务的userSig票据的重要信息，填写错误会导致IM登录失败，IM功能不可用
      */
-    sdkAppID: 1400075056,
+    sdkAppID: 123456789,
 
     /**
      *  云通信 账号集成类型 accountType: sdkAppID 和 privateKey 是云通信独立模式下，为您的独立账户identifer，
      *  派发访问云通信服务的userSig票据的重要信息，填写错误会导致IM登录失败，IM功能不可用
      */ 
-    accountType: "23701",
+    accountType: "12345",
 
     // 云通信 管理员账号
-    administrator: "berlin",
+    administrator: "admin",
 
     /**
      *  云通信 派发usersig 采用非对称加密算法RSA，用私钥生成签名。privateKey就是用于生成签名的私钥，私钥文件可以在互动直播控制台获取
@@ -77,7 +77,7 @@ const CONF = {
      *  程序发现server目录下有private_key 文件会优先用文件。
      *  详细的代码逻辑，可以参见 server/logic/im_mgr.js 文件，getSig函数的实现
      */ 
-    privateKey: "-----BEGIN PRIVATE KEY-----\r\n" + "MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgfXP/vXgn3S6Rf9yz\r\n" + "SV+R9SbM8ihmqto7m7hhZcSxmWyhRANCAASR+Vc+qhlwZeGmuGJGCNw0NMbGkID/\r\n" + "mZcjxvMBg3YsxpeJmbU2ehxkHqo+Y/1rUAVQhedKfCRTG3I3MEvAyDZF\r\n" + "-----END PRIVATE KEY-----\r\n"
+    privateKey: "-----BEGIN PRIVATE KEY-----\r\n" + "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\r\n" + "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\r\n" + "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\r\n" + "-----END PRIVATE KEY-----\r\n"
   },
 
   /**
