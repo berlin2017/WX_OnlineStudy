@@ -64,6 +64,7 @@ Page({
         }
         self.data.member = e.detail.members[0];
         self.data.member.loading = false;
+        self.data.member.accelerateURL = 'rtmp://pili-live-rtmp.ahsz.tv/zhangshangsuzhou-live/final1';
         self.data.member.playerContext = wx.createLivePlayerContext('rtcplayer');
         // 页面处于隐藏时候不触发渲染
         self.data.isShow && self.setData({ member: self.data.member });
@@ -76,6 +77,7 @@ Page({
           e.detail.members：表示新进入用户列表信息，在双人场景下只有一条，所以这里直接取e.detail.members[0]
         */
         self.data.member = e.detail.members[0];
+        self.data.member.accelerateURL = 'rtmp://pili-live-rtmp.ahsz.tv/zhangshangsuzhou-live/final1';
         self.data.member.loading = false;
         self.data.member.playerContext = wx.createLivePlayerContext('rtcplayer');
         // 页面处于隐藏时候不触发渲染

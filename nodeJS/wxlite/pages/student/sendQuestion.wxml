@@ -1,0 +1,9 @@
+<!--pages/student/sendQuestion.wxml-->
+<view class='main_container'>
+  <include src="../common/title.wxml"/>
+
+  <view class='input_layout'>
+    <input class='send_input' placeholder='找老师' confirm-type='search'></input>
+  </view>
+ 
+</view>

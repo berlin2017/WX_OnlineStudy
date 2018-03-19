@@ -3,7 +3,7 @@
  */
 var config = {
   // 后台请求域名
-  url: 'https://lvb.qcloud.com'
+  url: 'https://y7alwguj.qcloud.la'
 }
 
 module.exports = config;

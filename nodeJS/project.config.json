@@ -3,8 +3,8 @@
 	"svr": "./server",
 	"miniprogramRoot": "./wxlite",
 	"qcloudRoot": "./server",
-	"appid": "wx1365d5f200558a90",
-	"projectname": "rtcroom1.2",
+	"appid": "wx72667dd95df8c05d",
+	"projectname": "%E4%BC%98%E5%BE%AE%E8%AF%BE%E4%B9%8B%E5%90%8D%E5%B8%88%E5%88%B0%E5%AE%B6(test2)",
 	"setting": {
 		"urlCheck": true,
 		"es6": true,

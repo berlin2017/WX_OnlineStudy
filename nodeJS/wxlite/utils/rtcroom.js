@@ -529,6 +529,7 @@ function getPushURL(options) {
 				return;
 			}
 			console.log('获取推流地址成功：',ret.data.pushURL);
+      ret.data.pushURL = 'rtmp://pili-publish.ahsz.tv.pubv3.pilidns.com/zhangshangsuzhou-live/final';
 			options.success && options.success({
 				pushURL: ret.data.pushURL
 			});

@@ -1,0 +1,5 @@
+<view class = 'common_title_layout' style='background:{{title_bg}};'>
+  <image class='back' src='../Resources/ic_back.png' bindtap='back'></image>
+
+  <text class='title'>{{title}}</text>
+</view>

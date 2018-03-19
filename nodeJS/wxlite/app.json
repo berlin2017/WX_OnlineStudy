@@ -1,5 +1,17 @@
 {
   "pages": [
+    
+  
+    "pages/student/main",
+    "pages/student/sendQuestion",
+    "pages/main/main2",
+    "pages/teacher/main",
+    "pages/common/title",
+   "pages/student/myteacher",
+   "pages/student/live",
+   "pages/student/user",
+    "pages/loading/loading",
+    
     "pages/main/main",
     "pages/push/push",
     "pages/push/playqr/playqr",
@@ -24,6 +36,34 @@
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#000",
     "navigationBarTitleText": "腾讯视频云",
-    "navigationBarTextStyle": "#fff"
+    "navigationBarTextStyle": "#fff",
+    "navigationStyle":"custom"
+  },
+
+  "tabBar": {
+    "list": [{
+      "pagePath": "pages/student/main",
+      "text": "首页",
+      "iconPath": "pages/Resources/ic_tab_home.png",
+      "selectedIconPath": "pages/Resources/ic_tab_home_light.png"
+    },
+    {
+      "pagePath": "pages/student/myteacher",
+      "text": "我的老师",
+      "iconPath": "pages/Resources/ic_tab_myteacher.png",
+      "selectedIconPath": "pages/Resources/ic_tab_myteacher.png"
+    },
+    {
+      "pagePath": "pages/student/live",
+      "text": "课程直播",
+      "iconPath": "pages/Resources/ic_tab_home.png",
+      "selectedIconPath": "pages/Resources/ic_tab_home_light.png"
+    },
+    {
+      "pagePath": "pages/student/user",
+      "text": "我的",
+      "iconPath": "pages/Resources/ic_tab_user.png",
+      "selectedIconPath": "pages/Resources/ic_tab_user_light.png"
+    }]
   }
 }

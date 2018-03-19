@@ -1,0 +1,18 @@
+/* pages/student/sendQuestion.wxss */
+@import "../common/title.wxss";
+
+.input_layout{
+  width: 94%;
+  margin: 0px auto;
+}
+
+.send_input{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 40px;
+  background: white;
+  border-color: gray;
+  border-width: 2px;
+  border-radius: 20px;
+  padding-left: 20px;
+}
