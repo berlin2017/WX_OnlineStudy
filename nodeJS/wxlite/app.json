@@ -1,12 +1,15 @@
 {
   "pages": [
-    
+   "pages/student/teacherDetail",
+   "pages/student/search",
+  "pages/student/sendQuestion",
   
     "pages/student/main",
-    "pages/student/sendQuestion",
+    "pages/student/test",
     "pages/main/main2",
     "pages/teacher/main",
     "pages/common/title",
+    "pages/common/search_title",
    "pages/student/myteacher",
    "pages/student/live",
    "pages/student/user",
@@ -64,6 +67,7 @@
       "text": "我的",
       "iconPath": "pages/Resources/ic_tab_user.png",
       "selectedIconPath": "pages/Resources/ic_tab_user_light.png"
-    }]
+    }],
+    "selectedColor": "purple"
   }
 }

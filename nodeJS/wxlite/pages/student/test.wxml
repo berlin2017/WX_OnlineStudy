@@ -1,0 +1,43 @@
+<!--pages/student/sendQuestion.wxml-->
+<view class='main_container'>
+  <include src="../common/title.wxml"/>
+  <view class='mycontent'> 
+
+  <view class='input_layout'>
+    <input class='send_input' placeholder='找老师' confirm-type='search'></input>
+  </view>
+
+  <view style='width: 94%;margin: 0px auto;display: flex;flex-direction: column;'>
+    <text class='form_title'>课程需求</text>
+  </view>
+
+  <view class='form_layout'>
+    
+     <text style=' float: left;font-size: 15px;'>请选择题目图片:</text>
+     <image src='../Resources/ic_add.png' style='width:80px;height:80px;margin:10px;' wx:if='{{!chosed}}' bindtap='choseImage'></image>
+     <image src='{{image}}' style='width:100%;height:200px' wx:if='{{chosed}}' bindtap='choseImage'></image>
+
+     <view class='form_item'>
+      <text class='form_name'>年级:</text>
+      <image src='../Resources/ic_down.png' style='width:20px;height:20px;margin-right: 10px;float: right; margin-top: 10px;' bindtap='choseClass'></image>
+      <text class='form_value'>一年级</text>
+     </view>
+
+      <view class='form_item'>
+      <text class='form_name'>科目:</text>
+      <image src='../Resources/ic_down.png' style='width:20px;height:20px;margin-right: 10px;float: right; margin-top: 10px;' bindtap='choseType'></image>
+      <text class='form_value'>语文</text>
+     </view>
+
+      <view class='form_item'>
+        <text class='form_name'>价格:</text>
+        <input class='form_input' value='88.8'></input>
+     </view>
+
+      <textarea class='form_textarea' placeholder='备注'></textarea>
+
+      <button class='form_send' auto-height='true'>发布辅导需求</button>
+
+  </view>
+ </view>
+</view>

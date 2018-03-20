@@ -1,5 +1,5 @@
 <view class = 'common_title_layout' style='background:{{title_bg}};'>
-  <image class='back' src='../Resources/ic_back.png' bindtap='back'></image>
-
+  <image class='back' src='../Resources/ic_back.png' bindtap='back' wx:if='{{leftText==null}}'></image>
+  <button wx:if='{{leftText!=null}}'  class='back_text'>{{leftText}}</button>
   <text class='title'>{{title}}</text>
 </view>

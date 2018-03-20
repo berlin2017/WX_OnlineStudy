@@ -29,4 +29,5 @@
   background: purple;
   border-radius: 30px;
   color: white;
+  margin-bottom: 20px;
 }

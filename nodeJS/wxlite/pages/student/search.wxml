@@ -1,0 +1,24 @@
+<!--pages/student/search.wxml-->
+<view class='main_container'>
+
+  <include src='../common/search_title' />
+
+   <view class='content'> 
+
+      <view wx:for='{{teachers}}' class='item_layout' bindtap='toDetail'>
+      
+        <image class='item_image' src='{{item.image}}' mode='scaleToFill'></image>
+
+        <view class='item_text'>
+
+          <text class='item_name'>{{item.name}}</text>
+
+          <text class='item_info'>{{item.info}}</text> 
+
+        </view>
+
+      </view>
+
+   </view>
+
+</view>

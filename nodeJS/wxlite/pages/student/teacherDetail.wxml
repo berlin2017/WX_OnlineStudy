@@ -1,0 +1,10 @@
+<!--pages/student/teacherDetail.wxml-->
+<view class='main_container'>
+
+  <view class='top_layout'>
+  
+    <image src='{{image}}' class='image' mode='sacleToFill'></image>
+
+  </view>
+
+</view>

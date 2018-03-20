@@ -11,7 +11,6 @@
 
 .back_text{
   background: none;
-  margin-left: 10px;
   margin-top: 20px;
   line-height: 44px;
   font-size: 15px;
@@ -34,5 +33,18 @@
   margin-top: 20px;
   line-height: 44px;
   margin-left: 10px;
-  margin-right: 44px;
+  margin-right: 80px;
 }
+
+.search_title_input{
+  border-radius: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 27px;
+  background: white;
+  height: 30px;
+  margin-right: 10px;
+  margin-left: 10px;
+  width: 100%;
+}
+

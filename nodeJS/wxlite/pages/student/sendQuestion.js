@@ -7,6 +7,25 @@ Page({
   data: {
     title:'发布题目',
     title_bg:'purple',
+    image:'',
+    chosed:false,
+    // grades: ['一年级', '二年级', '三年级', '四年级', '五年级', '初一', '初二', '初三', '高一', '高二', '高三', '大一', '大二', '大三', '大四'],
+    grades: ['一年级', '二年级', '三年级', '四年级', '五年级', '初一', '初二', '初三', '高一', '高二', '高三'],
+    currentGrade:0,
+    subjects: ['语文', '数学', '英语', '化学', '物理', '生物', '历史', '地理', '政治'],
+    currentSubject:0,
+  },
+
+  changeGrade:function(e){
+    this.setData({
+      currentGrade:e.detail.value
+    });
+  },
+
+  changeSubject: function (e) {
+    this.setData({
+      currentSubject: e.detail.value
+    });
   },
 
   /**
@@ -69,6 +88,35 @@ Page({
     wx.navigateBack({
       
     })
-  }
+  },
+
+  choseImage:function(){
+    var that = this;
+    wx.chooseImage({
+      count:1,
+      success: function(res) {
+        var tempFilePaths = res.tempFilePaths;
+        that.setData({
+          image:tempFilePaths[0],
+          chosed:true
+        });
+      },
+    })
+  },
+  
+  send:function(e){
+   
+    var price = e.detail.value['price_input'];
+    var remark = e.detail.value['remark_input'];
+    console.log(price);
+    console.log(remark);
+
+  },
+
+  toSearch:function(){
+    wx.navigateTo({
+      url: 'search',
+    })
+  },
 
 })

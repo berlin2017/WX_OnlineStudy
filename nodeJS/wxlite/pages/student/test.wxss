@@ -1,6 +1,14 @@
 /* pages/student/sendQuestion.wxss */
 @import "../common/title.wxss";
 
+.mycontent {
+  z-index: 10000;
+  padding-top: 64px;
+  height: 1000px;
+  overflow-y: scroll;
+  width: 100%;
+}
+
 .input_layout{
   width: 94%;
   margin: 0px auto;
@@ -75,7 +83,7 @@
 }
 
 .form_send{
-  margin-top: 20px;
+  margin-top: 200px;
   margin-bottom: 20px;
   font-size: 20px;
   background: purple;
