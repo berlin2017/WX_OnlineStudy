@@ -1,2 +1,37 @@
 <!--pages/student/myteacher.wxml-->
-<text>pages/student/myteacher.wxml</text>
+<view class="zan-row">
+  <view class="zan-col zan-col-8" style='background:green;text-align:center;'>
+    span: 8
+  </view>
+  <view class="zan-col zan-col-8" style='background:yellow;text-align:center;'>
+    span: 8
+  </view>
+  <view class="zan-col zan-col-8" style='background:red;text-align:center;'>
+    span: 8
+  </view>
+</view>
+
+<view class="zan-row">
+  <view class="zan-col zan-col-8" style='background:green;text-align:center;'>
+    span: 8
+  </view>
+  <view class="zan-col zan-col-8" style='background:yellow;text-align:center;'>
+    span: 8
+  </view>
+  <view class="zan-col zan-col-8" style='background:red;text-align:center;'>
+    span: 8
+  </view>
+</view>
+
+
+<view class="zan-row">
+  <view class="zan-col zan-col-8" style='background:green;text-align:center;'>
+    span: 8
+  </view>
+  <view class="zan-col zan-col-8" style='background:yellow;text-align:center;'>
+    span: 8
+  </view>
+  <view class="zan-col zan-col-8" style='background:red;text-align:center;'>
+    span: 8
+  </view>
+</view>

@@ -1,94 +1,59 @@
-/* pages/student/sendQuestion.wxss */
-@import "../common/title.wxss";
+view , page {
+  padding: 0px;
+  margin: 0px;
+}
 
-.mycontent {
-  z-index: 10000;
-  padding-top: 64px;
-  height: 1000px;
-  overflow-y: scroll;
+.page {
+  height: 100%;
+}
+
+.navbar {
+    display: flex;
+    position: absolute;
+    z-index: 500;
+    top: 0;
+    width: 100%;
+}
+
+.navbar__item {
+    position: relative;
+    display: block;
+    flex: 1;
+    padding: 10rpx 0;
+    text-align: center;
+    font-size: 0;
+    height: 48rpx;
+    line-height: 48rpx;
+}
+
+.navbar__item_on {
+    color: #16B13A;
+}
+
+.navbar__slider {
+    position: absolute;
+    display: block;
+    content: " ";
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    background-color: #16B13A;
+    transition: transform .3s;
+}
+
+.navbar__title{
+    display: inline-block;
+    font-size: 15px;
+    max-width: 8em;
+    text-align: center;
+}
+
+swiper {
+  height: 100%;
+}
+
+swiper-item{
   width: 100%;
-}
-
-.input_layout{
-  width: 94%;
-  margin: 0px auto;
-}
-
-.send_input{
-  margin-top: 10px;
-  margin-bottom: 10px;
-  height: 40px;
-  background: white;
-  border-color: gray;
-  border-width: 2px;
-  border-radius: 20px;
-  padding-left: 20px;
-}
-
-.form_layout{
-  width: 80%;
-  margin: 0px auto;
-  display: flex;
-  flex-direction: column;
-  margin-top: 10px;
-}
-
-.form_title{
-  float: left;
-  font-size: 21px;
-}
-
-.form_item{
-  height: 40px;
-  border-bottom:1px solid #ddd;
-}
-
-.form_name{
-  line-height: 40px;
-  font-size: 15px;
-  color: gray;
-}
-
-.form_value{
-  margin-right: 10px;
-  float: right;
-  line-height: 40px;
-  font-size: 17px;
-}
-
-.form_input{
-  float: right;
-  text-align: right;
-  height: 40px;
-  margin-left: 10px;
-  color: purple;
-  font-size: 19px;
-}
-
-/* .form_input2{
-  margin-top: 10px;
-  height: 100px;
-  background: whitesmoke;
-  padding-top:0;
-  text-align:left;
-} */
-
-.form_textarea{
-  background: whitesmoke;
-  margin-top: 10px;
-  height:120px;
-  width: auto;
-  padding: 10px;
-	text-align:left;
-}
-
-.form_send{
-  margin-top: 200px;
-  margin-bottom: 20px;
-  font-size: 20px;
-  background: purple;
-  color: white;
-  width: 100%;
+  padding-top: 20rpx;
   text-align: center;
-  border-radius: 25px;
 }

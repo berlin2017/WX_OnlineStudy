@@ -1,7 +1,10 @@
 {
   "pages": [
+    
+    "pages/student/myteacher",
+   
    "pages/student/teacherDetail",
-   "pages/student/search",
+    "pages/student/search",
   "pages/student/sendQuestion",
   
     "pages/student/main",
@@ -10,7 +13,7 @@
     "pages/teacher/main",
     "pages/common/title",
     "pages/common/search_title",
-   "pages/student/myteacher",
+   
    "pages/student/live",
    "pages/student/user",
     "pages/loading/loading",

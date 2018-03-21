@@ -5,7 +5,7 @@
 
    <view class='content'> 
 
-      <view wx:for='{{teachers}}' class='item_layout' bindtap='toDetail'>
+      <view wx:for='{{teachers}}' class='item_layout' bindtap='toDetail' data-index='{{index}}'>
       
         <image class='item_image' src='{{item.image}}' mode='scaleToFill'></image>
 

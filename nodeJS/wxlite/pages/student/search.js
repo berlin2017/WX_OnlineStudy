@@ -72,10 +72,10 @@ Page({
     console.log(keyword);
     this.setData({
       teachers: [
-        { name: '李老师', image: 'https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3395536432,3763509115&fm=58', info: '辅导科目：小学语文/数学' },
-        { name: '李老师', image: 'https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3395536432,3763509115&fm=58', info: '辅导科目：小学语文/数学' },
-        { name: '李老师', image: 'https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3395536432,3763509115&fm=58', info: '辅导科目：小学语文/数学' },
-        { name: '李老师', image: 'https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3395536432,3763509115&fm=58', info: '辅导科目：小学语文/数学' }]
+        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '辅导科目：小学语文/数学' },
+        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '辅导科目：小学语文/数学' },
+        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '辅导科目：小学语文/数学' },
+        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '辅导科目：小学语文/数学' }]
     })
   },
 
@@ -85,9 +85,12 @@ Page({
     })
   },
 
-  toDetail:function(){
+  toDetail:function(e){
+    console.log(e);
+    var index = e.currentTarget.dataset.index;
+    var teacher = this.data.teachers[index];
     wx.navigateTo({
-      url: 'teacherDetail',
+      url: 'teacherDetail'+'?image='+teacher.image+'&name='+teacher.name+'&info='+teacher.info,
     })
   },
 })
