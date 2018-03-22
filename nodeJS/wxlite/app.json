@@ -1,8 +1,10 @@
 {
   "pages": [
-    
+
+    "pages/student/user",
     "pages/student/myteacher",
-   
+   "pages/student/userInfo",
+   "pages/student/userWallet",
    "pages/student/teacherDetail",
     "pages/student/search",
   "pages/student/sendQuestion",
@@ -15,7 +17,7 @@
     "pages/common/search_title",
    
    "pages/student/live",
-   "pages/student/user",
+   
     "pages/loading/loading",
     
     "pages/main/main",
@@ -71,6 +73,6 @@
       "iconPath": "pages/Resources/ic_tab_user.png",
       "selectedIconPath": "pages/Resources/ic_tab_user_light.png"
     }],
-    "selectedColor": "purple"
+    "selectedColor": "#8E388E"
   }
 }

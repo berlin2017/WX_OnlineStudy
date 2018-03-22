@@ -4,7 +4,7 @@
   width: 100%;
   padding-top: 20px;
   padding-bottom: 20px;
-  background: purple;
+  background: #7647a0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -107,7 +107,7 @@
 }
 
 .navbar__item_on {
-  color: purple;
+  color: #7647a0;
 }
 
 .navbar__slider {
@@ -117,7 +117,7 @@
   left: 0;
   bottom: 0;
   height: 3px;
-  background-color: purple;
+  background-color: #7647a0;
   transition: transform 0.3s;
 }
 

@@ -6,7 +6,7 @@ Page({
    */
   data: {
     title: '搜索',
-    title_bg: 'purple',
+    title_bg: '#7647a0',
     leftText:'Cancel',
     teachers: [],
   },
@@ -72,10 +72,12 @@ Page({
     console.log(keyword);
     this.setData({
       teachers: [
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '辅导科目：小学语文/数学' },
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '辅导科目：小学语文/数学' },
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '辅导科目：小学语文/数学' },
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '辅导科目：小学语文/数学' }]
+        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
+        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
+        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
+        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
+        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, }
+      ]
     })
   },
 
@@ -90,7 +92,7 @@ Page({
     var index = e.currentTarget.dataset.index;
     var teacher = this.data.teachers[index];
     wx.navigateTo({
-      url: 'teacherDetail'+'?image='+teacher.image+'&name='+teacher.name+'&info='+teacher.info,
+      url: 'teacherDetail' + '?image=' + teacher.image + '&name=' + teacher.name + '&info=' + teacher.info + '&numbers=' + teacher.numbers + '&ages=' + teacher.ages,
     })
   },
 })

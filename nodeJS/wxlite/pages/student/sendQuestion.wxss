@@ -53,7 +53,7 @@
   text-align: right;
   height: 40px;
   margin-left: 10px;
-  color: purple;
+  color: #7647a0;
   font-size: 19px;
 }
 
@@ -78,7 +78,7 @@
   margin-top: 20px;
   margin-bottom: 20px;
   font-size: 20px;
-  background: purple;
+  background: #7647a0;
   color: white;
   width: 100%;
   text-align: center;
