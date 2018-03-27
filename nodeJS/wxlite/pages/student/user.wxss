@@ -71,7 +71,7 @@
   height: 20px;
   padding: 10px;
   border-radius: 20px;
-  background: orange;
+  background: #e24a05;
 }
 
 .user_money_name {
@@ -180,7 +180,7 @@
   margin-top: 10px;
   margin-left: 10px;
   border-radius: 20px;
-  background: green; 
+  background: #268746; 
 }
 
 .user_help_text{

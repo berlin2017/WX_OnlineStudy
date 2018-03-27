@@ -1,24 +1,32 @@
 {
   "pages": [
+    "pages/main/main2",
+    "pages/student/walletDetail",
+    "pages/loading/loading",
 
+    "pages/student/walletCZ",
     "pages/student/user",
     "pages/student/myteacher",
-   "pages/student/userInfo",
-   "pages/student/userWallet",
-   "pages/student/teacherDetail",
+    "pages/student/userInfo",
+    "pages/student/helpHome",
+    "pages/student/userWallet",
+    
+    
+    "pages/student/teacherDetail",
     "pages/student/search",
-  "pages/student/sendQuestion",
-  
+    "pages/student/sendQuestion",
+    "pages/student/myWrongHome",
+    "pages/student/wrongList",
+    "pages/student/myClassHome",
+    "pages/student/myOrderHome",
+    "pages/student/myReleaseHome",
     "pages/student/main",
     "pages/student/test",
-    "pages/main/main2",
+    
     "pages/teacher/main",
     "pages/common/title",
     "pages/common/search_title",
-   
-   "pages/student/live",
-   
-    "pages/loading/loading",
+    "pages/student/live",
     
     "pages/main/main",
     "pages/push/push",
@@ -40,39 +48,41 @@
     "request": 60000
   },
   "window": {
+    "enablePullDownRefresh": true,
     "backgroundColor": "#888",
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#000",
     "navigationBarTitleText": "腾讯视频云",
     "navigationBarTextStyle": "#fff",
-    "navigationStyle":"custom"
+    "navigationStyle": "custom"
   },
-
   "tabBar": {
-    "list": [{
-      "pagePath": "pages/student/main",
-      "text": "首页",
-      "iconPath": "pages/Resources/ic_tab_home.png",
-      "selectedIconPath": "pages/Resources/ic_tab_home_light.png"
-    },
-    {
-      "pagePath": "pages/student/myteacher",
-      "text": "我的老师",
-      "iconPath": "pages/Resources/ic_tab_myteacher.png",
-      "selectedIconPath": "pages/Resources/ic_tab_myteacher.png"
-    },
-    {
-      "pagePath": "pages/student/live",
-      "text": "课程直播",
-      "iconPath": "pages/Resources/ic_tab_home.png",
-      "selectedIconPath": "pages/Resources/ic_tab_home_light.png"
-    },
-    {
-      "pagePath": "pages/student/user",
-      "text": "我的",
-      "iconPath": "pages/Resources/ic_tab_user.png",
-      "selectedIconPath": "pages/Resources/ic_tab_user_light.png"
-    }],
+    "list": [
+      {
+        "pagePath": "pages/student/main",
+        "text": "首页",
+        "iconPath": "pages/Resources/ic_tab_home.png",
+        "selectedIconPath": "pages/Resources/ic_tab_home_light.png"
+      },
+      {
+        "pagePath": "pages/student/myteacher",
+        "text": "我的老师",
+        "iconPath": "pages/Resources/ic_tab_myteacher.png",
+        "selectedIconPath": "pages/Resources/ic_tab_myteacher.png"
+      },
+      {
+        "pagePath": "pages/student/live",
+        "text": "课程直播",
+        "iconPath": "pages/Resources/ic_tab_home.png",
+        "selectedIconPath": "pages/Resources/ic_tab_home_light.png"
+      },
+      {
+        "pagePath": "pages/student/user",
+        "text": "我的",
+        "iconPath": "pages/Resources/ic_tab_user.png",
+        "selectedIconPath": "pages/Resources/ic_tab_user_light.png"
+      }
+    ],
     "selectedColor": "#8E388E"
   }
 }

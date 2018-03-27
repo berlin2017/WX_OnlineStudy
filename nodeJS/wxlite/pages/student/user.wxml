@@ -22,7 +22,7 @@
 
     </view>
 
-    <view class='user_money_layout'  catchtap='toWallet'>>
+     <view class='user_money_layout'  catchtap='toWallet'>
     
       <image src='../Resources/ic_user_yue.png' mode='scaleToFill' class='user_money_image'></image>
 
@@ -32,14 +32,14 @@
 
       <view class='user_money_number'>￥100.0</view>
 
-    </view>
+    </view> 
   
 
   </view>
 
    <view class='center_layout'>
   
-    <view class='option1_layout' style='height:{{option_height}}px;width:{{option_height}}px;'>
+    <view class='option1_layout' style='height:{{option_height}}px;width:{{option_height}}px;' bindtap='toWrong'>
     
       <view class='option1_value' style='line-height:{{option_height-80}}px;'>8</view>
 
@@ -47,33 +47,33 @@
     
     </view>
 
-     <view class='option2_layout' style='height:{{option_height}}px;width:{{option_height}}px;'>
+     <view class='option2_layout' style='height:{{option_height}}px;width:{{option_height}}px;' bindtap='toClass'>
     
-      <view class='option1_value' >8</view>
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>12</view>
 
-      <view class='option1_name'>我的错题本</view>
-    
-    </view>
-
-     <view class='option3_layout' style='height:{{option_height}}px;width:{{option_height}}px;'>
-    
-      <view class='option1_value' style='line-height:{{option_height-80}}px;'>8</view>
-
-       <view class='option1_name'>我的错题本</view>
+      <view class='option1_name'>我的课程</view>
     
     </view>
 
-     <view class='option4_layout' style='height:{{option_height}}px;width:{{option_height}}px;'>
+     <view class='option3_layout' style='height:{{option_height}}px;width:{{option_height}}px;' bindtap='toOrder'>
     
-      <view class='option1_value' >8</view>
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>3</view>
 
-      <view class='option1_name'>我的错题本</view>
+       <view class='option1_name'>我的订单</view>
+    
+    </view>
+
+     <view class='option4_layout' style='height:{{option_height}}px;width:{{option_height}}px;' bindtap='toRelease'>
+    
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>0</view>
+
+      <view class='option1_name'>我的发布</view>
     
     </view>
   
   </view> 
 
-  <view class='user_help_layout'>
+  <view class='user_help_layout'  bindtap='toHelp'>
   
     <image src='../Resources/ic_user_yue.png' mode='scaleToFill' class='user_help_image'></image>
 

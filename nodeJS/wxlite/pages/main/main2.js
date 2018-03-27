@@ -65,7 +65,7 @@ Page({
   },
 
   toTeacherMain:function(){
-    wx.switchTab({
+    wx.navigateTo({
       url: '../teacher/main',
     })
   },

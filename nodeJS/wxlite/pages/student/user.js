@@ -88,5 +88,35 @@ Page({
     wx.navigateTo({
       url: 'userWallet',
     })
-  }
+  },
+
+  toWrong:function(){
+    wx.navigateTo({
+      url: 'myWrongHome',
+    })
+  },
+
+  toClass: function () {
+    wx.navigateTo({
+      url: 'myClassHome',
+    })
+  },
+
+  toOrder: function () {
+    wx.navigateTo({
+      url: 'myOrderHome',
+    })
+  },
+
+  toRelease: function () {
+    wx.navigateTo({
+      url: 'myReleaseHome',
+    })
+  },
+
+  toHelp: function () {
+    wx.navigateTo({
+      url: 'helpHome',
+    })
+  },
 })

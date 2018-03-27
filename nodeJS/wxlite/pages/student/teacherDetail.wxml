@@ -1,7 +1,7 @@
 <!--pages/student/teacherDetail.wxml-->
 <import src="../../zanUI/loadmore/index.wxml" />
 
-<view class='main_container'>
+<view class='main_container' style='margin-bottom:50px;'>
 
   <view class='top_layout'>
 
@@ -135,15 +135,15 @@
 
     <view style='display:flex;display: block;width:100%;background:white;'>
       <view style='float:left;margin-left:10px;line-height:40px;'>好评率:
-        <text style='color:green'>100%</text>
+        <text style='color:#268746'>100%</text>
       </view>
       <view style='float:right;margin-right:10px;line-height:40px'>
-        <text style='color:green'>180</text>条评论</view>
+        <text style='color:#268746'>180</text>条评论</view>
       <view style='float:right;margin-right:10px;line-height:40px'>
-        <text style='color:green'>33</text>位学员</view>
+        <text style='color:#268746'>33</text>位学员</view>
     </view>
 
-     <view class='comment_item' wx:for='{{comments}}'>
+    <view class='comment_item' wx:for='{{comments}}'>
 
       <view class='comment_top_layout'>
 
@@ -157,29 +157,29 @@
 
         </view>
 
-          <view class="rating_layout" bindtap="myStarChoose" style='margin-right:0px;line-height:60px;height:60px;position:absolute;right:0px;'>
-        
-           <block wx:for="{{starMap}}" wx:for-item="itemName">
-          
+        <view class="rating_layout" bindtap="myStarChoose" style='margin-right:0px;line-height:60px;height:60px;position:absolute;right:0px;'>
+
+          <block wx:for="{{starMap}}" wx:for-item="itemName">
+
             <text wx:if="{{item.score>=index+1}}" style="padding-right: .5em" class="zan-c-green" data-star="{{index+1}}">★</text>
             <text wx:if="{{item.score<index+1}}" style="padding-right: .5em" class="zan-c-gray-dark" data-star="{{index+1}}">☆</text>
-          </block> 
-          </view>
+          </block>
+        </view>
 
       </view>
 
       <view class='comment_item_content'>{{item.content}}</view>
 
 
-    </view> 
-      <!-- 直接使用 zan-loadmore 模板，并且直接传入设置值 -->
-  <template is="zan-loadmore" data="{{ loading: true }}" wx:if='{{!nomore}}'/>
-  <template is="zan-loadmore" data="{{ nodata: true }}"  wx:if='{{comments.length==0}}'/>
-  <template is="zan-loadmore" data="{{ nomore: true }}" wx:if='{{nomore}}'/>
+    </view>
+    <!-- 直接使用 zan-loadmore 模板，并且直接传入设置值 -->
+    <template is="zan-loadmore" data="{{ loading: true }}" wx:if='{{!nomore}}' />
+    <template is="zan-loadmore" data="{{ nodata: true }}" wx:if='{{comments.length==0}}' />
+    <template is="zan-loadmore" data="{{ nomore: true }}" wx:if='{{nomore}}' />
 
   </view>
 
- 
+
 
 </view>
 

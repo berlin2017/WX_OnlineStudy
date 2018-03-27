@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    title:'我的钱包',
   },
 
   /**
@@ -62,5 +62,23 @@ Page({
    */
   onShareAppMessage: function () {
   
-  }
+  },
+  back:function(){
+    wx.navigateBack({
+      
+    })
+  },
+
+  toCZ:function(){
+    wx.navigateTo({
+      url: 'walletCZ',
+    })
+  },
+
+  toDetail:function(){
+    wx.navigateTo({
+      url: 'walletDetail',
+    })
+  },
+
 })

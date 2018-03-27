@@ -1,0 +1,2 @@
+/* pages/student/helpHome.wxss */
+@import '../common/title.wxss';

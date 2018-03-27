@@ -1,2 +1,103 @@
 <!--pages/teacher/main.wxml-->
-<text>pages/teacher/main.wxml</text>
+<view class='main_container' style='margin-bottom:40px;'>
+
+  <include src='../common/title' />
+
+  <view class='content'>
+
+    <image class='top_image' src='{{userInfo.image}}' mode='sacleToFill'></image>
+
+    <form>
+
+      <view class='item_layout'>
+
+        <view class='item_name'>姓名:</view>
+        <input placeholder='请输入姓名' class='item_right'></input>
+
+      </view>
+
+      <view class='item_layout'>
+
+        <view class='item_name'>手机:</view>
+        <input placeholder='请输入手机号码' class='item_right'></input>
+
+      </view>
+
+      <view class='item_layout'>
+
+        <view class='item_name'>身份证:</view>
+        <input placeholder='请输入身份证号码' class='item_right'></input>
+
+      </view>
+
+
+      <picker value='{{userInfo.sex}}' range='{{sexs}}' bindchange="changeSex">
+
+        <view class='item_layout'>
+
+          <view class='item_name'>国籍:</view>
+          <image class='item_arrow' src='../Resources/ic_down.png'></image>
+          <view class='item_value'>{{sexs[userInfo.sex]}}</view>
+
+        </view>
+
+      </picker>
+
+      <view class='item_layout'>
+
+        <view class='item_name'>性别:</view>
+        <view class='item_value'>
+          <radio-group>
+            <radio checked="{{userInfo.sex=='男'}}" style='margin-right:10px;'>男</radio>
+            <radio checked="{{userInfo.sex=='女'}}">女</radio>
+          </radio-group>
+        </view>
+
+      </view>
+
+      <view class='item_layout'>
+
+        <view class='item_name'>毕业学校:</view>
+        <input placeholder='请输入毕业学校' class='item_right'></input>
+
+      </view>
+
+      <picker value='{{userInfo.grade}}' range='{{grades}}' bindchange="changeGrade">
+        <view class='item_layout'>
+
+          <view class='item_name'>年级:</view>
+          <image class='item_arrow' src='../Resources/ic_down.png'></image>
+          <view class='item_value'>{{grades[userInfo.grade]}}</view>
+
+        </view>
+      </picker>
+
+      <picker value='{{userInfo.sex}}' range='{{sexs}}' bindchange="changeLocation">
+        <view class='item_layout'>
+
+          <view class='item_name'>地区:</view>
+          <image class='item_arrow' src='../Resources/ic_down.png'></image>
+          <view class='item_value'>合肥市</view>
+
+        </view>
+
+      </picker>
+
+      <picker value='{{userInfo.school}}' range='{{schools}}' bindchange="changeSchool">
+
+        <view class='item_layout'>
+
+          <view class='item_name'>学校:</view>
+          <image class='item_arrow' src='../Resources/ic_down.png'></image>
+          <view class='item_value'>{{schools[userInfo.school]}}</view>
+
+        </view>
+      </picker>
+
+    </form>
+
+  </view>
+
+</view>
+
+<view class='bottom_layout'>注册</view>

@@ -5,14 +5,25 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    title:'认证信息',
+    title_bg:'#268746',
+    userInfo:{
+      image:'',
+      sex:'男',
+    },
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    var that = this;
+    if (that.data.userInfo.image.length<=0){
+      that.data.userInfo.image = '../Resources/ic_user_header.png';
+      that.setData({
+        userInfo:that.data.userInfo
+      });
+    }
   },
 
   /**
@@ -62,5 +73,11 @@ Page({
    */
   onShareAppMessage: function () {
   
-  }
+  },
+  
+  back:function(){
+    wx.navigateBack({
+      
+    })
+  },
 })

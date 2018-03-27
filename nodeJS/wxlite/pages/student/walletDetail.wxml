@@ -1,0 +1,30 @@
+<!--pages/student/walletDetail.wxml-->
+<import src="../../zanUI/loadmore/index.wxml" />
+
+<view class='main_container'>
+
+  <include src='../common/title' />
+
+  <view class='content'>
+
+    <view class='list'>
+      <view class='item_layout' wx:for='{{list}}'>
+        <view class='item_money'>
+          <view style='float:left;'>交易金额：</view>
+          <view style='color:orange;float:left;font-size:21px;line-height:30px;text-align:center;'>{{item.num}}元</view>
+        </view>
+
+        <view class='item_ddbh'>订单编号：{{item.ddbh}}</view>
+        <view class='item_jybh'>交易编号：{{item.jybh}}</view>
+        <view class='item_time'>交易时间：{{item.time}}</view>
+      </view>
+    </view>
+
+    <!-- 直接使用 zan-loadmore 模板，并且直接传入设置值 -->
+    <template is="zan-loadmore" data="{{ loading: true }}" wx:if='{{!nomore}}' />
+    <template is="zan-loadmore" data="{{ nodata: true }}" wx:if='{{comments.length==0}}' />
+    <template is="zan-loadmore" data="{{ nomore: true }}" wx:if='{{nomore}}' />
+
+  </view>
+
+</view>

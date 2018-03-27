@@ -1,6 +1,6 @@
 <!--pages/student/main.wxml-->
 <view class='main_container'>
-  <swiper indicator-dots='true' indicator-color='white' indicator-active-color='green' autoplay='true' class='swip'>
+  <swiper indicator-dots='true' indicator-color='white' indicator-active-color='#268746' autoplay='true' class='swip'>
     <block wx:for="{{images}}">
       <swiper-item>
         <image src="{{item}}" class="slide-image" mode='scaleToFill'/>
