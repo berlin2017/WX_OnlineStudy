@@ -1,5 +1,6 @@
 {
   "pages": [
+    
     "pages/main/main2",
     "pages/student/walletDetail",
     "pages/loading/loading",

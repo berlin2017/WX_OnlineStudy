@@ -62,18 +62,38 @@
 
       </view>
 
-      <picker value='{{userInfo.grade}}' range='{{grades}}' bindchange="changeGrade">
-        <view class='item_layout'>
+        <view class='item_layout' bindtap='showGrade'>
 
-          <view class='item_name'>年级:</view>
+          <view class='item_name'>教学科目:</view>
           <image class='item_arrow' src='../Resources/ic_down.png'></image>
-          <view class='item_value'>{{grades[userInfo.grade]}}</view>
+
+          <view class='item_value' wx:for='{{gradeValue}}'>
+            <view style='padding:5px;line-height:20px;border-radious:10px'>{{item}}</view>
+          </view>
 
         </view>
+        
+          <checkbox-group bindchange="checkboxChange" wx:if='{{showGrade}}'>
+            <label class="zan-col zan-col-8" wx:for="{{grades}}">
+               <checkbox value="{{item}}" checked="true" wx:if='{{contains(gradeValue,item)}}' style='margin-left:10px;'/>
+                <checkbox value="{{item}}" checked='false' wx:else style='margin-left:10px;'/> 
+                {{item}}  
+            </label>
+           
+          </checkbox-group>
+         
+      <picker value='{{userInfo.grade}}' range='{{grades}}' bindchange="changeGrade" class='item_layout' style='float:left;padding-left:10px;'>
+        <!-- <view > -->
+
+          <view class='item_name'>年级:</view>
+          <image class='item_arrow' src='../Resources/ic_down.png' style='float:right;'></image>
+          <view class='item_value'>{{grades[userInfo.grade]}}</view>
+
+        <!-- </view> -->
       </picker>
 
-      <picker value='{{userInfo.sex}}' range='{{sexs}}' bindchange="changeLocation">
-        <view class='item_layout'>
+      <picker value='{{userInfo.sex}}' range='{{sexs}}' bindchange="changeLocation" >
+        <view class='item_layout' style='float:left;padding-left:10px;'>
 
           <view class='item_name'>地区:</view>
           <image class='item_arrow' src='../Resources/ic_down.png'></image>
@@ -85,7 +105,7 @@
 
       <picker value='{{userInfo.school}}' range='{{schools}}' bindchange="changeSchool">
 
-        <view class='item_layout'>
+        <view class='item_layout' style='float:left;padding-left:10px;'>
 
           <view class='item_name'>学校:</view>
           <image class='item_arrow' src='../Resources/ic_down.png'></image>
