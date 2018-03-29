@@ -1,123 +1,46 @@
-<!--pages/teacher/main.wxml-->
-<view class='main_container' style='margin-bottom:40px;'>
+<view class='main_container' style='margin-bottom:106rpx;'>
 
-  <include src='../common/title' />
+  <swiper indicator-dots='true' indicator-color='white' indicator-active-color='#268746' autoplay='true' class='swip'>
+    <block wx:for="{{images}}">
+      <swiper-item>
+        <image src="{{item}}" class="slide-image" mode='scaleToFill' />
+      </swiper-item>
+    </block>
+  </swiper>
 
-  <view class='content'>
+<view>
+  <view class='item_layout' style='border-radius:10px;width:94%;margin-left:3%;background:#edeff5;margin-top:10px;margin-bottom:10px;display:flex;flex-direction: column;position:relative;overflow:hidden;' wx:for='{{images}}'>
 
-    <image class='top_image' src='{{userInfo.image}}' mode='sacleToFill'></image>
+    <view style='display:fixed;'>
+      <view class='subject_name'>地理</view>
 
-    <form>
+      <view class='grade_name'>[高三]</view>
+    </view>
 
-      <view class='item_layout'>
-
-        <view class='item_name'>姓名:</view>
-        <input placeholder='请输入姓名' class='item_right'></input>
-
+    <view style='display:fixed;'>
+      <image class='item_image' src='../Resources/ic_teacher_image.png' mode='scaleToFill' style='width:{{imageWidth}}px;height:{{imageWidth*0.75}}px'></image>
+      <view style='float:left;display:flex;flex-direction: column;'>
+        <view>
+          <image class='user_image' mode='scaleToFill' src='{{images[0]}}'></image>
+          <view class='user_name'>小明</view>
+        </view>
+        <view class='user_money'>30豆</view>
+        <view class='item_time'>2018-03-29 17:30</view>
       </view>
 
-      <view class='item_layout'>
+    </view>
+    <view style='display:fixed;clear:both;'>
+      <view style='float:left;color:gray;display:inline-block;height:40px;width:15%;font-size:15px;margin-left:10px;'>备注:</view>
+      <view style='float:left;display:inline;display:inline-block;margin-left:10px;width:78%;font-size:15px;line-height:20px;height:40px;overflow:hidden;'>词语的一般解释表册上供填写附注的栏目；第二种意思指在备注栏内所加的注解说明。</view>
+    </view>
 
-        <view class='item_name'>手机:</view>
-        <input placeholder='请输入手机号码' class='item_right'></input>
-
-      </view>
-
-      <view class='item_layout'>
-
-        <view class='item_name'>身份证:</view>
-        <input placeholder='请输入身份证号码' class='item_right'></input>
-
-      </view>
-
-
-      <picker value='{{userInfo.sex}}' range='{{sexs}}' bindchange="changeSex">
-
-        <view class='item_layout'>
-
-          <view class='item_name'>国籍:</view>
-          <image class='item_arrow' src='../Resources/ic_down.png'></image>
-          <view class='item_value'>{{sexs[userInfo.sex]}}</view>
-
-        </view>
-
-      </picker>
-
-      <view class='item_layout'>
-
-        <view class='item_name'>性别:</view>
-        <view class='item_value'>
-          <radio-group>
-            <radio checked="{{userInfo.sex=='男'}}" style='margin-right:10px;'>男</radio>
-            <radio checked="{{userInfo.sex=='女'}}">女</radio>
-          </radio-group>
-        </view>
-
-      </view>
-
-      <view class='item_layout'>
-
-        <view class='item_name'>毕业学校:</view>
-        <input placeholder='请输入毕业学校' class='item_right'></input>
-
-      </view>
-
-        <view class='item_layout' bindtap='showGrade'>
-
-          <view class='item_name'>教学科目:</view>
-          <image class='item_arrow' src='../Resources/ic_down.png'></image>
-
-          <view class='item_value' wx:for='{{gradeValue}}'>
-            <view style='padding:5px;line-height:20px;border-radious:10px'>{{item}}</view>
-          </view>
-
-        </view>
-        
-          <checkbox-group bindchange="checkboxChange" wx:if='{{showGrade}}'>
-            <label class="zan-col zan-col-8" wx:for="{{grades}}">
-               <checkbox value="{{item}}" checked="true" wx:if='{{contains(gradeValue,item)}}' style='margin-left:10px;'/>
-                <checkbox value="{{item}}" checked='false' wx:else style='margin-left:10px;'/> 
-                {{item}}  
-            </label>
-           
-          </checkbox-group>
-         
-      <picker value='{{userInfo.grade}}' range='{{grades}}' bindchange="changeGrade" class='item_layout' style='float:left;padding-left:10px;'>
-        <!-- <view > -->
-
-          <view class='item_name'>年级:</view>
-          <image class='item_arrow' src='../Resources/ic_down.png' style='float:right;'></image>
-          <view class='item_value'>{{grades[userInfo.grade]}}</view>
-
-        <!-- </view> -->
-      </picker>
-
-      <picker value='{{userInfo.sex}}' range='{{sexs}}' bindchange="changeLocation" >
-        <view class='item_layout' style='float:left;padding-left:10px;'>
-
-          <view class='item_name'>地区:</view>
-          <image class='item_arrow' src='../Resources/ic_down.png'></image>
-          <view class='item_value'>合肥市</view>
-
-        </view>
-
-      </picker>
-
-      <picker value='{{userInfo.school}}' range='{{schools}}' bindchange="changeSchool">
-
-        <view class='item_layout' style='float:left;padding-left:10px;'>
-
-          <view class='item_name'>学校:</view>
-          <image class='item_arrow' src='../Resources/ic_down.png'></image>
-          <view class='item_value'>{{schools[userInfo.school]}}</view>
-
-        </view>
-      </picker>
-
-    </form>
-
+    <view style='background:#7647a0; width:160px;height:160px;position:absolute;top:-80px;right:-80px;border-radius:80px;color:white;'>
+      <view style='margin-top:100px;width:80px;text-align:center;line-height:20px;'>抢单</view>
+    </view>
   </view>
+</view>
 
 </view>
 
-<view class='bottom_layout'>注册</view>
+<import src="tabbar.wxml" />
+<template is="tabBar" data="{{tabBar:bindData.tabBar}}" />

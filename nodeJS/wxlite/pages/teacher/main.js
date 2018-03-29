@@ -1,33 +1,29 @@
 // pages/teacher/main.js
+const app = getApp()
+var template = require('tabbar.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    title: '认证信息',
-    title_bg: '#268746',
-    userInfo: {
-      image: '',
-      sex: '男',
-    },
-    grades: ['一年级', '二年级', '三年级', '四年级', '五年级', '初一', '初二', '初三', '高一', '高二', '高三'],
-    gradeValue: ['一年级', '二年级'],
-    showGrade:false,
+    images: [
+      '../Resources/ic_teacher_banner.png',
+      '../Resources/ic_teacher_banner.png',
+      '../Resources/ic_teacher_banner.png'
+    ],
+    imageWidth:0,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this;
-    if (that.data.userInfo.image.length <= 0) {
-      that.data.userInfo.image = '../Resources/ic_user_header.png';
-      that.setData({
-        userInfo: that.data.userInfo
-      });
-    }
-    // console.log(contains(this.data.gradeValue, "二年级"));
+    template.tabbar("tabBar", 0, this)//0表示第一个tabbar
+    var width = wx.getSystemInfoSync().windowWidth*0.4;
+    this.setData({
+      imageWidth:width
+    });
   },
 
   /**
@@ -85,35 +81,7 @@ Page({
     })
   },
 
-  checkboxChange:function(e){
-    console.log(e);
-    this.setData({
-      gradeValue: e.detail.value
-    });
-  },
+ 
 
-  showGrade:function(){
-    this.data.showGrade = !this.data.showGrade;
-    this.setData({
-      showGrade: this.data.showGrade
-    });
-  },
 })
 
-function contains(arr, obj) {
-  var i = arr.length;
-  while (i--) {
-    if (arr[i] === obj) {
-      return true;
-    }
-  }
-  return false;
-}  
-
-function array_contain(array, obj) {
-  for (var i = 0; i < array.length; i++) {
-    if (array[i] == obj)//如果要求数据类型也一致，这里可使用恒等号===
-      return true;
-  }
-  return false;
-}

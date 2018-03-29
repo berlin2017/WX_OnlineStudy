@@ -53,7 +53,57 @@ App({
       }
     })
   },
+
+  editTabBar: function () {
+    var tabbar = this.globalData.tabbar,
+      currentPages = getCurrentPages(),
+      _this = currentPages[currentPages.length - 1],
+      pagePath = _this.__route__;
+    (pagePath.indexOf('/') != 0) && (pagePath = '/' + pagePath);
+    for (var i in tabbar.list) {
+      tabbar.list[i].selected = false;
+      (tabbar.list[i].pagePath == pagePath) && (tabbar.list[i].selected = true);
+    }
+    _this.setData({
+      tabbar: tabbar
+    });
+  },
+
   globalData: {
-    userInfo: null
-  }
+    userInfo: null,
+    tabbar: {
+      color: "#000000",
+      selectedColor: "#8E388E",
+      backgroundColor: "#ffffff",
+      borderStyle: "gainsboro",
+      list: [
+        {
+          "pagePath": "main",
+          "text": "首页",
+          "iconPath": "../Resources/ic_tab_home.png",
+          "selectedIconPath": "pages/Resources/ic_tab_home_light.png"
+        },
+        {
+          "pagePath": "myStudent",
+          "text": "我的学生",
+          "iconPath": "../Resources/ic_tab_myteacher.png",
+          "selectedIconPath": "pages/Resources/ic_tab_myteacher.png"
+        },
+        {
+          "pagePath": "myClass",
+          "text": "我的课程",
+          "iconPath": "../Resources/ic_tab_home.png",
+          "selectedIconPath": "pages/Resources/ic_tab_home_light.png"
+        },
+        {
+          "pagePath": "user",
+          "text": "我的",
+          "iconPath": "../Resources/ic_tab_user.png",
+          "selectedIconPath": "pages/Resources/ic_tab_user_light.png"
+        }
+      ],
+      position: "bottom"
+    }
+  }  
+
 })

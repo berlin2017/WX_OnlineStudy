@@ -1,4 +1,4 @@
-// pages/main/main2.js
+// pages/teacher/studentDetail.js
 Page({
 
   /**
@@ -62,18 +62,5 @@ Page({
    */
   onShareAppMessage: function () {
   
-  },
-
-  toTeacherMain:function(){
-    wx.navigateTo({
-      url: '../teacher/regist',
-    })
-  },
-
-  toStudentMain:function(){
-    wx.switchTab({
-      url: '../student/main',
-    })
   }
-
 })

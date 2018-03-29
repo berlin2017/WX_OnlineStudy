@@ -1,9 +1,10 @@
 {
   "pages": [
-    
+      "pages/loading/loading",
+    "pages/teacher/main",
     "pages/main/main2",
     "pages/student/walletDetail",
-    "pages/loading/loading",
+  
 
     "pages/student/walletCZ",
     "pages/student/user",
@@ -24,7 +25,13 @@
     "pages/student/main",
     "pages/student/test",
     
-    "pages/teacher/main",
+   
+    "pages/teacher/user",
+    "pages/teacher/myClass",
+    "pages/teacher/myStudent",
+    "pages/teacher/studentDetail",
+    "pages/teacher/regist",
+   
     "pages/common/title",
     "pages/common/search_title",
     "pages/student/live",
@@ -57,6 +64,7 @@
     "navigationBarTextStyle": "#fff",
     "navigationStyle": "custom"
   },
+
   "tabBar": {
     "list": [
       {
@@ -86,4 +94,6 @@
     ],
     "selectedColor": "#8E388E"
   }
+
+  
 }
