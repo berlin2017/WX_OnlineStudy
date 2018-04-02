@@ -5,7 +5,7 @@
 
   <view class='content'>
 
-    <view class='zan-col zan-col-8' wx:for='{{moneys}}' style=' margin-top:20px;' bindtap='changeIndex' data-index='{{index}}'>
+    <view class='zan-col zan-col-8' wx:for='{{moneys}}' style=' margin-top:20px;width:33.3333%;float:left;box-sizing:border-box;' bindtap='changeIndex' data-index='{{index}}'>
       <view class="{{selectIndex== index ? 'item_layout_on' : 'item_layout'}}">
         <view class='item_value'>{{item.num}}</view>
 

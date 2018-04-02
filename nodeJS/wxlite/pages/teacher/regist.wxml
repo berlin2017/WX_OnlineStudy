@@ -74,7 +74,7 @@
       </view>
 
       <checkbox-group bindchange="subjectChanged" wx:if='{{showSubject}}'>
-        <label class="zan-col zan-col-8" wx:for="{{subjects}}">
+        <label class="zan-col zan-col-8" wx:for="{{subjects}}" style='width:33.3333%;float:left;box-sizing:border-box;'>
           <checkbox value="{{index}}" checked="{{item.checked}}" style='margin-left:10px;' /> {{item.name}}
         </label>
 
@@ -94,7 +94,7 @@
       </view>
 
       <checkbox-group bindchange="checkboxChange" wx:if='{{showGrade}}'>
-        <label class="zan-col zan-col-8" wx:for="{{grades}}">
+        <label class="zan-col zan-col-8" wx:for="{{grades}}" style='width:33.3333%;float:left;box-sizing:border-box;'>
           <checkbox value="{{index}}" checked="{{item.checked}}" style='margin-left:10px;' /> {{item.name}}
         </label>
 

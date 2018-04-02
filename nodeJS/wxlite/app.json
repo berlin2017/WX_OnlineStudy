@@ -1,7 +1,9 @@
 {
   "pages": [
-      "pages/loading/loading",
+    "pages/teacher/userWallet",
     "pages/teacher/main",
+    "pages/loading/loading",
+   
     "pages/main/main2",
     "pages/student/walletDetail",
   
@@ -31,6 +33,12 @@
     "pages/teacher/myStudent",
     "pages/teacher/studentDetail",
     "pages/teacher/regist",
+    
+    "pages/teacher/order",
+    "pages/teacher/finishedClass",
+    "pages/teacher/commentOrder",
+    "pages/teacher/finishedOrder",
+    "pages/teacher/helpHome",
    
     "pages/common/title",
     "pages/common/search_title",

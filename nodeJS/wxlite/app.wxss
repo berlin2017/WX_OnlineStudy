@@ -1,6 +1,5 @@
 /**app.wxss**/
 @import "./weui.wxss";
-@import "./zanUI/index.wxss";
 
 .content {
   z-index: 10000;

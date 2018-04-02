@@ -1,5 +1,4 @@
 <!--pages/student/walletDetail.wxml-->
-<import src="../../zanUI/loadmore/index.wxml" />
 
 <view class='main_container'>
 
@@ -19,11 +18,6 @@
         <view class='item_time'>交易时间：{{item.time}}</view>
       </view>
     </view>
-
-    <!-- 直接使用 zan-loadmore 模板，并且直接传入设置值 -->
-    <template is="zan-loadmore" data="{{ loading: true }}" wx:if='{{!nomore}}' />
-    <template is="zan-loadmore" data="{{ nodata: true }}" wx:if='{{comments.length==0}}' />
-    <template is="zan-loadmore" data="{{ nomore: true }}" wx:if='{{nomore}}' />
 
   </view>
 

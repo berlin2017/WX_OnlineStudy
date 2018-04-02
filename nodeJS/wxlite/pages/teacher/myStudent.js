@@ -8,14 +8,14 @@ Page({
    */
   data: {
     title_bg: '#268746',
-    title: '我的老师',
+    title: '我的学生',
     leftText: '',
     teachers: [
-      { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
-      { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
-      { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
-      { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
-      { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, }
+      { name: '小明', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '智商很高', numbers: 15, ages: 5, grade:'三年级',subjects:['数学','语文'],},
+      { name: '小明', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '智商很高', numbers: 15, ages: 5, grade: '三年级',subjects:['数学', '语文'],},
+      { name: '小明', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '智商很高', numbers: 15, ages: 5, grade: '三年级',subjects:['数学', '语文'],},
+      { name: '小明', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '智商很高', numbers: 15, ages: 5, grade: '三年级',subjects:['数学', '语文'],},
+      { name: '小明', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '智商很高', numbers: 15, ages: 5, grade: '三年级',subjects:['数学', '语文'],}
     ],
     inputShowed: false,
     inputVal: ""
