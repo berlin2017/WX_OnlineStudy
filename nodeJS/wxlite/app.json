@@ -1,10 +1,13 @@
 {
   "pages": [
-    "pages/teacher/userWallet",
-    "pages/teacher/main",
-    "pages/loading/loading",
+    "pages/chat/test",
+    "pages/chat/chatRoom",
    
     "pages/main/main2",
+    "pages/teacher/main",
+    "pages/loading/loading",
+    "pages/teacher/userWallet",
+   
     "pages/student/walletDetail",
   
 
@@ -26,7 +29,9 @@
     "pages/student/myReleaseHome",
     "pages/student/main",
     "pages/student/test",
-    
+    "pages/student/allOrder",
+    "pages/student/orderDetail",
+    "pages/student/comment",
    
     "pages/teacher/user",
     "pages/teacher/myClass",
@@ -39,10 +44,11 @@
     "pages/teacher/commentOrder",
     "pages/teacher/finishedOrder",
     "pages/teacher/helpHome",
+    "pages/teacher/orderDetail",
    
     "pages/common/title",
     "pages/common/search_title",
-    "pages/student/live",
+    
     
     "pages/main/main",
     "pages/push/push",
@@ -82,17 +88,18 @@
         "selectedIconPath": "pages/Resources/ic_tab_home_light.png"
       },
       {
+        "pagePath": "pages/student/allOrder",
+        "text": "我的订单",
+        "iconPath": "pages/Resources/ic_tab_home.png",
+        "selectedIconPath": "pages/Resources/ic_tab_home_light.png"
+      },
+      {
         "pagePath": "pages/student/myteacher",
         "text": "我的老师",
         "iconPath": "pages/Resources/ic_tab_myteacher.png",
         "selectedIconPath": "pages/Resources/ic_tab_myteacher.png"
       },
-      {
-        "pagePath": "pages/student/live",
-        "text": "课程直播",
-        "iconPath": "pages/Resources/ic_tab_home.png",
-        "selectedIconPath": "pages/Resources/ic_tab_home_light.png"
-      },
+    
       {
         "pagePath": "pages/student/user",
         "text": "我的",

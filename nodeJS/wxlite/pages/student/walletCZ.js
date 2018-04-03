@@ -13,6 +13,7 @@ Page({
       { num: 300, remark: '' },
       { num: 500, remark: '赠送100元' }],
     selectIndex: 0,
+    money:null,
   },
 
   /**
@@ -79,8 +80,10 @@ Page({
 
   changeIndex: function (e) {
     var index = e.currentTarget.dataset.index;
-    this.setData({
-      selectIndex: index
+    var that = this;
+    that.setData({
+      selectIndex: index,
+      money:that.data.moneys[index].num,
     });
   },
 

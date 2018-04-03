@@ -1,1 +1,4 @@
 /* pages/teacher/order.wxss */
+
+@import '../common/title.wxss';
+@import '../common/berlin.wxss';

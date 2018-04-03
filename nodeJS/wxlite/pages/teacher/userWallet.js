@@ -95,5 +95,10 @@ Page({
     });
   },
 
+  comfirm:function(){
+    this.setData({
+      isShowDialog: false
+    });
+  },
 
 })

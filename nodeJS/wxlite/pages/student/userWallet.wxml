@@ -5,7 +5,7 @@
 
   <view class='content'>
 
-    <view class='top_header'>
+    <view class='top_header' style='background: #613588;'>
       <view class='yue_name'>账户余额(元)</view>
 
       <view class='yue_value'>1000.0</view>

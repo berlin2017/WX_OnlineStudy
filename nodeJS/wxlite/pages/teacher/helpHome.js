@@ -5,7 +5,21 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    title: '帮助中心',
+    title_bg: '#268746',
+    questions: [
+      { showDetail: false, },
+       { showDetail: true, },
+        { showDetail: false, },
+         { showDetail: false,}],
+  },
+
+  show:function(e){
+    var index = e.currentTarget.dataset.index;
+    this.data.questions[index].showDetail = !this.data.questions[index].showDetail;
+    this.setData({
+      questions:this.data.questions
+    });
   },
 
   /**
@@ -62,5 +76,10 @@ Page({
    */
   onShareAppMessage: function () {
   
-  }
+  },
+  back:function(){
+    wx.navigateBack({
+      
+    })
+  },
 })

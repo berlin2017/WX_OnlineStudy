@@ -92,31 +92,31 @@ Page({
 
   toWrong:function(){
     wx.navigateTo({
-      url: 'myWrongHome',
+      url: 'myOrderHome'+'?order_type='+'0',
     })
   },
 
   toClass: function () {
     wx.navigateTo({
-      url: 'myClassHome',
+      url: 'myOrderHome' + '?order_type=' + '1',
     })
   },
 
   toOrder: function () {
     wx.navigateTo({
-      url: 'myOrderHome',
+      url: 'myOrderHome' + '?order_type=' + '2',
     })
   },
 
   toRelease: function () {
     wx.navigateTo({
-      url: 'myReleaseHome',
+      url: 'myOrderHome' + '?order_type=' + '3',
     })
   },
 
   toHelp: function () {
     wx.navigateTo({
-      url: 'helpHome',
+      url: '../teacher/helpHome',
     })
   },
 })

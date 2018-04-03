@@ -1,0 +1,2 @@
+/* pages/student/orderDetail.wxss */
+@import '../teacher/orderDetail.wxss';

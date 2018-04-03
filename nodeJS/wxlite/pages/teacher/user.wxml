@@ -46,7 +46,7 @@
     
       <view class='option1_value' style='line-height:{{option_height-80}}px;'>8</view>
 
-       <view class='option1_name'>待上课</view>
+       <view class='option1_name'>已抢单</view>
     
     </view>
 
@@ -54,7 +54,7 @@
     
       <view class='option1_value' style='line-height:{{option_height-80}}px;'>12</view>
 
-      <view class='option1_name'>结束</view>
+      <view class='option1_name'>上课中</view>
     
     </view>
 
@@ -62,7 +62,7 @@
     
       <view class='option1_value' style='line-height:{{option_height-80}}px;'>3</view>
 
-       <view class='option1_name'>待评价</view>
+       <view class='option1_name'>学生评价</view>
     
     </view>
 
@@ -70,13 +70,13 @@
     
       <view class='option1_value' style='line-height:{{option_height-80}}px;'>0</view>
 
-      <view class='option1_name'>已完结</view>
+      <view class='option1_name'>今日收入</view>
     
     </view>
   
   </view> 
 
-  <view class='user_help_layout'  bindtap='toHelp'>
+  <view class='user_help_layout' style='margin-bottom:60px;'  bindtap='toHelp'>
   
     <image src='../Resources/ic_user_yue.png' mode='scaleToFill' class='user_help_image'></image>
 

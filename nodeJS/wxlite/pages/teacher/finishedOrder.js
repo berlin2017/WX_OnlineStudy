@@ -5,14 +5,24 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    title: '完结订单',
+    title_bg: '#268746',
+    images: [
+      'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522726278037&di=23a3f6e356fa7b30e251d2dad073faa4&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01499057fc7f95a84a0e282bfe3089.jpg',
+      'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522726278037&di=23a3f6e356fa7b30e251d2dad073faa4&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01499057fc7f95a84a0e282bfe3089.jpg',
+      'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522726278037&di=23a3f6e356fa7b30e251d2dad073faa4&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01499057fc7f95a84a0e282bfe3089.jpg'
+    ],
+    imageWidth: 0,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    var width = wx.getSystemInfoSync().windowWidth * 0.4;
+    this.setData({
+      imageWidth: width
+    });
   },
 
   /**
@@ -62,5 +72,16 @@ Page({
    */
   onShareAppMessage: function () {
   
-  }
+  },
+
+  back: function () {
+    wx.navigateBack({
+
+    })
+  },
+  toDetail: function () {
+    wx.navigateTo({
+      url: 'orderDetail' + '?order_type=' + 3,
+    })
+  },
 })

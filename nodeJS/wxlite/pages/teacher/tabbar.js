@@ -10,18 +10,19 @@ function tabbarinit() {
     },
     {
       current: 0,
+      "pagePath": "myClass",
+      "text": "我的订单",
+      "iconPath": "../Resources/ic_tab_home.png",
+      "selectedIconPath": "../Resources/ic_tab_home_light.png"
+    },
+    {
+      current: 0,
       "pagePath": "myStudent",
       "text": "我的学生",
       "iconPath": "../Resources/ic_tab_myteacher.png",
       "selectedIconPath": "../Resources/ic_tab_myteacher.png"
     },
-    {
-      current: 0,
-      "pagePath": "myClass",
-      "text": "我的课程",
-      "iconPath": "../Resources/ic_tab_home.png",
-      "selectedIconPath": "../Resources/ic_tab_home_light.png"
-    },
+   
     {
       current: 0,
       "pagePath": "user",

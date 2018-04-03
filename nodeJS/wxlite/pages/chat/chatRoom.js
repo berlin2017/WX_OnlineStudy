@@ -1,11 +1,17 @@
-// pages/student/live.js
+// pages/chat/chatRoom.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+      title:'聊天室',
+    messages:[
+      { content: '老师你好', uid: 1, icon:'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg',},
+      { content: '老师你好', uid: 2, icon: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg',},
+      { content: '老师你好', uid: 1, icon: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg',},
+      { content: '老师你好', uid: 2, icon: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg',},
+      ],
   },
 
   /**
@@ -62,5 +68,10 @@ Page({
    */
   onShareAppMessage: function () {
   
-  }
+  },
+  back:function(){
+    wx.navigateBack({
+      
+    })
+  },
 })

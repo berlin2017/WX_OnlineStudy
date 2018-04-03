@@ -1,0 +1,310 @@
+.top_header{
+  width: 100%;
+}
+
+.yue_name{
+  padding-top: 20px;
+  padding-left: 20px;
+  font-size: 13px;
+  color: white;
+}
+
+.yue_value{
+  padding-left: 20px;
+  padding-bottom: 10px;
+  font-size: 40px;
+  color: white;
+}
+
+.cz_layout{
+  width: 100%;
+  border-bottom: 1px solid gainsboro;
+ 
+  height: 40px;
+  margin-left: 10px;
+}
+
+
+.cz_image{
+  margin: 5px;
+  float: left;
+  width: 20px;
+  height: 20px;
+  padding: 5px;
+  border-radius: 22.5px;
+  
+}
+
+
+.cz_name{
+  float: left;
+  line-height: 40px;
+  text-align: center;
+}
+
+.arrow{
+  float: right;
+  width: 20px;
+  height: 20px;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.top_header {
+  background: #268746;
+  width: 100%;
+}
+
+.header_image {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  margin-left: 20px;
+  margin-right: 10px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  float: left;
+}
+
+.header_info_layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.name_text {
+  color: white;
+  font-size: 19px;
+  line-height: 30px;
+  margin-top: 40px;
+  float: left;
+}
+
+.mobile_text {
+  color: white;
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.grade_text {
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-right: 10px;
+  /* float: left; */
+  display: inline;
+  color: black;
+  font-size: 13px;
+  line-height: 20px;
+  background: white;
+  border-radius: 10px;
+}
+
+.header_arrow {
+  width: 30px;
+  height: 30px;
+  margin-top: 55px;
+  margin-right: 10px;
+  float: right;
+}
+
+.user_money_layout {
+  background-color: rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+
+.user_money_image {
+  margin: 10px;
+  float: left;
+  width: 20px;
+  height: 20px;
+  padding: 10px;
+  border-radius: 20px;
+  background: #e24a05;
+}
+
+.user_money_name {
+  margin-left: 10px;
+  float: left;
+  line-height: 60px;
+  text-align: center;
+  color: white;
+  font-size: 15px;
+}
+
+.header_arrow2 {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  right: 10px;
+  bottom: 20px;
+}
+
+.user_money_number {
+  position: absolute;
+  line-height: 60px;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  font-size: 21px;
+  right: 40px;
+}
+
+.center_layout{
+  width: 94%;
+  /* margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 10px; */
+  margin: 3% auto;
+}
+
+.option1_layout{
+
+  background: #268746;
+  float: left;
+  position: relative;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.option2_layout{
+  background: #268746;
+  float: right;
+  position: relative;
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.option3_layout{
+  margin-top: 3%;
+  background: #268746;
+  float: left;
+  position: relative;
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.option4_layout{
+  margin-top: 3%;
+  background: #268746;
+  float: right;
+  position: relative;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+
+.option1_value{
+  position: absolute;
+  color: white;
+  font-size: 80px;
+  bottom:40px;
+  width: 100%;
+  text-align: center;
+}
+
+.option1_name{
+  width: 100%;
+  position: absolute;
+  line-height: 30px;
+  bottom: 10px;
+  color: white;
+  font-size: 17px;
+  text-align: center;
+}
+
+.user_help_layout{
+  width: 100%;
+  height: 60px;
+  border-bottom: 1px solid gainsboro;
+  border-top: 1px solid gainsboro;
+}
+
+.user_help_image{
+  float: left;
+  width: 20px;
+  height: 20px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-left: 10px;
+  border-radius: 20px;
+  background: #268746; 
+}
+
+.user_help_text{
+  margin-left: 10px;
+  line-height: 60px;
+  text-align: center;
+  float: left;
+}
+
+.user_help_arrow{
+  width: 20px;
+  height: 20px;
+  margin-top: 20px;
+  margin-right: 10px;
+  float: right;
+}
+
+.subject_name{
+  background: #56d2a1;
+  padding: 5px 10px;
+  margin-top: 10px;
+  width: 80px;
+  text-align: center;
+  font-size: 15px;
+  color: white;
+  border-bottom-right-radius: 10px;
+  float: left;
+}
+
+.grade_name{
+  float: left;
+  margin-left: 10px;
+  margin-top: 10px;
+  line-height: 30px;
+  font-size: 20px;
+   font-weight: bold; 
+   
+}
+
+.item_image{
+  margin: 10px;
+  border-radius: 10px;
+  float: left;
+}
+
+.user_image{
+  width: 30px;
+  height:30px;
+  margin-top: 10px;
+  border-radius: 15px;
+  float: left;
+}
+
+.user_name{
+  float: left;
+  margin-top: 10px;
+  margin-left: 10px;
+  line-height: 30px;
+  text-align: center;
+}
+
+.user_money{
+  margin-top: 10px;
+  background: #e24a05;
+  width: 60px;
+  text-align: center;
+  color: white;
+  padding: 2px 5px;
+  line-height: 25px;
+  border-radius: 14.5px;
+}
+
+.item_time{
+  line-height: 30px;
+  color: gray;
+  margin-top: 10px;
+}
