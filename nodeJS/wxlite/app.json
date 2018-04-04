@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/test/chating",
     "pages/chat/test",
     "pages/chat/chatRoom",
    
