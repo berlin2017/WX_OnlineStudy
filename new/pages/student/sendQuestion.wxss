@@ -1,0 +1,86 @@
+/* pages/student/sendQuestion.wxss */
+@import "../common/title.wxss";
+
+.input_layout{
+  width: 94%;
+  margin: 0px auto;
+}
+
+.send_input{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 40px;
+  background: white;
+  border-color: gray;
+  border-width: 2px;
+  border-radius: 20px;
+  padding-left: 20px;
+}
+
+.form_layout{
+  width: 80%;
+  margin: 0px auto;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.form_title{
+  float: left;
+  font-size: 21px;
+}
+
+.form_item{
+  height: 40px;
+  border-bottom:1px solid #ddd;
+}
+
+.form_name{
+  line-height: 40px;
+  font-size: 15px;
+  color: gray;
+}
+
+.form_value{
+  margin-right: 10px;
+  float: right;
+  line-height: 40px;
+  font-size: 17px;
+}
+
+.form_input{
+  float: right;
+  text-align: right;
+  height: 40px;
+  margin-left: 10px;
+  color: #7647a0;
+  font-size: 19px;
+}
+
+/* .form_input2{
+  margin-top: 10px;
+  height: 100px;
+  background: whitesmoke;
+  padding-top:0;
+  text-align:left;
+} */
+
+.form_textarea{
+  background: whitesmoke;
+  margin-top: 10px;
+  height:120px;
+  width: auto;
+  padding: 10px;
+	text-align:left;
+}
+
+.form_send{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 20px;
+  background: #7647a0;
+  color: white;
+  width: 100%;
+  text-align: center;
+  border-radius: 25px;
+}

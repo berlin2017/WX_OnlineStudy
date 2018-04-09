@@ -1,0 +1,3 @@
+/* pages/teacher/finishedOrder.wxss */
+
+@import 'order.wxss';

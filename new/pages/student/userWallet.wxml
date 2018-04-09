@@ -1,0 +1,33 @@
+<!--pages/student/userWallet.wxml-->
+<view class='main_container'>
+
+  <include src='../common/title'/>
+
+  <view class='content'>
+
+    <view class='top_header' style='background: #613588;'>
+      <view class='yue_name'>账户余额(元)</view>
+
+      <view class='yue_value'>1000.0</view>
+    </view>
+
+    <view class='cz_layout' style=' margin-top: 10px; border-top: 1px solid gainsboro;' bindtap='toCZ'>
+      <image src='../Resources/ic_cz.png' mode='scaleToFill' class='cz_image' style='background: #e24a05;'></image>
+
+      <view class='cz_name'>充值</view>
+
+      <image class='arrow' src='../Resources/ic_arrow_right_black.png'></image>
+    </view>
+
+     <view class='cz_layout' bindtap='toDetail'>
+      <image src='../Resources/ic_wallet_detail.png' mode='scaleToFill' class='cz_image' style='background: #2ca559;'></image>
+
+      <view class='cz_name'>账单明细</view>
+
+      <image class='arrow' src='../Resources/ic_arrow_right_black.png'></image>
+    </view>
+
+
+  </view>
+
+</view>

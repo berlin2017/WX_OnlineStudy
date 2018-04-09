@@ -1,0 +1,92 @@
+<!--pages/student/user.wxml-->
+<view class='main_container'> 
+
+  <view class='top_header' bindtap='toInfo'  style=' background: #7647a0;'>
+  
+    <image class='header_image' mode='scaleToFill' src='{{userInfo.icon}}'></image>
+
+     <image class='header_arrow' src='../Resources/right_arrow.png'></image>
+
+    <view class='header_info_layout'>
+    
+       <view class='name_text'>{{userInfo.name}}</view>
+
+       <view class='mobile_text'>{{userInfo.mobile}}</view>
+
+      <view>
+       <view class='grade_text'>{{userInfo.grade}}</view>
+
+       <view class='grade_text'>{{userInfo.className}}</view>
+
+      </view>
+
+    </view>
+
+     <view class='user_money_layout'  catchtap='toWallet'>
+    
+      <image src='../Resources/ic_user_yue.png' mode='scaleToFill' class='user_money_image'></image>
+
+      <view class='user_money_name'>账户余额</view>
+    
+      <image class='header_arrow2' src='../Resources/right_arrow.png'></image>
+
+      <view class='user_money_number'>￥100.0</view>
+
+    </view> 
+  
+
+  </view>
+
+   <view class='center_layout'>
+  
+    <view class='option1_layout' style='height:{{option_height}}px;width:{{option_height}}px;background: #7647a0;' bindtap='toWrong'>
+    
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>8</view>
+
+       <view class='option1_name'>未接单</view>
+    
+    </view>
+
+     <view class='option2_layout' style='height:{{option_height}}px;width:{{option_height}}px;background: #7647a0;' bindtap='toClass'>
+    
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>12</view>
+
+      <view class='option1_name'>已接单</view>
+    
+    </view>
+
+     <view class='option3_layout' style='height:{{option_height}}px;width:{{option_height}}px;background: #7647a0;' bindtap='toOrder'>
+    
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>3</view>
+
+       <view class='option1_name'>授课中</view>
+    
+    </view>
+
+     <view class='option4_layout' style='height:{{option_height}}px;width:{{option_height}}px;background: #7647a0;' bindtap='toRelease'>
+    
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>0</view>
+
+      <view class='option1_name'>待评价</view>
+    
+    </view>
+  
+  </view> 
+
+  <view class='user_help_layout'  bindtap='toHelp'>
+  
+    <image src='../Resources/ic_user_yue.png' mode='scaleToFill' class='user_help_image'></image>
+
+    <view class='user_help_text'>帮助中心</view>
+
+    <image class='user_help_arrow' src='../Resources/ic_arrow_right_black.png'></image>
+
+  </view>
+
+
+
+
+
+</view>
+
+<button style='width:80px;height:80px;border-radius:40px;background:#268746;color:white;position:absolute;right:10px;bottom:10px;line-height:80px;text-align:center;'>签到</button>

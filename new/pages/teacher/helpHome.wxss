@@ -1,0 +1,44 @@
+/* pages/teacher/helpHome.wxss */
+
+@import '../common/title.wxss';
+
+.item_point{
+  font-size: 17px;
+  color: #268746;
+  margin-left: 10px;
+  margin-right: 10px;
+  float: left;
+}
+
+.item_layout{
+  border-bottom: solid 1px whitesmoke;
+}
+
+.item_title{
+  text-align:left;
+   float: left;
+}
+
+.item_title_layout{
+  background:#edeff5;
+  line-height:40px;
+  height: 40px;
+  width: 100%;
+}
+
+.item_arrow{
+  width: 16px;
+  height: 16px;
+  float: right;
+  margin-right: 10px;
+  margin-top: 12px;
+}
+
+.item_answer{
+  padding-left: 20px;
+  padding-right: 10px;
+  background: white;
+  font-size: 13px;
+  line-height: 20px;
+  padding-top: 5px;
+}

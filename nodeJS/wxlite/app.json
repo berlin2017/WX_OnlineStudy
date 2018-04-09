@@ -1,9 +1,11 @@
 {
   "pages": [
-    "pages/test/chating",
+   
+   "pages/test/test",
+    "pages/main/main",
     "pages/chat/test",
     "pages/chat/chatRoom",
-   
+    "pages/test/chating",
     "pages/main/main2",
     "pages/teacher/main",
     "pages/loading/loading",
@@ -51,7 +53,7 @@
     "pages/common/search_title",
     
     
-    "pages/main/main",
+    
     "pages/push/push",
     "pages/push/playqr/playqr",
     "pages/play/play",

@@ -1,0 +1,59 @@
+<!--pages/teacher/userWallet.wxml-->
+<view class='main_container'>
+
+  <include src='../common/title'/>
+
+  <view class='content'>
+
+    <view class='top_header' style='background: #1f6f3a;'>
+      <view class='yue_name'>账户余额(元)</view>
+
+      <view class='yue_value'>1000000.0</view>
+    </view>
+
+    <view class='cz_layout' style=' margin-top: 10px; border-top: 1px solid gainsboro;' bindtap='toCZ'>
+      <image src='../Resources/ic_cz.png' mode='scaleToFill' class='cz_image' style='background: #e24a05;'></image>
+
+      <view class='cz_name'>充值</view>
+
+      <image class='arrow' src='../Resources/ic_arrow_right_black.png'></image>
+    </view>
+
+     <view class='cz_layout' bindtap='toDetail'>
+      <image src='../Resources/ic_wallet_detail.png' mode='scaleToFill' class='cz_image' style='background: #2ca559;'></image>
+
+      <view class='cz_name'>账单明细</view>
+
+      <image class='arrow' src='../Resources/ic_arrow_right_black.png'></image>
+    </view>
+
+
+      <view class='cz_layout' bindtap='toDetail' style='margin-top:20px;border-top:1px solid gainsboro;' bindtap='showDialog'>
+      <image src='../Resources/ic_wallet_detail.png' mode='scaleToFill' class='cz_image' style='background: #2ca559;'></image>
+
+      <view class='cz_name'>提现</view>
+
+      <image class='arrow' src='../Resources/ic_arrow_right_black.png'></image>
+    </view>
+
+  </view>
+
+</view>
+
+<view class='dialog' style='width:100%;height:100%;position:absolute;top:0px;z-index:1000000;'wx:if='{{isShowDialog}}' >
+
+  <view class='cover_layout' style='height:100%;background:#373737;opacity:0.5;'></view>
+
+  <view class='dialog_layout' style='width:90%;background:white;opacity:1;border-radius:20px;text-align:center;position: absolute;top: 50%;transform: translateY(-50%);left:5%;overflow:hidden;'>
+    <view class='dialog_title' style='line-height:60px;text-align:center;background:#268746;color:white;font-size:21px; '>修改提现信息</view>
+    <view style='margin-left:20px;width:90%;margin-left:auto;margin-right:auto;text-align:left;line-height:30px;margin-top:10px;'>提现金额(元)</view>
+    <input style='border-radius:1px;background:whiteSmoke;width:90%;margin-left:auto;margin-right:auto;height:40px;text-align:left;' placeholder='请输入提现金额' type='number'></input>
+
+     <view style='margin-left:20px;width:90%;margin-left:auto;margin-right:auto;text-align:left;line-height:30px;margin-top:10px;'>支付宝账号</view>
+    <input style='border-radius:1px;background:whiteSmoke;width:90%;margin-left:auto;margin-right:auto;height:40px;text-align:left;' placeholder='请输入支付宝账号' type='phone'></input>
+
+    <button style='background:#7647a0;width:80%;margin-left:auto;margin-right:auto;height:40px;color:white;margin-top:20px;margin-bottom:20px;border-radius:20px;text-algin:center;line-height:40px;' bindtap='comfirm'>确认</button>
+  </view>
+
+</view>
+

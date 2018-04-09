@@ -1,0 +1,3 @@
+/* pages/student/user.wxss */
+
+@import '../common/berlin.wxss';

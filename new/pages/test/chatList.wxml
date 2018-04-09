@@ -1,0 +1,9 @@
+<!--pages/test/chatList.wxml-->
+<view class='main_container'>
+  <include src = '../common/title'/>
+  <view class='content'>
+    <view wx:for='{{list}}'>
+      <view>{{item.nickname}}</view>
+    </view>
+  </view>
+</view>

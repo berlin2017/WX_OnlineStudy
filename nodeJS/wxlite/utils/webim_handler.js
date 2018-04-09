@@ -504,11 +504,11 @@ function convertGroupTipMsgToHtml(content) {
 function tlsLogin() {
     //跳转到TLS登录页面
     console.warn('tlslogin need rewrite');
-    // TLSHelper.goLogin({
-    //     sdkappid: loginInfo.sdkAppID,
-    //     acctype: loginInfo.accountType,
-    //     url: window.location.href
-    // });
+    TLSHelper.goLogin({
+        sdkappid: loginInfo.sdkAppID,
+        acctype: loginInfo.accountType,
+        url: window.location.href
+    });
 }
 //第三方应用需要实现这个函数，并在这里拿到UserSig
 function tlsGetUserSig(res) {

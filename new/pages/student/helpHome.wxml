@@ -1,0 +1,10 @@
+<!--pages/student/helpHome.wxml-->
+<view class='main_container'>
+
+  <include src='../common/title'/>
+
+  <view class='content'>
+  
+  </view>
+
+</view>

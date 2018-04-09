@@ -70,7 +70,7 @@
       <!--底部输入框  -->
       <view class='chatinput-wrapper' style='margin-bottom: {{focusFlag ? 20 : 0}}rpx;' catchtap='stopEventPropagation'>
         <view class='chatinput-content'>
-          <image src='{{sendType == 0 ? "../Resources/voice.png" : "../../images/keyboard.png"}}' class='chatinput-img' catchtap='switchSendType'></image>
+          <image src='{{sendType == 0 ? "../Resources/voice.png" : "../Resources/keyboard.png"}}' class='chatinput-img' catchtap='switchSendType'></image>
           <input style='margin-bottom: 20rpx;' wx:if="{{sendType == 0}}" value='{{inputValue}}' focus='{{focusFlag}}' bindinput='inputChange' bindfocus='inputFocus' bindblur='inputBlur' bindconfirm='inputSend' class='chatinput-input' placeholder="输入文字" confirm-type='send'></input>
           <!-- <button wx:if="{{sendType == 1}}" class="{{ isLongPress ? 'chatinput-voice-mask chatinput-voice-mask-hover' : 'chatinput-voice-mask' }}" hover-class="none" catchtouchstart='longPressStart' catchlongpress='voiceBtnLongTap' catchtouchend='longPressEnd'>按住说话</button> -->
           <button wx:if="{{sendType == 1}}" class="{{ isLongPress ? 'chatinput-voice-mask chatinput-voice-mask-hover' : 'chatinput-voice-mask' }}" hover-class="none" catchtouchstart='longPressStart' catchtouchend='longPressEnd'>按住说话</button>

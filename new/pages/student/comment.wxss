@@ -1,0 +1,4 @@
+/* pages/student/comment.wxss */
+
+@import '../common/title.wxss';
+@import 'teacherDetail.wxss';

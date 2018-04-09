@@ -1,0 +1,93 @@
+<!--pages/teacher/user.wxml-->
+<import src="tabbar.wxml"/>
+<template is="tabBar" data="{{tabBar:bindData.tabBar}}"/>
+
+<view class='main_container'> 
+
+  <view class='top_header' bindtap='toInfo'  >
+  
+    <image class='header_image' mode='scaleToFill' src='{{userInfo.icon}}'></image>
+
+     <image class='header_arrow' src='../Resources/right_arrow.png'></image>
+
+    <view class='header_info_layout'>
+    
+       <view class='name_text'>{{userInfo.name}}</view>
+
+       <view class='mobile_text'>{{userInfo.mobile}}</view>
+
+      <view style='display:none;'>
+       <view class='grade_text'>{{userInfo.grade}}</view>
+
+       <view class='grade_text'>{{userInfo.className}}</view>
+
+      </view>
+
+    </view>
+
+     <view class='user_money_layout'  catchtap='toWallet'>
+    
+      <image src='../Resources/ic_user_yue.png' mode='scaleToFill' class='user_money_image'></image>
+
+      <view class='user_money_name'>账户余额</view>
+    
+      <image class='header_arrow2' src='../Resources/right_arrow.png'></image>
+
+      <view class='user_money_number'>￥100.0</view>
+
+    </view> 
+  
+
+  </view>
+
+   <view class='center_layout'>
+  
+    <view class='option1_layout' style='height:{{option_height}}px;width:{{option_height}}px;' bindtap='toWrong'>
+    
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>8</view>
+
+       <view class='option1_name'>已抢单</view>
+    
+    </view>
+
+     <view class='option2_layout' style='height:{{option_height}}px;width:{{option_height}}px;' bindtap='toClass'>
+    
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>12</view>
+
+      <view class='option1_name'>上课中</view>
+    
+    </view>
+
+     <view class='option3_layout' style='height:{{option_height}}px;width:{{option_height}}px;' bindtap='toOrder'>
+    
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>3</view>
+
+       <view class='option1_name'>学生评价</view>
+    
+    </view>
+
+     <view class='option4_layout' style='height:{{option_height}}px;width:{{option_height}}px;' bindtap='toRelease'>
+    
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>0</view>
+
+      <view class='option1_name'>今日收入</view>
+    
+    </view>
+  
+  </view> 
+
+  <view class='user_help_layout' style='margin-bottom:60px;'  bindtap='toHelp'>
+  
+    <image src='../Resources/ic_user_yue.png' mode='scaleToFill' class='user_help_image'></image>
+
+    <view class='user_help_text'>帮助中心</view>
+
+    <image class='user_help_arrow' src='../Resources/ic_arrow_right_black.png'></image>
+
+  </view>
+
+
+
+</view>
+
+

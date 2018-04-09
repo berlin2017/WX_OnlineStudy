@@ -1,0 +1,67 @@
+/* pages/student/walletCZ.wxss */
+@import '../common/title.wxss';
+
+.item_layout{
+  border-style: solid;
+    border-width: 2px;
+    border-color: gainsboro;
+    border-radius: 10px;
+    width:90%;
+    height:70px;
+    margin-left:auto;
+    margin-right:auto;
+    position: relative;
+}
+
+.item_layout_on{
+    border-style: solid;
+    border-width: 2px;
+    border-color: #7647a0;
+    border-radius: 10px;
+    width:90%;
+    height:70px;
+    margin-left:auto;
+    margin-right:auto;
+    position: relative;
+}
+
+.item_value{
+  line-height: 30px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+  color: #7647a0;
+  float: left;
+  font-size: 21px;
+  /* width: 100%; */
+}
+
+.item_name{
+  color: #7647a0;
+  float: right;
+  line-height: 20px;
+  margin-right: 10px;
+  text-align: center;
+  margin-top: 25px;
+}
+
+.item_remark{
+  font-size: 13px;
+  color:  #7647a0;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  text-align: center;
+  left:0px;
+}
+
+.home_send_btn{
+  position: absolute;
+  bottom: 20px;
+  width: 80%;
+  background: #7647a0;
+  border-radius: 30px;
+  color: white;
+  left: 10%;
+}

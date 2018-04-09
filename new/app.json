@@ -1,0 +1,102 @@
+{
+  "pages": [
+    
+    "pages/loading/loading",
+  "pages/main/main2",
+    "pages/test/chating",
+    "pages/main/main",
+    "pages/chat/test",
+    "pages/chat/chatRoom",
+   "pages/test/chatList",
+    
+    "pages/teacher/main",
+   
+    "pages/teacher/userWallet",
+   
+    "pages/student/walletDetail",
+  
+
+    "pages/student/walletCZ",
+    "pages/student/user",
+    "pages/student/myteacher",
+    "pages/student/userInfo",
+    "pages/student/helpHome",
+    "pages/student/userWallet",
+    
+    
+    "pages/student/teacherDetail",
+    "pages/student/search",
+    "pages/student/sendQuestion",
+    "pages/student/myWrongHome",
+    "pages/student/wrongList",
+    "pages/student/myClassHome",
+    "pages/student/myOrderHome",
+    "pages/student/myReleaseHome",
+    "pages/student/main",
+    "pages/student/test",
+    "pages/student/allOrder",
+    "pages/student/orderDetail",
+    "pages/student/comment",
+   
+    "pages/teacher/user",
+    "pages/teacher/myClass",
+    "pages/teacher/myStudent",
+    "pages/teacher/studentDetail",
+    "pages/teacher/regist",
+    
+    "pages/teacher/order",
+    "pages/teacher/finishedClass",
+    "pages/teacher/commentOrder",
+    "pages/teacher/finishedOrder",
+    "pages/teacher/helpHome",
+    "pages/teacher/orderDetail",
+   
+    "pages/common/title",
+    "pages/common/search_title"
+  ],
+  "networkTimeout": {
+    "request": 60000
+  },
+  "window": {
+    "enablePullDownRefresh": true,
+    "backgroundColor": "#888",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#000",
+    "navigationBarTitleText": "腾讯视频云",
+    "navigationBarTextStyle": "#fff",
+    "navigationStyle": "custom"
+  },
+
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/student/main",
+        "text": "首页",
+        "iconPath": "pages/Resources/ic_tab_home.png",
+        "selectedIconPath": "pages/Resources/ic_tab_home_light.png"
+      },
+      {
+        "pagePath": "pages/student/allOrder",
+        "text": "我的订单",
+        "iconPath": "pages/Resources/ic_tab_home.png",
+        "selectedIconPath": "pages/Resources/ic_tab_home_light.png"
+      },
+      {
+        "pagePath": "pages/student/myteacher",
+        "text": "我的老师",
+        "iconPath": "pages/Resources/ic_tab_myteacher.png",
+        "selectedIconPath": "pages/Resources/ic_tab_myteacher.png"
+      },
+    
+      {
+        "pagePath": "pages/student/user",
+        "text": "我的",
+        "iconPath": "pages/Resources/ic_tab_user.png",
+        "selectedIconPath": "pages/Resources/ic_tab_user_light.png"
+      }
+    ],
+    "selectedColor": "#8E388E"
+  }
+
+  
+}

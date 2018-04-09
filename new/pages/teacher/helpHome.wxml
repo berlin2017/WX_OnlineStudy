@@ -1,0 +1,16 @@
+<!--pages/teacher/helpHome.wxml-->
+<view class='main_container'>
+  <include src='../common/title'/>
+  <view class='content'>
+    <view class='item_layout' wx:for='{{questions}}'>
+      <view class='item_title_layout' bindtap='show' data-index='{{index}}'>
+      <view class='item_point'>·</view>
+      <view class='item_title'>2月全球APP谁最热？</view>
+      <image class='item_arrow' src='{{item.showDetail ? "../Resources/arrow_on.png" : "../Resources/arrow_down.png"}}'></image>
+      </view>
+
+      <view class='item_answer' wx:if='{{item.showDetail}}'>实现两个div在同一行显示有多种方法，可以用设置浮动——用float，还可以用绝对定位position，等等。</view>
+
+    </view>
+  </view>
+</view>

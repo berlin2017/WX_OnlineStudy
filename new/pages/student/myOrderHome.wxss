@@ -1,0 +1,3 @@
+/* pages/student/myOrderHome.wxss */
+@import '../common/title.wxss';
+@import '../teacher/order.wxss';

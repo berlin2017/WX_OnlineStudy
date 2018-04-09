@@ -1,0 +1,126 @@
+/**app.wxss**/
+ @import "./weui.wxss"; 
+
+.content {
+  z-index: 10000;
+  padding-top: 64px;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+.main_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+   /* position:absolute;  */
+  width: 100%;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+body, page {
+  height: 100%;
+}
+
+page {
+  font-size: 16px;
+  background-color: #f8f8f8;
+}
+
+body, page {
+  height: 100%;
+}
+
+.weui-cells__title {
+  margin-top: 15px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.weui-label, .weui-input {
+  font-size: 17px;
+}
+
+.weui-cell_active {
+  background-color: #ececec;
+}
+
+.disabled-text {
+  color: #b2b2b2;
+}
+
+.weui-btn-area {
+  padding-bottom: 30px;
+}
+
+.weui-cells__title {
+  margin-top: 20px;
+}
+
+.weui-panel__hd:after {
+  display: none;
+}
+
+.weui-panel__bd {
+  position: relative;
+}
+
+.weui-media-box {
+  padding-top: 0;
+}
+
+.weui-panel__bd:after {
+  content: " ";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 1px;
+  border-bottom: 1rpx solid #e5e5e5;
+  color: #e5e5e5;
+  left: 15px;
+}
+
+.weui-uploader__input-box {
+  margin-bottom: 4px;
+}
+
+.weui-placeholder {
+  color: #b2b2b2;
+}
+
+.icon{
+  width:54rpx;
+  height: 54rpx;
+}
+.tabBar{
+  width:100%;
+  position: fixed;
+  bottom:0;
+  padding:10rpx;
+  margin-left:-4rpx;
+  background:#F7F7FA;
+  font-size:20rpx;
+  color:#8A8A8A;
+  box-shadow: 6rpx 6rpx 6rpx 6rpx #aaa;
+  z-index: 1000000;
+}
+
+ .tabBar-item{
+  float:left;
+  width:25%;
+  text-align: center;
+  overflow: hidden;
+}
+/*当前字体颜色*/
+.tabBartext{
+  color:#8E388E;
+}

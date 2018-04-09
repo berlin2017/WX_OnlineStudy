@@ -1,0 +1,40 @@
+/* pages/teacher/orderDetail.wxss */
+@import '../common/title.wxss';
+@import '../common/berlin.wxss';
+
+.header_icon {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  border-radius: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+}
+
+.order_user_name {
+  width: 100%;
+  text-align: center;
+  font-size: 17px;
+  line-height: 20px;
+}
+
+.order_subject_name {
+  position: absolute;
+  left: -10px;
+  top: 80px;
+  background: #56d2a1;
+  padding: 5px 10px;
+  width: 80px;
+  text-align: center;
+  line-height: 20px;
+  color: white;
+  border-bottom-right-radius: 10px;
+}
+
+.order_grade_name {
+  margin-left: 100px;
+  line-height: 30px;
+  text-align: left;
+}

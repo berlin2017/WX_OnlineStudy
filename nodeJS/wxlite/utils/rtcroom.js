@@ -147,8 +147,9 @@ function loginIM(options) {
 		accountType: accountInfo.accountType,
 		sdkAppID: accountInfo.sdkAppID,
 		avChatRoomId: options.roomID || 0,
-		selType: webim.SESSION_TYPE.GROUP,
-		selToID: options.roomID || 0,
+		selType: webim.SESSION_TYPE.C2C,
+		// selToID: options.roomID || 0,
+    selToID: 'user_1523243999446_11',
 		selSess: null //当前聊天会话
 	});
 	//当前用户身份

@@ -1,0 +1,2 @@
+/* pages/teacher/myClass.wxss */
+@import '../teacher/order.wxss';

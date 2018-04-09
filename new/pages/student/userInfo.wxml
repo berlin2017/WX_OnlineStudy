@@ -1,0 +1,81 @@
+<!--pages/student/userInfo.wxml-->
+<view class='main_container' style='margin-bottom:40px;'>
+
+  <view class='content'>
+
+    <include src="../common/title.wxml" />
+
+    <image class='userinfo_header' src='{{userInfo.avatarUrl}}' mode='scaleToFill' bindtap='choseImage'></image>
+
+    <form>
+
+      <view class='item_layout'>
+
+        <view class='item_name'>姓名:</view>
+        <input placeholder='请输入姓名' class='item_right' value='{{userInfo.nickname}}'></input>
+
+      </view>
+
+      <view class='item_layout'>
+
+        <view class='item_name'>手机:</view>
+        <input placeholder='请输入手机号码' class='item_right' value='{{userInfo.mobile}}'></input>
+
+      </view>
+
+      <picker value='{{userInfo.sex}}' range='{{sexs}}' bindchange="changeSex">
+
+        <view class='item_layout'>
+
+          <view class='item_name'>性别:</view>
+          <image class='item_arrow' src='../Resources/ic_down.png'></image>
+          <view class='item_value'>{{sexs[userInfo.sex]}}</view>
+
+        </view>
+
+      </picker>
+
+      <picker value='{{userInfo.grade}}' range='{{grades}}' bindchange="changeGrade">
+        <view class='item_layout' >
+
+          <view class='item_name'>年级:</view>
+          <image class='item_arrow' src='../Resources/ic_down.png'></image>
+          <view class='item_value'>{{grades[userInfo.grade]}}</view>
+
+        </view>
+      </picker>
+
+      <picker value='{{userInfo.sex}}' range='{{sexs}}' bindchange="changeLocation">
+        <view class='item_layout'>
+
+          <view class='item_name'>地区:</view>
+          <image class='item_arrow' src='../Resources/ic_down.png'></image>
+          <view class='item_value'>{{userInfo.province}}</view>
+
+        </view>
+
+      </picker>
+
+      <picker value='{{userInfo.school}}' range='{{schools}}' bindchange="changeSchool">
+
+        <view class='item_layout'>
+
+          <view class='item_name'>学校:</view>
+          <image class='item_arrow' src='../Resources/ic_down.png'></image>
+          <view class='item_value'>{{schools[userInfo.school]}}</view>
+
+        </view>
+      </picker>
+
+    </form>
+
+
+
+
+  </view>
+
+
+
+</view>
+
+<view class='bottom_layout'>保存</view>

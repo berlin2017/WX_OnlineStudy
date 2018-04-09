@@ -1,0 +1,4 @@
+/* pages/student/userWallet.wxss */
+
+@import '../common/title.wxss';
+@import '../common/berlin.wxss';

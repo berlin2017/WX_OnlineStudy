@@ -1,0 +1,19 @@
+<!--pages/student/myWrongHome.wxml-->
+<view class='main_container'>
+
+  <include src='../common/title' />
+
+  <view class='content'>
+
+    <view style='text-align:center;color:gray;margin-top:10px;'>请选择错题本科目</view>
+
+    <view class="zan-row">
+      <view class="zan-col zan-col-8" wx:for='{{subjects}}' style='align-items: center;justify-content: space-between;text-align:center;width:33.3333%;float:left;box-sizing:border-box;' bindtap='toList' data-index='{{index}}'>
+        <image class='item_image' src='{{item.image}}' mode='scaleToFill'></image>
+        <view class='item_name'>{{item.name}}</view>
+      </view>
+    </view>
+
+  </view>
+
+</view>

@@ -1,0 +1,42 @@
+<!--pages/teacher/order.wxml-->
+<view class='main_container'>
+
+  <include src='../common/title' />
+
+  <view class='content'>
+
+    <view class='item_layout' style='border-radius:10px;width:94%;margin-left:3%;background:#edeff5;margin-top:10px;margin-bottom:10px;display:flex;flex-direction: column;position:relative;overflow:hidden;' wx:for='{{images}}' bindtap='toDetail'>
+
+      <view style='display:fixed;'>
+        <view class='subject_name'>地理</view>
+
+        <view class='grade_name'>[高三]</view>
+      </view>
+
+      <view style='display:fixed;'>
+        <image class='item_image' src='../Resources/ic_teacher_image.png' mode='scaleToFill' style='width:{{imageWidth}}px;height:{{imageWidth*0.75}}px'></image>
+        <view style='float:left;display:flex;flex-direction: column;'>
+          <view>
+            <image class='user_image' mode='scaleToFill' src='{{images[0]}}'></image>
+            <view class='user_name'>小明</view>
+          </view>
+          <view class='user_money'>30豆</view>
+          <view class='item_time'>2018-03-29 17:30</view>
+        </view>
+
+      </view>
+
+      <view style='display:fixed;clear:both;'>
+        <view style='float:left;color:gray;display:inline-block;height:40px;width:15%;font-size:15px;margin-left:10px;'>备注:</view>
+        <view style='float:left;display:inline;display:inline-block;margin-left:10px;width:78%;font-size:15px;line-height:20px;height:40px;overflow:hidden;'>词语的一般解释表册上供填写附注的栏目；第二种意思指在备注栏内所加的注解说明。</view>
+      </view>
+
+      <view style='background:#7647a0; width:160px;height:160px;position:absolute;top:-80px;right:-80px;border-radius:80px;color:white; display:none'>
+        <view style='margin-top:100px;width:80px;text-align:center;line-height:20px;'>抢单</view>
+      </view>
+
+    </view>
+
+  </view>
+
+</view>

@@ -1,0 +1,2 @@
+/* pages/test/chatList.wxss */
+@import '../common/title.wxss';

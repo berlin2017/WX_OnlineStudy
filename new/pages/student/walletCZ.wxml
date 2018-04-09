@@ -1,0 +1,24 @@
+<!--pages/student/walletCZ.wxml-->
+<view class='main_container'>
+
+  <include src='../common/title' />
+
+  <view class='content'>
+
+    <view class='zan-col zan-col-8' wx:for='{{moneys}}' style=' margin-top:20px;width:33.3333%;float:left;box-sizing:border-box;' bindtap='changeIndex' data-index='{{index}}'>
+      <view class="{{selectIndex== index ? 'item_layout_on' : 'item_layout'}}">
+        <view class='item_value'>{{item.cz_money}}</view>
+
+        <view class='item_name'>元</view>
+
+        <view class='item_remark' wx:if='{{item.zs_money>0}}'>赠送{{item.zs_money}}元</view>
+      </view>
+    </view>
+
+    <input placeholder='输入充值金额' type='number' style='background:whiteSmoke;height:40px;clear:both;margin:10px;margin-top:10px;' value='{{money}}'></input>
+
+    <button class='home_send_btn' bindtap='pay'>立即充值</button>
+
+  </view>
+
+</view>

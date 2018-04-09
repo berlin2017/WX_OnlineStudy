@@ -1,0 +1,48 @@
+<!--pages/student/sendQuestion.wxml-->
+<view class='main_container'>
+  <include src="../common/title.wxml"/>
+  <view class='content'> 
+
+  <view class='input_layout'>
+    <input class='send_input' placeholder='找老师' confirm-type='search' bindtap='toSearch'></input>
+  </view>
+
+  <view style='width: 94%;margin: 0px auto;display: flex;flex-direction: column;'>
+    <text class='form_title'>课程需求</text>
+  </view>
+
+  <form class='form_layout' bindsubmit='send'>
+    
+     <text style=' float: left;font-size: 15px;color:gray;width:100%;'>请选择题目图片:</text>
+     <image src='../Resources/ic_add.png' style='width:80px;height:80px;margin:10px;' wx:if='{{!chosed}}' bindtap='choseImage'></image>
+     <image src='{{image}}' style='width:100%;height:200px' wx:if='{{chosed}}' bindtap='choseImage'></image>
+
+     <view class='form_item'>
+        <picker value='{{currentGrade}}' range='{{grades}}' bindchange='changeGrade' name='grade_pick'>
+      <text class='form_name'>年级:</text>
+      <image src='../Resources/ic_down.png' style='width:20px;height:20px;margin-right: 10px;float: right; margin-top: 10px;'></image>
+      <text class='form_value'>{{grades[currentGrade]}}</text>
+
+      </picker>
+     </view>
+
+      <view class='form_item'>
+      <picker value='{{currentSubject}}' range='{{subjects}}' bindchange='changeSubject' name='subject_pick'>
+      <text class='form_name'>科目:</text>
+      <image src='../Resources/ic_down.png' style='width:20px;height:20px;margin-right: 10px;float: right; margin-top: 10px;'></image>
+      <text class='form_value'>{{subjects[currentSubject]}}</text>
+      </picker>
+     </view>
+
+      <view class='form_item'>
+        <text class='form_name'>价格:</text>
+        <input class='form_input' value='0' type='number' name='price_input'></input>
+     </view>
+
+      <textarea class='form_textarea' placeholder='备注' name='remark_input'></textarea>
+
+      <button class='form_send' auto-height='true' form-type='submit'>发布辅导需求</button>
+
+  </form>
+ </view>
+</view>

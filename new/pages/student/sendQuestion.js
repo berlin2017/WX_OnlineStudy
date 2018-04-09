@@ -1,0 +1,166 @@
+// pages/student/sendQuestion.js
+var app = getApp();
+
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    title:'发布题目',
+    title_bg:'#7647a0',
+    image:'',
+    chosed:false,
+    // grades: ['一年级', '二年级', '三年级', '四年级', '五年级', '初一', '初二', '初三', '高一', '高二', '高三', '大一', '大二', '大三', '大四'],
+    grades: ['一年级', '二年级', '三年级', '四年级', '五年级', '初一', '初二', '初三', '高一', '高二', '高三'],
+    currentGrade:0,
+    subjects: ['语文', '数学', '英语', '化学', '物理', '生物', '历史', '地理', '政治'],
+    currentSubject:0,
+  },
+
+  changeGrade:function(e){
+    this.setData({
+      currentGrade:e.detail.value
+    });
+  },
+
+  changeSubject: function (e) {
+    this.setData({
+      currentSubject: e.detail.value
+    });
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+  
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+  
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+  
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+  
+  },
+
+  back:function(){
+    wx.navigateBack({
+      
+    })
+  },
+
+  choseImage:function(){
+    var that = this;
+    wx.chooseImage({
+      count:1,
+      success: function(res) {
+        var tempFilePaths = res.tempFilePaths;
+        that.setData({
+          image:tempFilePaths[0],
+          chosed:true
+        });
+      },
+    })
+  },
+
+  chooseImage: function (e) {
+    var that = this;
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (res) {
+        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+        var tempFilePaths = res.tempFilePaths;
+        that.setData({
+          image: tempFilePaths[0],
+          chosed: true
+        });
+      }
+    })
+  },
+  
+  send:function(e){
+   
+    var price = e.detail.value['price_input'];
+    var remark = e.detail.value['remark_input'];
+    console.log(price);
+    console.log(remark);
+
+    wx.showLoading({
+      title: '',
+    })
+    var that = this;
+    wx.uploadFile({
+      url: 'https://weixin.ywkedu.com/App/student_indent',
+      filePath: that.data.image,
+      name: 'pic',
+      formData: {
+        'nianji': that.data.grades[that.data.currentGrade],
+        'kemu': that.data.subjects[that.data.currentSubject],
+        'price':price,
+        'beizhu':remark,
+        'student_id':app.globalData.myUser.uid,
+      },
+      success: function (res) {
+        console.log(res);
+        wx.hideLoading();
+        wx.showToast({
+          title: 'success',
+          duration:3000,
+        })
+       
+      }
+    })
+  },
+
+  toSearch:function(){
+    wx.navigateTo({
+      url: 'search',
+    })
+  },
+
+})

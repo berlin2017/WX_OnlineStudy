@@ -1,0 +1,22 @@
+<!--pages/main/main2.wxml-->
+<view class='main_container'>
+  <text class='title'>请选择角色</text>
+
+  <view style='width:100%;height:100%;'>
+    <view class='left' bindtap='toTeacherMain'>
+      <image src='../Resources/teacher-logo.png' class='roler_image' mode='widthFix'></image>
+
+      <view class='btn'>
+        <text class='name'>我是\n老师</text>
+      </view>
+    </view>
+
+    <view class='right' bindtap='toStudentMain'>
+      <image src='../Resources/students-logo.png' class='roler_image' mode='widthFix'></image>
+      <view class='btn2'>
+        <text class='name'>我是\n学生</text>
+      </view>
+    </view>
+  </view>
+
+</view>
