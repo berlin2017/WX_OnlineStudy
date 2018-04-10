@@ -3,13 +3,13 @@
 
   <view class='top_header' bindtap='toInfo'  style=' background: #7647a0;'>
   
-    <image class='header_image' mode='scaleToFill' src='{{userInfo.icon}}'></image>
+    <image class='header_image' mode='scaleToFill' src='{{userInfo.avatarUrl}}'></image>
 
      <image class='header_arrow' src='../Resources/right_arrow.png'></image>
 
     <view class='header_info_layout'>
     
-       <view class='name_text'>{{userInfo.name}}</view>
+       <view class='name_text'>{{userInfo.nickName}}</view>
 
        <view class='mobile_text'>{{userInfo.mobile}}</view>
 

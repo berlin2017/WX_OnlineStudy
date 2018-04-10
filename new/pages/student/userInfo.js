@@ -48,6 +48,7 @@ Page({
         'openid':app.globalData.myUser.openId
       },
       success: function (res) {
+        console.log(res);
         that.setData({
           userInfo: res.data
         });

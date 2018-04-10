@@ -69,12 +69,12 @@ Page({
   },
 
   toSend:function(){
-    wx.navigateTo({
-      url: 'sendQuestion',
-    })
     // wx.navigateTo({
-    //   url: '../test/chatList',
+    //   url: 'sendQuestion',
     // })
+    wx.navigateTo({
+      url: '../test/chatList',
+    })
   },
   toTest:function(){
     wx.navigateTo({

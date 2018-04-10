@@ -1,5 +1,6 @@
 // pages/test/chatList.js
 var app = getApp();
+var util = require('../../utils/util.js');
 Page({
 
   /**
@@ -7,7 +8,7 @@ Page({
    */
   data: {
     title:'回话列表',
-    list:[],
+    chatList:[],
   },
 
   /**
@@ -22,11 +23,80 @@ Page({
    */
   onReady: function () {
     var that = this;
+    if(app.globalData.jim.isLogin()){
+      that.requestList();
+      app.globalData.jim.onMsgReceive(function (data) {
+
+        //不显示loading
+        app.globalData.jim.getConversation().onSuccess(function (data) {
+          console.log(data);
+          var list = new Array();
+          for (var i = 0; i < data.conversations.length; i++) {
+            var item = data.conversations[i];
+            item.mtime = util.formatTime(new Date(item.mtime));
+            list.push(item);
+          }
+          that.setData({
+            chatList: list
+          });
+        }).onFail(function (data) {
+          console.log(data);
+        });
+
+      });
+    }else{
+      if (app.globalData.myUser&&app.globalData.myUser.openId){
+        app.globalData.jim.login({
+          'username': app.globalData.myUser.openId,
+          'password': 'ah123456'
+        }).onSuccess(function () {
+          that.requestList();
+          app.globalData.jim.onMsgReceive(function (data) {
+
+            //不显示loading
+            app.globalData.jim.getConversation().onSuccess(function (data) {
+              console.log(data);
+              var list = new Array();
+              for (var i = 0; i < data.conversations.length; i++) {
+                var item = data.conversations[i];
+                item.mtime = util.formatTime(new Date(item.mtime));
+                list.push(item);
+              }
+              that.setData({
+                chatList: list
+              });
+            }).onFail(function (data) {
+              console.log(data);
+            });
+
+          });
+        }).onFail(function (data) {
+          //同上
+          console.log(data);
+        });
+      }
+      
+    }
+    
+  },
+
+  requestList:function(){
+    wx.showLoading({
+      title: '',
+    })
+    var that = this;
     app.globalData.jim.getConversation().onSuccess(function (data) {
       console.log(data);
+      var list = new Array();
+      for (var i = 0; i < data.conversations.length; i++) {
+        var item = data.conversations[i];
+        item.mtime = util.formatTime(new Date(item.mtime));
+        list.push(item);
+      }
       that.setData({
-        list:data.conversations
+        chatList: list
       });
+      wx.hideLoading();
       //data.code 返回码
       //data.message 描述
       //data.conversations[] 会话列表，属性如下示例
@@ -43,7 +113,19 @@ Page({
     }).onFail(function (data) {
       //data.code 返回码
       //data.message 描述
+      console.log(data);
+      wx.hideLoading();
     });
+  },
+
+  switchToChating:function(e){
+    app.globalData.jim.resetUnreadCount({
+      'username': e.currentTarget.dataset.data
+    });
+    this.requestList();
+    wx.navigateTo({
+      url: 'chating?name=' + e.currentTarget.dataset.data + '&nickName=' + e.currentTarget.dataset.nickname + '&logo=' + e.currentTarget.dataset.logo,
+    })
   },
 
   /**

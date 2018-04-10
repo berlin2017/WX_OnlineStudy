@@ -2,8 +2,29 @@
 <view class='main_container'>
   <include src = '../common/title'/>
   <view class='content'>
-    <view wx:for='{{list}}'>
-      <view>{{item.nickname}}</view>
-    </view>
+
+   <view class='recentchat-wrapper'>
+  <view wx:if="{{chatList.length == 0}}" class='no-recent'>
+    <image src="{{iconNoMessage}}" class='no-recent-image'></image>
+    <text class='no-recent-text'>暂无会话内容</text>
+  </view>
+  <view wx:if="{{chatList.length != 0}}" wx:for="{{chatList}}" wx:for-item="message" wx:key="message.time" data-data='{{message.name}}' bindtap='catchDeleteTap'>
+  
+    <swipe-delete>
+      <view class='recentchat-item' hover-class='recentchat-item-hover'>
+        <image src='{{message.avatar}}' class='recentchat-item-img' data-data='{{message.account}}' catchtap='switchToPersonCard'></image>
+        <view class='recentchat-item-right' data-data='{{message.name}}' catchtap='switchToChating' data-nickname='{{message.nickName}}' data-logo='{{message.avatar}}'>
+          <view class='recentchat-item-top'>
+             <text class='recentchat-item-title'>{{message.nickName || message.name}}</text> 
+              
+            <text class='recentchat-item-time'>{{message.mtime}}</text>
+            <view wx:if="{{message.unread_msg_count}}" class='recentchat-item-unread'>{{message.unread_msg_count || ''}}</view>
+          </view>
+        </view>
+      </view>
+    </swipe-delete>
   </view>
 </view>
+  </view>
+</view>
+

@@ -72,13 +72,30 @@ App({
       "random_str": random_str,
       "signature": signature,
       "timestamp": time,
+      "flag":1,
     }).onSuccess(function (data) {
       //TODO
-     
+     console.log('im初始化成功');
     }).onFail(function (data) {
       //TODO
+      console.log('im初始化失败');
     });  
     this.globalData.jim = jim;
+
+
+    jim.onDisconnect(function () {
+      var new_time = Date.parse(new Date());
+      var new_random_str = "022cd9fd995849b";
+      var new_s = "appkey=" + "20a1f8331c8e462116c4d24e" + "&timestamp=" + time + "&random_str=" + random_str + "&key=fc92fd7140c3e9b228d368fb"
+      var new_signature = md5.hexMD5(new_s);
+      jim.init({
+        "appkey": "20a1f8331c8e462116c4d24e",
+        "random_str": new_random_str,
+        "signature": new_signature,
+        "timestamp": new_time,
+        "flag": 1,
+      })
+    });
   },
 
 

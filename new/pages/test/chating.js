@@ -1,12 +1,18 @@
-
 var app = getApp()
+var util = require('../../utils/util.js');
+
 Page({
   data: {
-    title:'聊天室',
+    chatToLogo: '',
+    toId: '',
+    toNickName: '',
+    title: '聊天室',
+    inputValue: '',
     tipInputValue: '', // tip消息文本框内容
     sendType: 0, //发送消息类型，0 文本 1 语音
     messageArr: [], //[{text, time, sendOrReceive: 'send', displayTimeHeader, nodes: []},{type: 'geo',geo: {lat,lng,title}}]
     inputValue: '',//文本框输入内容
+    focusFlag: false,//控制输入框失去焦点与否
   },
   onUnload() {
 
@@ -15,24 +21,130 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    this.setData({
+      title: options.nickName,
+      toId: options.name,
+      toNickName: options.nickName,
+      chatToLogo: options.logo
+    });
   },
 
-  init: function (){
-    // console.log('聊天界面', options)
-    // console.log(app.globalData.messageList[app.globalData['loginUser']['account']])
-    let chatWrapperMaxHeight = wx.getSystemInfoSync().windowHeight - 52 - 35
+  onShow: function () {
+    if (!app.globalData.jim.isLogin()) {
+      if (app.globalData.myUser && app.globalData.myUser.openId) {
+        app.globalData.jim.login({
+          'username': app.globalData.myUser.openId,
+          'password': 'ah123456'
+        })
+      }
 
-    this.setData({
-      chatWrapperMaxHeight,
-    })
-   
+    }
+  },
+
+  onReady: function () {
+    var that = this;
+    // wx.showLoading({
+    //   title: '',
+    // })
+    app.globalData.jim.onMsgReceive(function (data) {
+      console.log(data);
+      // data.messages[]
+      // data.messages[].ctime_ms
+      // data.messages[].msg_type 会话类型
+      // data.messages[].msg_id
+      // data.messages[].from_appey 单聊有效
+      // data.messages[].from_username 单聊有效
+      // data.messages[].from_gid 群聊有效
+      // data.messages[].need_receipt
+      // data.messages[].content
+      // data.messages[].custom_notification.enabled
+      // data.messages[].custom_notification.title
+      // data.messages[].custom_notification.alert
+      // data.messages[].custom_notification.at_prefix
+      if (data.messages[0].from_username == that.data.toId) {
+
+        if (data.messages[0].content.msg_type === 'image') {
+          app.globalData.jim.getResource({
+            'media_id': data.messages[0].content.msg_body.media_id,
+          }).onSuccess(function (res) {
+            //data.code 返回码
+            //data.message 描述
+            //data.url 资源临时访问路径
+            data.messages[0].content.msg_body.media_id = res.url
+            data.messages[0].ctime_ms = util.formatTime(new Date(data.messages[0].ctime_ms));
+            that.data.messageArr.push(data.messages[0]);
+            that.setData({
+              messageArr: that.data.messageArr
+            });
+          }).onFail(function (res) {
+            //data.code 返回码
+            //data.message 描述
+          });
+        } else {
+          data.messages[0].ctime_ms = util.formatTime(new Date(data.messages[0].ctime_ms));
+          that.data.messageArr.push(data.messages[0]);
+          that.setData({
+            messageArr: that.data.messageArr
+          });
+
+          console.log('------总消息-----');
+          console.log(that.data.messageArr);
+
+        }
+      }
+    });
+
+
+    app.globalData.jim.onSyncConversation(function (data) {
+      console.log('----离线消息-----')
+      console.log(data);
+      // data[]
+      // data[].msg_type 会话类型
+      // data[].from_appey 单聊有效
+      // data[].from_username 单聊有效
+      // data[].from_gid 群聊有效
+      // data[].unread_msg_count 消息未读数
+      // 消息已读回执状态，针对自己发的消息
+      // data[].receipt_msgs[]
+      // data[].receipt_msgs[].msg_id
+      // data[].receipt_msgs[].unread_count
+      // data[].receipt_msgs[].mtime
+      // 消息列表
+      // data[].msgs[]
+      // data[].msgs[].msg_id
+      // data[].msgs[].content
+      // data[].msgs[].msg_type
+      // data[].msgs[].ctime_ms
+      // data[].msgs[].need_receipt
+      // data[].msgs[].custom_notification.enabled
+      // data[].msgs[].custom_notification.title
+      // data[].msgs[].custom_notification.alert
+      // data[].msgs[].custom_notification.at_prefix
+    });
+
+    app.globalData.jim.getSingleConversation({
+      'target_username': that.data.toId,
+      'target_nickname': that.data.toNickName,
+      'appkey': '20a1f8331c8e462116c4d24e',
+    }).onSuccess(function (data, msg) {
+      console.log(data);
+      //data.code 返回码
+      //data.message 描述
+      //data.msg_id 发送成功后的消息id
+      //data.ctime_ms 消息生成时间,毫秒
+      //data.appkey 用户所属 appkey
+      //data.target_username 用户名
+      //msg.content 发送成功消息体
+    }).onFail(function (data) {
+      //同发送单聊文本
+      console.log(data);
+    });
   },
 
   /**
    * 收起所有输入框
    */
-  chatingWrapperClick (e) {
+  chatingWrapperClick(e) {
     // console.log('chatingWrapperClick')
     this.foldInputArea()
   },
@@ -55,11 +167,11 @@ Page({
   /**
    * 全屏播放视频
    */
-  requestFullScreenVideo (e) {
+  requestFullScreenVideo(e) {
     let video = e.currentTarget.dataset.video
     // console.log(video)
     let videoContext = wx.createVideoContext('videoEle')
-    
+
     this.setData({
       isVideoFullScreen: true,
       videoSrc: video.url,
@@ -68,7 +180,7 @@ Page({
     videoContext.requestFullScreen()
     videoContext.play()
   },
-  videoEnded () {
+  videoEnded() {
     this.setData({
       isVideoFullScreen: false,
       videoSrc: ''
@@ -82,12 +194,12 @@ Page({
     wx.showToast({
       title: '播放中',
       icon: 'none',
-      duration: 120*1000,
+      duration: 120 * 1000,
       mask: true
     })
     let audio = e.currentTarget.dataset.audio
     const audioContext = wx.createInnerAudioContext()
-    if(audio.ext === 'mp3') { // 小程序发送的
+    if (audio.ext === 'mp3') { // 小程序发送的
       audioContext.src = audio.url
     } else {
       audioContext.src = audio.mp3Url
@@ -109,11 +221,11 @@ Page({
   /**
    * 展示编辑菜单
    */
-  showEditorMenu (e) {
+  showEditorMenu(e) {
     console.log('长按了')
     let message = e.currentTarget.dataset.message
     // console.log('消息是',message)
-    if(message.type === 'tip') {
+    if (message.type === 'tip') {
       return
     }
     let paraObj = {
@@ -136,8 +248,8 @@ Page({
               wx.showActionSheet({
                 itemList: ['确定'],
                 itemColor: '#ff0000',
-                success: function(res) {
-                  if(res.tapIndex === 0) {
+                success: function (res) {
+                  if (res.tapIndex === 0) {
                     self.recallMessage(message)
                   }
                 }
@@ -172,23 +284,23 @@ Page({
   forwardMessage(paramObj) {
     let str = encodeURIComponent(JSON.stringify(paramObj))
     wx.redirectTo({
-      url: '../forwardcontact/forwardcontact?data='+str,
+      url: '../forwardcontact/forwardcontact?data=' + str,
     })
   },
   /**
    * 撤回消息
    */
-  recallMessage (message) {
+  recallMessage(message) {
     console.log('撤回消息', message)
     let self = this
     let from = app.globalData['loginUser']['account']
     let to = self.data.chatTo
     let rawMessage = app.globalData.rawMessageList[to][message.time]
-    console.log('撤回消息', rawMessage)    
+    console.log('撤回消息', rawMessage)
     app.globalData.nim.deleteMsg({
       msg: rawMessage,
-      done: function(err, {msg}) {
-        if(err){ // 撤回失败
+      done: function (err, { msg }) {
+        if (err) { // 撤回失败
           console.log(err)
           wx.showToast({
             title: '消息已超过2分钟，不能撤回',
@@ -201,7 +313,7 @@ Page({
           let displayTimeHeader = self.judgeOverTwoMinute(msg.time)
           let messageArr = [...self.data.messageArr]
           let pos = null
-          
+
           messageArr.map((item, index) => {
             let type = ''
             if (item.type == '贴图表情' || item.type == '猜拳') {
@@ -209,7 +321,7 @@ Page({
             } else {
               type = item.type
             }
-            if(item.time === msg.time && msg.type === type) {
+            if (item.time === msg.time && msg.type === type) {
               pos = index
             }
           })
@@ -226,7 +338,7 @@ Page({
               text: '你撤回了一条消息'
             }]
           }
-          console.log('撤回消息', messageArr)   
+          console.log('撤回消息', messageArr)
           self.setData({
             messageArr
           })
@@ -260,7 +372,7 @@ Page({
     let messageArr = [...this.data.messageArr]
     // 从当前界面删除
     messageArr.map((item, index) => {
-      if(item.time === msg.time && item.text === msg.text) {
+      if (item.time === msg.time && item.text === msg.text) {
         deleteIndex = index
         return
       }
@@ -285,7 +397,7 @@ Page({
     let recentChatToList = app.globalData.recentChatList[this.data.chatTo]
     // 发送消息，重新渲染最近会话列表
     let isFirstRecent = false
-    if (Object.keys(recentChatToList).indexOf(msg.time+'') === (Object.keys(recentChatToList).length-1)) { //是否是最新消息
+    if (Object.keys(recentChatToList).indexOf(msg.time + '') === (Object.keys(recentChatToList).length - 1)) { //是否是最新消息
       isFirstRecent = true
     }
     // 删除记录
@@ -293,14 +405,14 @@ Page({
     // 发送消息，重新渲染最近会话列表
     let account = this.data.chatTo
     if (Object.keys(recentChatToList).length === 0) { // 删空了，删除条目
-      app.globalData.subscriber.emit('DELETE_RECENT_CHAT_ITEM', { account, time: msg.time})
+      app.globalData.subscriber.emit('DELETE_RECENT_CHAT_ITEM', { account, time: msg.time })
     }
     if (isFirstRecent && Object.keys(recentChatToList).length !== 0) { // 在多条记录中，删除最新记录
       // account, time, text, type
       let lastMsg = recentChatToList[Object.keys(recentChatToList)[0]]
       // console.log(lastMsg)
       // 将下一条记录更新上去
-      app.globalData.subscriber.emit('UPDATE_RECENT_CHAT', { account, time: Object.keys(recentChatToList)[0], text: lastMsg.text, type: lastMsg.type }, true) 
+      app.globalData.subscriber.emit('UPDATE_RECENT_CHAT', { account, time: Object.keys(recentChatToList)[0], text: lastMsg.text, type: lastMsg.type }, true)
     }
   },
   /**
@@ -308,13 +420,13 @@ Page({
    */
   reCalcAllMessageTime() {
     let tempArr = [...this.data.messageArr]
-    if(tempArr.length == 0) return
+    if (tempArr.length == 0) return
     // 计算时差
     tempArr.map((msg, index) => {
       if (index === 0) {
         msg['displayTimeHeader'] = calcTimeHeader(msg.time)
       } else {
-        let delta = (msg.time - tempArr[index-1].time) / (120 * 1000)
+        let delta = (msg.time - tempArr[index - 1].time) / (120 * 1000)
         if (delta > 1) { // 距离上一条，超过两分钟重新计算头部
           msg['displayTimeHeader'] = calcTimeHeader(msg.time)
         }
@@ -413,7 +525,7 @@ Page({
         let recordAuth = res.authSetting['scope.record']
         if (recordAuth == false) { //已申请过授权，但是用户拒绝
           wx.openSetting({
-            success: function(res) { 
+            success: function (res) {
               let recordAuth = res.authSetting['scope.record']
               if (recordAuth == true) {
                 wx.showToast({
@@ -432,8 +544,8 @@ Page({
                 isLongPress: false
               })
             }
-          })    
-        } else if(recordAuth == true) { // 用户已经同意授权
+          })
+        } else if (recordAuth == true) { // 用户已经同意授权
           self.startRecord()
         } else { // 第一次进来，未发起授权
           wx.authorize({
@@ -448,7 +560,7 @@ Page({
           })
         }
       },
-      fail: function() {
+      fail: function () {
         wx.showToast({
           title: '鉴权失败，请重试',
           icon: 'none',
@@ -491,7 +603,7 @@ Page({
       })
       wx.hideToast()
       this.data.recorderManager.stop()
-    } 
+    }
   },
   /**
    * 执行录音逻辑
@@ -554,7 +666,7 @@ Page({
   /**
    * 开始录音
    */
-  startRecord () {
+  startRecord() {
     let self = this
     wx.showToast({
       title: '开始录音',
@@ -596,7 +708,7 @@ Page({
   /**
    * 切出更多
    */
-  toggleMore () {
+  toggleMore() {
     this.setData({
       moreFlag: !this.data.moreFlag,
       emojiFlag: false,
@@ -606,17 +718,32 @@ Page({
   /**
    * 选择相册图片
    */
-  chooseImageToSend (e) {
+  chooseImageToSend(e) {
     let type = e.currentTarget.dataset.type
     let self = this
     self.setData({
       moreFlag: false
     })
+    //先通过小程序API获取图片
     wx.chooseImage({
-      sourceType: ['album'],
-      success: function(res) {
-        self.sendImageToNOS(res)
-      },
+      count: 1, //
+      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (res) {
+        var tempFilePaths = res.tempFilePaths[0]; //获取成功，读取文件路径
+        app.globalData.jim.sendSinglePic({
+          'target_username': self.data.toId,
+          'target_nickname': self.data.toNickName,
+          'appkey': '20a1f8331c8e462116c4d24e',
+          'image': tempFilePaths //设置图片参数
+        }).onSuccess(function (data, msg) {
+          //TODO
+          console.log("发送成功");
+        }).onFail(function (data) {
+          //TODO
+          console.log("发送失败");
+        });
+      }
     })
   },
   /**
@@ -627,32 +754,32 @@ Page({
     self.setData({
       moreFlag: false
     })
-    wx.showActionSheet({
-      itemList: ['照相', '视频'],
-      success: function(res) {
-        if (res.tapIndex === 0) { // 相片
-          wx.chooseImage({
-            sourceType: ['camera'],
-            success: function (res) {
-              self.sendImageToNOS(res)
-            },
-          })
-        } else if (res.tapIndex === 1){ // 视频
-          wx.chooseVideo({
-            sourceType: ['camera', 'album'],
-            success: function(res) {
-              // {duration,errMsg,height,size,tempFilePath,width}
-              self.sendVideoToNos(res)
-            }
-          })
-        }
+    //单聊发送视频示例,群聊、聊天室类似
+    //先通过小程序API获取视频资源
+    wx.chooseVideo({
+      sourceType: ['album', 'camera'],
+      camera: 'back',
+      success: function (res) {
+        //sendGroupVedio(),sendChatroomVedio()类似
+        app.globalData.jim.sendSingleVedio({
+          'target_username': self.data.toId,
+          'target_nickname': self.data.toNickName,
+          'appkey': '20a1f8331c8e462116c4d24e',
+          'file': res.tempFilePath
+        }).onSuccess(function (data, msg) {
+          //TODO
+          console.log("发送成功");
+        }).onFail(function (data) {
+          //TODO
+          console.log("发送失败");
+        });
       }
     })
   },
   /**
    * 调出tip发送面板
    */
-  sendTipMessage () {
+  sendTipMessage() {
     this.setData({
       tipFlag: true,
       moreFlag: false
@@ -661,7 +788,7 @@ Page({
   /**
    * 选取位置
    */
-  choosePosition () {
+  choosePosition() {
     let self = this
     self.setData({
       moreFlag: false
@@ -710,11 +837,11 @@ Page({
   /**
    * 调用系统地图界面
    */
-  callSysMap () {
+  callSysMap() {
     let self = this
     wx.chooseLocation({
       success: function (res) {
-        let { address, latitude, longitude} = res
+        let { address, latitude, longitude } = res
         // console.log(res)
         self.sendPositionMsg(res)
       },
@@ -730,15 +857,15 @@ Page({
       itemList: ['清空本地聊天记录', '查看云消息记录'],
       success: (res) => {
         if (res.tapIndex == 0) {//清空本地聊天记录
-        wx.showActionSheet({//二次确认
-          itemList: ['清空'],
-          itemColor: '#f00',
-          success: (res) => {
-            if(res.tapIndex == 0) {
-              self.clearAllMessage()
+          wx.showActionSheet({//二次确认
+            itemList: ['清空'],
+            itemColor: '#f00',
+            success: (res) => {
+              if (res.tapIndex == 0) {
+                self.clearAllMessage()
+              }
             }
-          }
-        })
+          })
         } else if (res.tapIndex == 1) {//查看云消息记录
           wx.navigateTo({
             url: `../historyfromcloud/historyfromcloud?account=${self.data.chatTo}&chatToLogo=${encodeURIComponent(self.data.chatToLogo)}`,
@@ -766,16 +893,16 @@ Page({
   emojiCLick(e) {
     let val = e.detail
     // 单击删除按钮，，删除emoji
-    if(val == '[删除]') {
+    if (val == '[删除]') {
       let lastIndex = this.data.inputValue.lastIndexOf('[')
-      if(lastIndex != -1) {
+      if (lastIndex != -1) {
         this.setData({
           inputValue: this.data.inputValue.slice(0, lastIndex)
         })
       }
       return
     }
-    if(val[0] == '[') { // emoji
+    if (val[0] == '[') { // emoji
       this.setData({
         inputValue: this.data.inputValue + val
       })
@@ -813,17 +940,17 @@ Page({
     })
     let self = this
     let catalog = ''
-    if(val[0] === 'a') {
+    if (val[0] === 'a') {
       catalog = 'ajmd'
-    } else if(val[0] === 'x') {
+    } else if (val[0] === 'x') {
       catalog = 'xxy'
-    } else if(val[0] === 'l') {
+    } else if (val[0] === 'l') {
       catalog = 'lt'
     }
     let content = {
       type: 3,
       data: {
-        catalog, 
+        catalog,
         chartlet: val
       }
     }
@@ -929,8 +1056,8 @@ Page({
     })
   },
   /**
- * 点击发送tip按钮
- */
+  * 点击发送tip按钮
+  */
   tipInputConfirm() {
     let self = this
     if (self.data.tipInputValue.length !== 0) {
@@ -990,7 +1117,7 @@ Page({
   /**
    * 发送语音消息
    */
-  sendAudioMsg (res) {
+  sendAudioMsg(res) {
     wx.showLoading({
       title: '发送中...',
     })
@@ -1043,60 +1170,44 @@ Page({
    * 发送位置消息
    */
   sendPositionMsg(res) {
-    let self = this
-    let { address, latitude, longitude } = res
-    app.globalData.nim.sendGeo({
-      scene: 'p2p',
-      to: self.data.chatTo,
-      geo: {
-        lng: longitude,
-        lat: latitude,
-        title: address
-      },
-      done: function(err, msg) {
-        // 判断错误类型，并做相应处理
-        if (self.handleErrorAfterSend(err)) {
-          return
-        }
-        // console.log(msg)
-        // 刷新界面
-        let displayTimeHeader = self.judgeOverTwoMinute(msg.time)
-        self.setData({
-          messageArr: [...self.data.messageArr, {
-            type: 'geo',
-            time: msg.time,
-            sendOrReceive: 'send',
-            displayTimeHeader,
-            geo: Object.assign({}, msg.geo)
-          }]
-        })
-
-        // 存储到全局 并 存储到最近会话列表中
-        self.saveMsgToGlobalAndRecent(msg, {
-          from: msg.from,
-          to: msg.chatTo,
-          type: msg.type,
-          scene: msg.scene,
-          text: msg.text,
-          geo: msg.geo,
-          sendOrReceive: 'send',
-          displayTimeHeader
-        })
-        app.globalData.subscriber.emit('UPDATE_RECENT_CHAT', { account: msg.to, time: msg.time, text: msg.text, type: msg.type }, true)
-        // 滚动到底部
-        self.scrollToBottom()
-      }
-    })
+    console.log(res);
+    // 发送消息
+    var that = this;
+    app.globalData.jim.sendSingleLocation({
+      'target_username': that.data.toId,
+      'target_nickname': that.data.toNickName,
+      'latitude': res.latitude,
+      'longitude': res.longitude,
+      'label': res.address,
+      'scale': 1,
+      'appkey': '20a1f8331c8e462116c4d24e',
+    }).onSuccess(function (data, msg) {
+      console.log("位置发送成功");
+      console.log(data);
+      //data.code 返回码
+      //data.message 描述
+      //data.msg_id 发送成功后的消息id
+      //data.ctime_ms 消息生成时间,毫秒
+      //data.appkey 用户所属 appkey
+      //data.target_username 用户名
+      //msg.content 发送成功消息体
+    }).onFail(function (data) {
+      //同发送单聊文本
+      console.log("位置发送失败");
+      console.log(data);
+    });
   },
   /**
    * 发送网络请求：发送文字
    */
   sendRequest(text) {
+    var that = this;
     app.globalData.jim.sendSingleMsg({
-      'target_username': 'berlin',
-      'target_nickname': 'berlin1',
-      'content': '哈哈',
+      'target_username': that.data.toId,
+      'target_nickname': that.data.toNickName,
+      'content': text,
       'appkey': '20a1f8331c8e462116c4d24e',
+      'no_offline': true,
     }).onSuccess(function (data, msg) {
       //data.code 返回码
       //data.message 描述
@@ -1108,13 +1219,17 @@ Page({
       wx.showToast({
         title: 'success',
       })
+      that.setData({
+        inputValue: ''
+      });
       app.globalData.jim.updateConversation({
         'appkey': '20a1f8331c8e462116c4d24e',
-        'username': 'berlin1',
+        'username': that.data.toNickName,
       });
     }).onFail(function (data) {
       //data.code 返回码
       //data.message 描述
+      console.log(data);
       wx.showToast({
         title: 'fail',
       })
@@ -1168,7 +1283,7 @@ Page({
           sendOrReceive: 'send',
           displayTimeHeader
         })
-        
+
         app.globalData.subscriber.emit('UPDATE_RECENT_CHAT', { account: msg.to, time: msg.time, text: msg.text, type: msg.type }, true)
         // 滚动到底部
         self.scrollToBottom()
@@ -1187,7 +1302,7 @@ Page({
     for (let i = 0; i < tempFilePaths.length; i++) {
       // 上传文件到nos
       app.globalData.nim.sendFile({
-      // app.globalData.nim.previewFile({
+        // app.globalData.nim.previewFile({
         type: 'image',
         scene: 'p2p',
         to: self.data.chatTo,
@@ -1201,7 +1316,7 @@ Page({
           // console.log(msg)
           // 刷新界面
           let displayTimeHeader = ''
-          if(i === 0) { // 只计算第一张图片
+          if (i === 0) { // 只计算第一张图片
             displayTimeHeader = self.judgeOverTwoMinute(msg.time)
           }
           self.setData({
@@ -1232,7 +1347,7 @@ Page({
         }
       })
     }
-    
+
   },
   /**
    * 替换消息内容：目的显示撤回消息
@@ -1307,7 +1422,7 @@ Page({
    */
   handleErrorAfterSend(err) {
     if (err) {
-      if(err.code == 7101) {
+      if (err.code == 7101) {
         wx.showToast({
           title: '你已被对方拉黑',
           icon: 'none',

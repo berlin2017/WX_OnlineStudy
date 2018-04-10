@@ -1,12 +1,13 @@
 // pages/loading/loading.js
 var app = getApp();
+var TIME = 1000;
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+
   },
 
   /**
@@ -50,39 +51,90 @@ Page({
       }
     });
 
-   
+
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    if (app.globalData.res) {
-      var iv = app.globalData.res.iv;
-      var encryptedData = app.globalData.res.encryptedData;
-      wx.login({
-        success: info => {
-          // 发送 res.code 到后台换取 openId, sessionKey, unionId
-          wx.request({
-            url: 'https://weixin.ywkedu.com/App/code',
-            data: {
-              'code': info.code,
-              'encryptedData': encryptedData,
-              'iv': iv
-            },
-            success: function (result) {
-              console.log(result);
-              app.globalData.myUser = result.data;
-              app.globalData.jim.register({
-                'username': app.globalData.userInfo.nickName,
-                'password': 'ah123456',
-                'is_md5': false,
-                'extras': app.globalData.userInfo,
-              }).onSuccess(function (data) {
-                //data.code 返回码
-                //data.message 描述
+    if (!app.globalData.res) {
+      wx.getUserInfo({
+        success: res => {
+          // 可以将 res 发送给后台解码出 unionId
+          app.globalData.userInfo = res.userInfo
+          app.globalData.res = res
+          this.init(app.globalData.res);
+        }
+      })
+    }else{
+      this.init(app.globalData.res);
+    }
+    
+  },
+
+  init: function () {
+    var iv = app.globalData.res.iv;
+    var encryptedData = app.globalData.res.encryptedData;
+    wx.login({
+      success: info => {
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        wx.request({
+          url: 'https://weixin.ywkedu.com/App/code',
+          data: {
+            'code': info.code,
+            'encryptedData': encryptedData,
+            'iv': iv
+          },
+          success: function (result) {
+            console.log(result);
+            if (!result.data.openId){
+              setTimeout(function () {
+                wx.redirectTo({
+                  url: '../main/main2',
+                })
+              }, TIME);
+              return;
+            }
+            app.globalData.myUser = result.data;
+            app.globalData.jim.register({
+              'username': result.data.openId,
+              'password': 'ah123456',
+              'is_md5': false,
+              'nickname': app.globalData.userInfo.nickName,
+              'media_id': app.globalData.userInfo.avatarUrl,
+            }).onSuccess(function (data) {
+              //data.code 返回码
+              //data.message 描述
+              app.globalData.jim.login({
+                'username': result.data.openId,
+                'password': 'ah123456'
+              }).onSuccess(function () {
+                wx.showToast({
+                  title: '登录成功',
+                })
+                setTimeout(function () {
+                  wx.redirectTo({
+                    url: '../main/main2',
+                  })
+                }, TIME);
+              }).onFail(function (data) {
+                //同上
+                console.log(data);
+                wx.showToast({
+                  title: '登录失败',
+                })
+                setTimeout(function () {
+                  wx.redirectTo({
+                    url: '../main/main2',
+                  })
+                }, TIME);
+              });
+            }).onFail(function (data) {
+              // 同上
+              if (data.code == 882002) {
                 app.globalData.jim.login({
-                  'username': app.globalData.userInfo.nickName,
+                  'username': result.data.openId,
                   'password': 'ah123456'
                 }).onSuccess(function () {
                   wx.showToast({
@@ -92,9 +144,10 @@ Page({
                     wx.redirectTo({
                       url: '../main/main2',
                     })
-                  }, 3000);
+                  }, TIME);
                 }).onFail(function (data) {
                   //同上
+                  console.log(data);
                   wx.showToast({
                     title: '登录失败',
                   })
@@ -102,107 +155,16 @@ Page({
                     wx.redirectTo({
                       url: '../main/main2',
                     })
-                  }, 3000);
+                  }, TIME);
                 });
-              }).onFail(function (data) {
-                // 同上
-                if (data.code == 882002) {
-                  app.globalData.jim.login({
-                    'username': app.globalData.userInfo.nickName,
-                    'password': 'ah123456'
-                  }).onSuccess(function () {
-                    wx.showToast({
-                      title: '登录成功',
-                    })
-                    setTimeout(function () {
-                      wx.redirectTo({
-                        url: '../main/main2',
-                      })
-                    }, 3000);
-                  }).onFail(function (data) {
-                    //同上
-                    wx.showToast({
-                      title: '登录失败',
-                    })
-                    setTimeout(function () {
-                      wx.redirectTo({
-                        url: '../main/main2',
-                      })
-                    }, 3000);
-                  });
-                }
-              });
-            },
-          })
-        }
-      })
-    } else {
-      wx.getUserInfo({
-        success: res => {
-          // 可以将 res 发送给后台解码出 unionId
-          app.globalData.userInfo = res.userInfo
-          app.globalData.res = res
-          var iv = res.iv;
-          var encryptedData = res.encryptedData;
-          wx.login({
-            success: info => {
-              // 发送 res.code 到后台换取 openId, sessionKey, unionId
-              wx.request({
-                url: 'https://weixin.ywkedu.com/App/code',
-                data: {
-                  'code': info.code,
-                  'encryptedData': encryptedData,
-                  'iv': iv
-                },
-                success: function (result) {
-                  console.log(result);
-                  app.globalData.myUser = result.data;
-                  app.globalData.jim.register({
-                    'username': app.globalData.userInfo.nickName,
-                    'password': 'ah123456',
-                    'is_md5': false,
-                    'extras': result.data.userinfo,
-                  }).onSuccess(function (data) {
-                    //data.code 返回码
-                    //data.message 描述
-                    app.globalData.jim.login({
-                      'username': app.globalData.userInfo.nickName,
-                      'password': 'ah123456'
-                    }).onSuccess(function () {
-                      wx.showToast({
-                        title: '登录成功',
-                      })
-                      setTimeout(function () {
-                        wx.redirectTo({
-                          url: '../main/main2',
-                        })
-                      }, 3000);
-                    });
-                  }).onFail(function (data) {
-                    // 同上
-                    if (data.code == 882002) {
-                      app.globalData.jim.login({
-                        'username': app.globalData.userInfo.nickName,
-                        'password': 'ah123456'
-                      }).onSuccess(function () {
-                        wx.showToast({
-                          title: '登录成功',
-                        })
-                        setTimeout(function () {
-                          wx.redirectTo({
-                            url: '../main/main2',
-                          })
-                        }, 3000);
-                      });
-                    }
-                  });
-                },
-              })
-            }
-          })
-        }
-      })
-    }
+              }else{
+                console.log('注册失败');
+              }
+            });
+          },
+        })
+      }
+    })
   },
 
   /**
@@ -215,34 +177,34 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
+
   }
 })

@@ -1,4 +1,5 @@
 // pages/student/user.js
+var app = getApp();
 Page({
 
   /**
@@ -34,6 +35,31 @@ Page({
         })
       },
     })
+    
+    this.getUser();
+  },
+
+  getUser:function(){
+    wx.showLoading({
+      title: '',
+    })
+    var that = this;
+    wx.request({
+      url: 'https://weixin.ywkedu.com/App/userInfo',
+      data: {
+        'openid': app.globalData.myUser.openId
+      },
+      success: function (res) {
+        console.log(res);
+        that.setData({
+          userInfo: res.data
+        });
+        wx.hideLoading();
+      },
+      fail: function (res) {
+        console.log(res);
+      },
+    })
   },
 
   /**
@@ -61,7 +87,8 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+    this.getUser();
+    wx.stopPullDownRefresh();
   },
 
   /**
