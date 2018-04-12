@@ -67,6 +67,7 @@ Page({
       image:options.image,
       name: options.name,
       info: options.info,
+      id:options.openId,
     });
 
     this.requestComments();
@@ -83,7 +84,7 @@ Page({
     wx.request({
       url: 'https://weixin.ywkedu.com/App/teacher_info',
       data:{
-        'id':that.data.id
+        'openId':that.data.id
       },
       success:function(res){
         this.setData({
@@ -156,7 +157,7 @@ Page({
     wx.request({
       url: 'https://weixin.ywkedu.com/App/pingjia',
       data:{
-        'id':that.data.id,
+        'openId':that.data.id,
       },
       success:function(res){
         that.setData({

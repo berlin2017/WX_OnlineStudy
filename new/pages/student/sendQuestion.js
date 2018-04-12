@@ -12,15 +12,31 @@ Page({
     image:'',
     chosed:false,
     // grades: ['一年级', '二年级', '三年级', '四年级', '五年级', '初一', '初二', '初三', '高一', '高二', '高三', '大一', '大二', '大三', '大四'],
-    grades: ['一年级', '二年级', '三年级', '四年级', '五年级', '初一', '初二', '初三', '高一', '高二', '高三'],
+    grades: [],
     currentGrade:0,
-    subjects: ['语文', '数学', '英语', '化学', '物理', '生物', '历史', '地理', '政治'],
+    subjects: [],
     currentSubject:0,
+    allSubjects:[],
   },
 
   changeGrade:function(e){
     this.setData({
-      currentGrade:e.detail.value
+      currentGrade:e.detail.value,
+      currentSubject:0
+    });
+    if (!this.data.allSubjects || this.data.allSubjects.length<=0){
+      return;
+    }
+    var array = [];
+    for (var index in this.data.allSubjects){
+     
+      var item = this.data.allSubjects[index];
+      if (item.nianji_name === this.data.grades[this.data.currentGrade].name){
+        array.push(item);
+      }
+    }
+    this.setData({
+      subjects:array
     });
   },
 
@@ -41,14 +57,73 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+    this.requestSubjects();
+  },
+
+  requestSubjects: function () {
+    console.log('----------科目列表---------');
+    var that = this;
+    wx.showLoading({
+      title: '',
+    })
+    wx.request({
+      method: 'POST',
+      url: 'https://weixin.ywkedu.com/App/subject',
+      success: function (data) {
+        wx.hideLoading();
+        console.log(data);
+        that.setData({
+          allSubjects: data.data
+        });
+        that.requestGrades();
+      },
+      fail: function (data) {
+        wx.hideLoading();
+        console.log(data);
+      },
+    })
+  },
+
+  requestGrades:function(){
+    console.log('----------年级列表---------');
+    var that = this;
+    wx.showLoading({
+      title: '',
+    })
+    wx.request({
+      url: 'https://weixin.ywkedu.com/App/grade',
+      success: function (data) {
+        wx.hideLoading();
+        console.log(data);
+        that.setData({
+          grades: data.data
+        });
+
+        //设置科目
+        var array = [];
+        for (var index in that.data.allSubjects) {
+          var item = that.data.allSubjects[index];
+          
+          if (item.nianji_name === that.data.grades[that.data.currentGrade].name) {
+            array.push(item);
+          }
+        }
+        that.setData({
+          subjects: array
+        });
+      },
+      fail: function (data) {
+        wx.hideLoading();
+        console.log(data);
+      },
+    })
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+   
   },
 
   /**
@@ -124,7 +199,12 @@ Page({
   },
   
   send:function(e){
-   
+    if (!this.data.image){
+      wx.showToast({
+        title: '请选择题目照片',
+      })
+      return;
+   }
     var price = e.detail.value['price_input'];
     var remark = e.detail.value['remark_input'];
     console.log(price);

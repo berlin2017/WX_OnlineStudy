@@ -36,8 +36,33 @@ Page({
       },
     })
     
-    this.getUser();
+    this.requestInfo();
   },
+
+  requestInfo: function () {
+    wx.showLoading({
+      title: '',
+    })
+    var that = this;
+    wx.request({
+      method:'POST',
+      url: 'https://weixin.ywkedu.com/App/student_my',
+      data: {
+        'openId': app.globalData.myUser.openId
+      },
+      success: function (res) {
+        console.log(res);
+        that.setData({
+          userInfo: res.data
+        });
+        wx.hideLoading();
+      },
+      fail: function (res) {
+        console.log(res);
+      },
+    })
+  },
+
 
   getUser:function(){
     wx.showLoading({
@@ -87,7 +112,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    this.getUser();
+    this.requestInfo();
     wx.stopPullDownRefresh();
   },
 

@@ -18,19 +18,19 @@
      <image src='{{image}}' style='width:100%;height:200px' wx:if='{{chosed}}' bindtap='choseImage'></image>
 
      <view class='form_item'>
-        <picker value='{{currentGrade}}' range='{{grades}}' bindchange='changeGrade' name='grade_pick'>
+        <picker value='{{currentGrade}}' range='{{grades}}' bindchange='changeGrade' name='grade_pick' range-key='name'>
       <text class='form_name'>年级:</text>
       <image src='../Resources/ic_down.png' style='width:20px;height:20px;margin-right: 10px;float: right; margin-top: 10px;'></image>
-      <text class='form_value'>{{grades[currentGrade]}}</text>
+      <text class='form_value'>{{grades[currentGrade].name}}</text>
 
       </picker>
      </view>
 
       <view class='form_item'>
-      <picker value='{{currentSubject}}' range='{{subjects}}' bindchange='changeSubject' name='subject_pick'>
+      <picker value='{{currentSubject}}' range='{{subjects}}' bindchange='changeSubject' name='subject_pick' range-key='kemu_name'>
       <text class='form_name'>科目:</text>
       <image src='../Resources/ic_down.png' style='width:20px;height:20px;margin-right: 10px;float: right; margin-top: 10px;'></image>
-      <text class='form_value'>{{subjects[currentSubject]}}</text>
+      <text class='form_value'>{{subjects[currentSubject].kemu_name}}</text>
       </picker>
      </view>
 

@@ -62,7 +62,7 @@ Page({
     var index = e.currentTarget.dataset.index;
     var teacher = this.data.teachers[index];
     wx.navigateTo({
-      url: 'teacherDetail' + '?image=' + teacher.image + '&name=' + teacher.name + '&info=' + teacher.info + '&numbers=' +teacher.numbers + '&ages=' + teacher.ages,
+      url: 'teacherDetail' + '?image=' + teacher.image + '&name=' + teacher.name + '&info=' + teacher.info + '&numbers=' + teacher.numbers + '&ages=' + teacher.ages + '&openId=' + teacher.openId,
     })
   },
 
@@ -88,7 +88,7 @@ Page({
     wx.request({
       url: 'https://weixin.ywkedu.com/App/teacher_list',
       data: {
-        'id': app.globalData.myUser.uid
+        'openId': app.globalData.myUser.openId
       },
       success: function (res) {
         that.setData({

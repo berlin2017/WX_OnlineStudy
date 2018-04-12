@@ -43,7 +43,7 @@ Page({
     })
     var that = this;
     wx.request({
-      url: 'https://weixin.ywkedu.com/App/userInfo',
+      url: 'https://weixin.ywkedu.com/App/student_info',
       data:{
         'openid':app.globalData.myUser.openId
       },
