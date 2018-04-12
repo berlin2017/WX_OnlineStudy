@@ -38,7 +38,10 @@ Page({
             },
 
             fail(error) {
-              util.showModel('请求失败', error)
+              wx.showModal({
+                title: '请求失败',
+                content: error,
+              })
               console.log('request fail', error)
             }
           })
@@ -46,7 +49,10 @@ Page({
       },
 
       fail(error) {
-        util.showModel('登录失败', error)
+        wx.showModal({
+          title: '登录失败',
+          content: error,
+        })
         console.log('登录失败', error)
       }
     });

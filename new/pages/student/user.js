@@ -45,7 +45,7 @@ Page({
     })
     var that = this;
     wx.request({
-      method:'POST',
+      method:'GET',
       url: 'https://weixin.ywkedu.com/App/student_my',
       data: {
         'openId': app.globalData.myUser.openId
