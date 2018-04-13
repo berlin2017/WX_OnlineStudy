@@ -14,48 +14,64 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this;
-    // 调用登录接口
-    wx.login({
-      success(result) {
-        if (result) {
-          // util.showSuccess('登录成功')
-          that.setData({
-            userInfo: result,
-            logged: true
-          })
-        } else {
-          // 如果不是首次登录，不会返回用户信息，请求用户信息接口获取
-          qcloud.request({
-            url: config.service.requestUrl,
-            login: true,
-            success(result) {
-              // util.showSuccess('登录成功')
-              that.setData({
-                userInfo: result.data.data,
-                logged: true
-              })
-            },
+    // var that = this;
+    // // 调用登录接口
+    // wx.login({
+    //   success(result) {
+    //     if (result) {
+    //       // util.showSuccess('登录成功')
+    //       that.setData({
+    //         userInfo: result,
+    //         logged: true
+    //       })
+    //     } else {
+    //       // 如果不是首次登录，不会返回用户信息，请求用户信息接口获取
+    //       qcloud.request({
+    //         url: config.service.requestUrl,
+    //         login: true,
+    //         success(result) {
+    //           // util.showSuccess('登录成功')
+    //           that.setData({
+    //             userInfo: result.data.data,
+    //             logged: true
+    //           })
+    //         },
 
-            fail(error) {
-              wx.showModal({
-                title: '请求失败',
-                content: error,
-              })
-              console.log('request fail', error)
-            }
-          })
-        }
-      },
+    //         fail(error) {
+    //           wx.showModal({
+    //             title: '请求失败',
+    //             content: '请求失败',
+    //             success: function (res) {
+    //               if (res.confirm) {
+    //                 console.log('用户点击确定')
+    //                 // that.init();
+    //               } else if (res.cancel) {
+    //                 console.log('用户点击取消')
+    //               }
+    //             }
+    //           })
+    //           console.log('request fail', error)
+    //         }
+    //       })
+    //     }
+    //   },
 
-      fail(error) {
-        wx.showModal({
-          title: '登录失败',
-          content: error,
-        })
-        console.log('登录失败', error)
-      }
-    });
+    //   fail(error) {
+    //     wx.showModal({
+    //       title: '登录失败',
+    //       content: '登录失败',
+    //       success: function (res) {
+    //         if (res.confirm) {
+    //           console.log('用户点击确定')
+    //           // that.init();
+    //         } else if (res.cancel) {
+    //           console.log('用户点击取消')
+    //         }
+    //       }
+    //     })
+    //     console.log('登录失败', error)
+    //   }
+    // });
 
 
   },
@@ -64,6 +80,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    var that = this;
     if (!app.globalData.res) {
       wx.getUserInfo({
         success: res => {
@@ -71,6 +88,10 @@ Page({
           app.globalData.userInfo = res.userInfo
           app.globalData.res = res
           this.init(app.globalData.res);
+        },
+        fail: res=>{
+          console.log(res);
+          that.onReady();
         }
       })
     }else{
@@ -80,12 +101,17 @@ Page({
   },
 
   init: function () {
+    var that = this;
     var iv = app.globalData.res.iv;
     var encryptedData = app.globalData.res.encryptedData;
     wx.login({
       success: info => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         wx.request({
+          header: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
+          method: 'POST',
           url: 'https://weixin.ywkedu.com/App/code',
           data: {
             'code': info.code,
@@ -95,11 +121,17 @@ Page({
           success: function (result) {
             console.log(result);
             if (!result.data.openId){
-              setTimeout(function () {
-                wx.redirectTo({
-                  url: '../main/main2',
-                })
-              }, TIME);
+              // setTimeout(function () {
+              //   wx.redirectTo({
+              //     url: '../main/main2',
+              //   })
+              // }, TIME);
+
+
+              // that.init();
+              console.log('iv:'+iv);
+              console.log('encryptedData:' + encryptedData);
+              console.log('code:' + info.code);
               return;
             }
             app.globalData.myUser = result.data;
@@ -172,6 +204,8 @@ Page({
       }
     })
   },
+
+  
 
   /**
    * 生命周期函数--监听页面显示

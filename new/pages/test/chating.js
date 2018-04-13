@@ -121,24 +121,6 @@ Page({
       // data[].msgs[].custom_notification.alert
       // data[].msgs[].custom_notification.at_prefix
     });
-
-    app.globalData.jim.getSingleConversation({
-      'target_username': that.data.toId,
-      'target_nickname': that.data.toNickName,
-      'appkey': '20a1f8331c8e462116c4d24e',
-    }).onSuccess(function (data, msg) {
-      console.log(data);
-      //data.code 返回码
-      //data.message 描述
-      //data.msg_id 发送成功后的消息id
-      //data.ctime_ms 消息生成时间,毫秒
-      //data.appkey 用户所属 appkey
-      //data.target_username 用户名
-      //msg.content 发送成功消息体
-    }).onFail(function (data) {
-      //同发送单聊文本
-      console.log(data);
-    });
   },
 
   /**

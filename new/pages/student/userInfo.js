@@ -10,15 +10,17 @@ Page({
     title: '我的资料',
     title_bg: '#7647a0',
     sexs: ['女','男'],
-    grades: ['一年级', '二年级', '三年级', '四年级', '五年级', '初一', '初二', '初三', '高一', '高二', '高三'],
-    schools: ['鸡鸣寺小学', '天鹅湖小学'],
+    grades: [],
+    schools: [],
     userInfo:{
-      sex:0,
-      grade:0,
-      school:0,
-      location:'',
-      image:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522726278037&di=23a3f6e356fa7b30e251d2dad073faa4&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01499057fc7f95a84a0e282bfe3089.jpg',
+      
     },
+    wxUser:{},
+    areaSchools:[],
+    currentSchool:0,
+    currentSex:0,
+    currentGrade:0,
+    selectImage:null,
   },
 
   /**
@@ -38,14 +40,24 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    this.setData({
+      wxUser:app.globalData.myUser
+    });
+    if(this.data.wxUser.sex === '1'){
+      this.setData({
+        currentSex:1
+      });
+    }
     wx.showLoading({
       title: '',
     })
     var that = this;
     wx.request({
+      method:'POST',
       url: 'https://weixin.ywkedu.com/App/student_info',
       data:{
-        'openid':app.globalData.myUser.openId
+        'openid':app.globalData.myUser.openId,
+        'id': app.globalData.myUser.uid,
       },
       success: function (res) {
         console.log(res);
@@ -92,7 +104,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
@@ -110,35 +122,33 @@ Page({
   chooseImage: function (e) {
     var that = this;
     wx.chooseImage({
+      count:1,
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
       success: function (res) {
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+        that.data.userInfo.userInfo.pic = res.tempFilePaths[0];
         that.setData({
-          files: that.data.files.concat(res.tempFilePaths)
+          userInfo: that.data.userInfo,
+          selectImage: res.tempFilePaths[0],
         });
       }
-    })
-  },
-  previewImage: function (e) {
-    wx.previewImage({
-      current: e.currentTarget.id, // 当前显示图片的http链接
-      urls: this.data.files // 需要预览的图片http链接列表
     })
   },
 
   changeSex:function(e){
     var that = this;
-    that.data.userInfo.sex = parseInt(e.detail.value);
+    that.data.userInfo.userInfo.sex = parseInt(e.detail.value);
     that.setData({
-      userInfo: that.data.userInfo
+      userInfo: that.data.userInfo,
+      currentSex: parseInt(e.detail.value)
     });
     console.log(that.data.userInfo);
   },
 
   changeGrade: function (e) {
     var that = this;
-    that.data.userInfo.grade = parseInt(e.detail.value);
+    that.data.userInfo.userInfo.grade = that.data.userInfo.nianji[parseInt(e.detail.value)];
     that.setData({
       userInfo: that.data.userInfo
     });
@@ -147,38 +157,100 @@ Page({
 
   changeLocation: function (e) {
     var that = this;
-    that.data.userInfo.location = parseInt(e.detail.value);
+    that.data.userInfo.userInfo.area = that.data.userInfo.area[parseInt(e.detail.value)];
     that.setData({
       userInfo: that.data.userInfo
     });
     console.log(that.data.userInfo);
+
+    if (!this.data.userInfo.school || this.data.userInfo.school.length <= 0) {
+      return;
+    }
+    var array = [];
+    for (var index in this.data.userInfo.school) {
+
+      var item = this.data.userInfo.school[index];
+      if (item.area_name === this.data.userInfo.userInfo.area.area_name) {
+        array.push(item);
+      }
+    }
+    that.data.userInfo.userInfo.school = array[0];
+    this.setData({
+      areaSchools: array,
+      currentSchool:0,
+      userInfo: that.data.userInfo
+    });
   },
 
   changeSchool: function (e) {
     var that = this;
-    that.data.userInfo.school = parseInt(e.detail.value);
+    that.data.userInfo.userInfo.school = that.data.userInfo.school[parseInt(e.detail.value)];
     that.setData({
+      currentSchool: parseInt(e.detail.value),
       userInfo: that.data.userInfo
     });
-    console.log(that.data.userInfo);
   },
 
-  choseImage: function (e) {
-    var that = this;
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-      success: function (res) {
-        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-        var tempFilePaths = res.tempFilePaths;
-        that.data.userInfo.image = tempFilePaths[0];
-        that.setData({
-          userInfo:that.data.userInfo,
-        });
-      }
-    })
-  },
   
+
+  commit:function(e){
+    console.log(e.detail.value);
+    var that = this;
+    wx.showLoading({
+      title: '',
+    })
+    var params = e.detail.value;
+    params.openId = app.globalData.myUser.openId;
+    if (that.data.selectImage){
+      wx.uploadFile({
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        method: 'POST',
+        url: 'https://weixin.ywkedu.com/App/add_stuInfo',
+        filePath: 'that.data.selectImage',
+        name: 'pic',
+        formData:params,
+        success: function (res) {
+          console.log(res);
+          wx.hideLoading();
+          wx.showToast({
+            title: '修改成功',
+          })
+        },
+        fail: function (res) {
+          console.log(res);
+          wx.hideLoading();
+          wx.showToast({
+            title: '修改失败',
+          })
+        },
+      })
+    }else{
+      wx.request({
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        method: 'POST',
+        url: 'https://weixin.ywkedu.com/App/add_stuInfo',
+        data: params,
+        success: function (res) {
+          console.log(res);
+          wx.hideLoading();
+          wx.showToast({
+            title: '修改成功',
+          })
+        },
+        fail: function (res) {
+          console.log(res);
+          wx.hideLoading();
+          wx.showToast({
+            title: '修改失败',
+          })
+        },
+      })
+    }
+    
+  },
 
 })

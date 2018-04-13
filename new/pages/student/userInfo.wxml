@@ -5,68 +5,70 @@
 
     <include src="../common/title.wxml" />
 
-    <image class='userinfo_header' src='{{userInfo.avatarUrl}}' mode='scaleToFill' bindtap='choseImage'></image>
+    <image class='userinfo_header' src='{{userInfo.userInfo.pic ? userInfo.userInfo.pic : wxUser.avatarUrl}}' mode='scaleToFill' bindtap='choseImage' ></image>
 
-    <form>
+    <form bindsubmit='commit'>
 
       <view class='item_layout'>
 
         <view class='item_name'>姓名:</view>
-        <input placeholder='请输入姓名' class='item_right' value='{{userInfo.nickname}}'></input>
+        <input placeholder='请输入真实姓名' class='item_right' value='{{userInfo.userInfo.nickName ? userInfo.userInfo.nickName : wxUser.nickName}}' name='realname'></input>
 
       </view>
 
       <view class='item_layout'>
 
         <view class='item_name'>手机:</view>
-        <input placeholder='请输入手机号码' class='item_right' value='{{userInfo.mobile}}'></input>
+        <input placeholder='请输入手机号码' class='item_right' value='{{userInfo.userInfo.mobile ? userInfo.userInfo.mobile : wxUser.mobile}}' name='tel'></input>
 
       </view>
 
-      <picker value='{{userInfo.sex}}' range='{{sexs}}' bindchange="changeSex">
+      <picker value='{{currentSex}}' range='{{sexs}}' bindchange="changeSex" name='sex'>
 
         <view class='item_layout'>
 
           <view class='item_name'>性别:</view>
           <image class='item_arrow' src='../Resources/ic_down.png'></image>
-          <view class='item_value'>{{sexs[userInfo.sex]}}</view>
+          <view class='item_value'>{{sexs[currentSex]}}</view>
 
         </view>
 
       </picker>
 
-      <picker value='{{userInfo.grade}}' range='{{grades}}' bindchange="changeGrade">
+      <picker value='{{userInfo.userInfo.grade.id}}' range='{{userInfo.nianji}}' bindchange="changeGrade" range-key='name' name='nanji_id'>
         <view class='item_layout' >
 
           <view class='item_name'>年级:</view>
           <image class='item_arrow' src='../Resources/ic_down.png'></image>
-          <view class='item_value'>{{grades[userInfo.grade]}}</view>
+          <view class='item_value'>{{userInfo.userInfo.grade.name}}</view>
 
         </view>
       </picker>
 
-      <picker value='{{userInfo.sex}}' range='{{sexs}}' bindchange="changeLocation">
+      <picker value='{{userInfo.userInfo.area.id}}' range='{{userInfo.area}}' bindchange="changeLocation" range-key='area_name' name='area_id'>
         <view class='item_layout'>
 
           <view class='item_name'>地区:</view>
           <image class='item_arrow' src='../Resources/ic_down.png'></image>
-          <view class='item_value'>{{userInfo.province}}</view>
+          <view class='item_value'>{{userInfo.userInfo.area.area_name}}</view>
 
         </view>
 
       </picker>
 
-      <picker value='{{userInfo.school}}' range='{{schools}}' bindchange="changeSchool">
+      <picker value='{{userInfo.userInfo.school.id}}' range='{{areaSchools}}' bindchange="changeSchool" range-key='name' name='school_id'>
 
         <view class='item_layout'>
 
           <view class='item_name'>学校:</view>
           <image class='item_arrow' src='../Resources/ic_down.png'></image>
-          <view class='item_value'>{{schools[userInfo.school]}}</view>
+          <view class='item_value'>{{areaSchools[currentSchool].name}}</view>
 
         </view>
       </picker>
 
+
+      <button class='bottom_layout' formType="submit">保存</button>
     </form>
 
 
@@ -77,5 +79,3 @@
 
 
 </view>
-
-<view class='bottom_layout'>保存</view>

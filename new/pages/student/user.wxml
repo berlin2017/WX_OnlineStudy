@@ -3,20 +3,20 @@
 
   <view class='top_header' bindtap='toInfo'  style=' background: #7647a0;'>
   
-    <image class='header_image' mode='scaleToFill' src='{{userInfo.avatarUrl}}'></image>
+    <image class='header_image' mode='scaleToFill' src='{{userInfo.userInfo.avatarUrl}}'></image>
 
      <image class='header_arrow' src='../Resources/right_arrow.png'></image>
 
     <view class='header_info_layout'>
     
-       <view class='name_text'>{{userInfo.nickName}}</view>
+       <view class='name_text'>{{userInfo.userInfo.nickname}}</view>
 
-       <view class='mobile_text'>{{userInfo.mobile}}</view>
+       <view class='mobile_text'>{{userInfo.userInfo.mobile}}</view>
 
       <view>
-       <view class='grade_text'>{{userInfo.grade}}</view>
+       <view class='grade_text' wx:if="{{userInfo.data.grade}}">{{userInfo.data.grade}}</view>
 
-       <view class='grade_text'>{{userInfo.className}}</view>
+       <view class='grade_text' wx:if="{{userInfo.data.className}}">{{userInfo.data.className}}</view>
 
       </view>
 
@@ -30,7 +30,7 @@
     
       <image class='header_arrow2' src='../Resources/right_arrow.png'></image>
 
-      <view class='user_money_number'>￥100.0</view>
+      <view class='user_money_number'>￥{{userInfo.data.money ? userInfo.data.money : 0.0}}</view>
 
     </view> 
   
@@ -41,7 +41,7 @@
   
     <view class='option1_layout' style='height:{{option_height}}px;width:{{option_height}}px;background: #7647a0;' bindtap='toWrong'>
     
-      <view class='option1_value' style='line-height:{{option_height-80}}px;'>8</view>
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>{{userInfo.indent.fabu}}</view>
 
        <view class='option1_name'>未接单</view>
     
@@ -49,7 +49,7 @@
 
      <view class='option2_layout' style='height:{{option_height}}px;width:{{option_height}}px;background: #7647a0;' bindtap='toClass'>
     
-      <view class='option1_value' style='line-height:{{option_height-80}}px;'>12</view>
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>{{userInfo.indent.queren}}</view>
 
       <view class='option1_name'>已接单</view>
     
@@ -57,7 +57,7 @@
 
      <view class='option3_layout' style='height:{{option_height}}px;width:{{option_height}}px;background: #7647a0;' bindtap='toOrder'>
     
-      <view class='option1_value' style='line-height:{{option_height-80}}px;'>3</view>
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>{{userInfo.indent.shouke}}</view>
 
        <view class='option1_name'>授课中</view>
     
@@ -65,7 +65,7 @@
 
      <view class='option4_layout' style='height:{{option_height}}px;width:{{option_height}}px;background: #7647a0;' bindtap='toRelease'>
     
-      <view class='option1_value' style='line-height:{{option_height-80}}px;'>0</view>
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>{{userInfo.indent.daiping}}</view>
 
       <view class='option1_name'>待评价</view>
     

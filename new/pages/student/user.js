@@ -7,11 +7,6 @@ Page({
    */
   data: {
     userInfo:{
-      icon:'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg',
-      name:'陈小明',
-      mobile:'15605662015',
-      grade:'一年级',
-      className:'家里蹲幼儿园',
     },
     option_height:0,
   },
