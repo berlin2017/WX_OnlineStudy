@@ -20,6 +20,7 @@ Page({
     currentSchool:0,
     currentSex:0,
     currentGrade:0,
+    currentArea:0,
     selectImage:null,
   },
 
@@ -53,10 +54,13 @@ Page({
     })
     var that = this;
     wx.request({
-      method:'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      method: 'POST',
       url: 'https://weixin.ywkedu.com/App/student_info',
       data:{
-        'openid':app.globalData.myUser.openId,
+        'openId':app.globalData.myUser.openId,
         'id': app.globalData.myUser.uid,
       },
       success: function (res) {
@@ -64,6 +68,46 @@ Page({
         that.setData({
           userInfo: res.data
         });
+        for(var i = 0;i <res.data.nianji.length;i++){
+          if(res.data.nianji[i].id == res.data.userInfo.nianji_id){
+            that.setData({
+              currentGrade:i
+            });
+          }
+        }
+
+        for (var i = 0; i < res.data.area.length; i++) {
+          if (res.data.area[i].id == res.data.userInfo.area) {
+            that.setData({
+              currentArea: i
+            });
+          }
+        }
+
+        var array = [];
+        for (var index in res.data.school) {
+
+          var item = res.data.school[index];
+          if (item.area_name === res.data.area[that.data.currentArea].area_name) {
+            array.push(item);
+          }
+        }
+        that.setData({
+          areaSchools: array
+        });
+        for (var i = 0; i < array.length; i++) {
+          if (array[i].id == res.data.userInfo.school_id) {
+            that.setData({
+              currentSchool: i
+            });
+          }
+        }
+
+        if (res.data.userInfo.sex&&res.data.userInfo.sex === '1') {
+          this.setData({
+            currentSex: 1
+          });
+        }
         wx.hideLoading();
       },
       fail:function(res){
@@ -148,18 +192,18 @@ Page({
 
   changeGrade: function (e) {
     var that = this;
-    that.data.userInfo.userInfo.grade = that.data.userInfo.nianji[parseInt(e.detail.value)];
+    // that.data.userInfo.userInfo.grade = that.data.userInfo.nianji[parseInt(e.detail.value)];
     that.setData({
-      userInfo: that.data.userInfo
+      currentGrade: parseInt(e.detail.value)
     });
     console.log(that.data.userInfo);
   },
 
   changeLocation: function (e) {
     var that = this;
-    that.data.userInfo.userInfo.area = that.data.userInfo.area[parseInt(e.detail.value)];
+    // that.data.userInfo.userInfo.area = that.data.userInfo.area[parseInt(e.detail.value)];
     that.setData({
-      userInfo: that.data.userInfo
+      currentArea: parseInt(e.detail.value)
     });
     console.log(that.data.userInfo);
 

@@ -12,14 +12,14 @@
       <view class='item_layout'>
 
         <view class='item_name'>姓名:</view>
-        <input placeholder='请输入真实姓名' class='item_right' value='{{userInfo.userInfo.nickName ? userInfo.userInfo.nickName : wxUser.nickName}}' name='realname'></input>
+        <input placeholder='请输入真实姓名' class='item_right' value='{{userInfo.userInfo.realname ? userInfo.userInfo.realname : wxUser.nickName}}' name='realname'></input>
 
       </view>
 
       <view class='item_layout'>
 
         <view class='item_name'>手机:</view>
-        <input placeholder='请输入手机号码' class='item_right' value='{{userInfo.userInfo.mobile ? userInfo.userInfo.mobile : wxUser.mobile}}' name='tel'></input>
+        <input placeholder='请输入手机号码' class='item_right' value='{{userInfo.userInfo.tel ? userInfo.userInfo.tel : wxUser.tel}}' name='tel'></input>
 
       </view>
 
@@ -35,28 +35,28 @@
 
       </picker>
 
-      <picker value='{{userInfo.userInfo.grade.id}}' range='{{userInfo.nianji}}' bindchange="changeGrade" range-key='name' name='nanji_id'>
+      <picker value='{{userInfo.nianji[currentGrade].id}}' range='{{userInfo.nianji}}' bindchange="changeGrade" range-key='name' name='nianji_id'>
         <view class='item_layout' >
 
           <view class='item_name'>年级:</view>
           <image class='item_arrow' src='../Resources/ic_down.png'></image>
-          <view class='item_value'>{{userInfo.userInfo.grade.name}}</view>
+          <view class='item_value'>{{userInfo.nianji[currentGrade].name}}</view>
 
         </view>
       </picker>
 
-      <picker value='{{userInfo.userInfo.area.id}}' range='{{userInfo.area}}' bindchange="changeLocation" range-key='area_name' name='area_id'>
+      <picker value='{{userInfo.area[currentArea].id}}' range='{{userInfo.area}}' bindchange="changeLocation" range-key='area_name' name='area_id'>
         <view class='item_layout'>
 
           <view class='item_name'>地区:</view>
           <image class='item_arrow' src='../Resources/ic_down.png'></image>
-          <view class='item_value'>{{userInfo.userInfo.area.area_name}}</view>
+          <view class='item_value'>{{userInfo.area[currentArea].area_name}}</view>
 
         </view>
 
       </picker>
 
-      <picker value='{{userInfo.userInfo.school.id}}' range='{{areaSchools}}' bindchange="changeSchool" range-key='name' name='school_id'>
+      <picker value='{{areaSchools[currentSchool].id}}' range='{{areaSchools}}' bindchange="changeSchool" range-key='name' name='school_id'>
 
         <view class='item_layout'>
 

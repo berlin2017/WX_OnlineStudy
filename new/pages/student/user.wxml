@@ -9,9 +9,9 @@
 
     <view class='header_info_layout'>
     
-       <view class='name_text'>{{userInfo.userInfo.nickname}}</view>
+       <view class='name_text'>{{userInfo.userInfo.realname}}</view>
 
-       <view class='mobile_text'>{{userInfo.userInfo.mobile}}</view>
+       <view class='mobile_text'>{{userInfo.userInfo.tel}}</view>
 
       <view>
        <view class='grade_text' wx:if="{{userInfo.data.grade}}">{{userInfo.data.grade}}</view>
