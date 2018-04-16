@@ -8,11 +8,6 @@ Page({
    */
   data: {
     userInfo: {
-      icon: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg',
-      name: '陈小明',
-      mobile: '15605662015',
-      grade: '一年级',
-      className: '家里蹲幼儿园',
     },
     option_height: 0,
   },
@@ -34,6 +29,33 @@ Page({
         that.setData({
           option_height: res.windowWidth * 0.94 * 0.485
         })
+      },
+    })
+
+    this.requestInfo();
+  },
+
+  requestInfo: function () {
+    wx.showLoading({
+      title: '',
+    })
+    var that = this;
+    wx.request({
+      method: 'GET',
+      url: 'https://weixin.ywkedu.com/App/student_my',
+      data: {
+        'openId': app.globalData.myUser.openId,
+        'id': app.globalData.myUser.uid,
+      },
+      success: function (res) {
+        console.log(res);
+        that.setData({
+          userInfo: res.data
+        });
+        wx.hideLoading();
+      },
+      fail: function (res) {
+        console.log(res);
       },
     })
   },
@@ -63,7 +85,8 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    this.requestInfo();
+    wx.stopPullDownRefresh();
   },
 
   /**

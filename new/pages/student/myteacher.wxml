@@ -27,13 +27,13 @@
        
         <image src='{{item.image}}' mode='scaleToFill' class='item_image'></image>
 
-        <view class='item_name'>{{item.name}}</view>
+        <view class='item_name'>{{item.realname}}</view>
 
-        <view class='item_subject'>辅导科目:{{item.info}}</view>
+        <view class='item_subject'>辅导科目:{{item.nianji_kemu}}</view>
 
-        <view class='item_subject'>教学经验:{{item.ages}}年</view>
+        <view class='item_subject'>教学经验:{{item.teaching}}年</view>
 
-        <view class='item_subject'>学生人数:{{item.numbers}}人</view>
+        <view class='item_subject'>学生人数:{{item.studentNum}}人</view>
 
 
       </view>

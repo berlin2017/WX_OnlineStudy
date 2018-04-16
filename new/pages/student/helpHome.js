@@ -19,7 +19,26 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+    wx.showLoading({
+      title: '',
+    })
+    wx.request({
+      url: 'https://weixin.ywkedu.com/App/help',
+      method:'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success:function(res){
+        console.log(res);
+        wx.hideLoading();
+      },
+      fail:function(res){
+        wx.hideLoading();
+        wx.showToast({
+          title: '网络请求失败',
+        })
+      },
+    })
   },
 
   /**

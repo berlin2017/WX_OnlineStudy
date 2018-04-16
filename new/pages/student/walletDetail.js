@@ -1,4 +1,5 @@
 // pages/student/walletDetail.js
+var app = getApp();
 Page({
 
   /**
@@ -7,30 +8,6 @@ Page({
   data: {
     title: '账单明细',
     list: [
-      {
-        num: '100.0',
-        ddbh: '2018032701',
-        jybh: '20180327100000',
-        time: '2018.03.37 10:00:00',
-      },
-      {
-        num: '100.0',
-        ddbh: '2018032701',
-        jybh: '20180327100000',
-        time: '2018.03.37 10:00:00',
-      },
-      {
-        num: '100.0',
-        ddbh: '2018032701',
-        jybh: '20180327100000',
-        time: '2018.03.37 10:00:00',
-      },
-      {
-        num: '100.0',
-        ddbh: '2018032701',
-        jybh: '20180327100000',
-        time: '2018.03.37 10:00:00',
-      },
     ],
   },
 
@@ -45,7 +22,30 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    wx.showLoading({
+      title: '',
+    })
+    var that = this;
+    wx.request({
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      method: 'POST',
+      url: 'https://weixin.ywkedu.com/App/student_account_detail',
+      data: {
+        'openId': app.globalData.myUser.openId,
+      },
+      success: function (res) {
+        console.log(res);
+        that.setData({
+          money: res.data.account
+        });
+        wx.hideLoading();
+      },
+      fail: function (res) {
+        console.log(res);
+      },
+    })
   },
 
   /**
@@ -99,6 +99,39 @@ Page({
   requestList:function(){
     wx.showLoading({
       title: '',
+    })
+    var that = this;
+    wx.request({
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      method: 'POST',
+      url: 'https://weixin.ywkedu.com/App/student_account_detail',
+      data: {
+        'openId': app.globalData.myUser.openId,
+      },
+      success: function (res) {
+        console.log(res);
+        wx.hideLoading();
+        if(res.data.code == "0"){
+          wx.showToast({
+            title: res.data.data.data,
+          })
+          return;
+        }
+        var array = new Array();
+        for (var i = 0; i < res.data.detail.length; i++) {
+          var item = res.data.detail[i];
+          item.time = util.formatTime(new Date(item.time));
+          array.push(item);
+        }
+        that.setData({
+          list: array
+        });
+      },
+      fail: function (res) {
+        console.log(res);
+      },
     })
   },
 

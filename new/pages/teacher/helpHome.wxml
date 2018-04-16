@@ -5,11 +5,11 @@
     <view class='item_layout' wx:for='{{questions}}'>
       <view class='item_title_layout' bindtap='show' data-index='{{index}}'>
       <view class='item_point'>·</view>
-      <view class='item_title'>2月全球APP谁最热？</view>
+      <view class='item_title'>{{item.title}}</view>
       <image class='item_arrow' src='{{item.showDetail ? "../Resources/arrow_on.png" : "../Resources/arrow_down.png"}}'></image>
       </view>
 
-      <view class='item_answer' wx:if='{{item.showDetail}}'>实现两个div在同一行显示有多种方法，可以用设置浮动——用float，还可以用绝对定位position，等等。</view>
+      <view class='item_answer' wx:if='{{item.showDetail}}'>{{item.content}}</view>
 
     </view>
   </view>

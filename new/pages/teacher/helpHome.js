@@ -7,11 +7,7 @@ Page({
   data: {
     title: '帮助中心',
     title_bg: '#268746',
-    questions: [
-      { showDetail: false, },
-       { showDetail: true, },
-        { showDetail: false, },
-         { showDetail: false,}],
+    questions: [],
   },
 
   show:function(e){
@@ -33,7 +29,30 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+    var that = this;
+    wx.showLoading({
+      title: '',
+    })
+    wx.request({
+      url: 'https://weixin.ywkedu.com/App/help',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        console.log(res);
+        wx.hideLoading();
+        that.setData({
+          questions:res.data
+        });
+      },
+      fail: function (res) {
+        wx.hideLoading();
+        wx.showToast({
+          title: '网络请求失败',
+        })
+      },
+    })
   },
 
   /**

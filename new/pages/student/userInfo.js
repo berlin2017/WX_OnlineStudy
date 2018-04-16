@@ -22,6 +22,8 @@ Page({
     currentGrade:0,
     currentArea:0,
     selectImage:null,
+    inputName:'',
+    inputPhone:'',
   },
 
   /**
@@ -44,23 +46,25 @@ Page({
     this.setData({
       wxUser:app.globalData.myUser
     });
+   
     if(this.data.wxUser.sex === '1'){
       this.setData({
         currentSex:1
       });
     }
+    this.requestInfo();
+  },
+
+  requestInfo:function(){
     wx.showLoading({
       title: '',
     })
     var that = this;
     wx.request({
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      method: 'POST',
+      method: 'GET',
       url: 'https://weixin.ywkedu.com/App/student_info',
-      data:{
-        'openId':app.globalData.myUser.openId,
+      data: {
+        'openId': app.globalData.myUser.openId,
         'id': app.globalData.myUser.uid,
       },
       success: function (res) {
@@ -68,16 +72,37 @@ Page({
         that.setData({
           userInfo: res.data
         });
-        for(var i = 0;i <res.data.nianji.length;i++){
-          if(res.data.nianji[i].id == res.data.userInfo.nianji_id){
+
+        if (that.data.userInfo.userInfo.realname) {
+          that.setData({
+            inputName: that.data.userInfo.userInfo.realname
+          });
+        } else {
+          that.setData({
+            inputName: app.globalData.myUser.nickName
+          });
+        }
+
+        if (that.data.userInfo.userInfo.tel) {
+          that.setData({
+            inputPhone: that.data.userInfo.userInfo.tel
+          });
+        } else {
+          that.setData({
+            inputPhone: app.globalData.myUser.tel
+          });
+        }
+
+        for (var i = 0; i < res.data.nianji.length; i++) {
+          if (res.data.nianji[i].id == res.data.userInfo.nianji_id) {
             that.setData({
-              currentGrade:i
+              currentGrade: i
             });
           }
         }
 
         for (var i = 0; i < res.data.area.length; i++) {
-          if (res.data.area[i].id == res.data.userInfo.area) {
+          if (res.data.area[i].id == res.data.userInfo.area_id) {
             that.setData({
               currentArea: i
             });
@@ -103,14 +128,14 @@ Page({
           }
         }
 
-        if (res.data.userInfo.sex&&res.data.userInfo.sex === '1') {
-          this.setData({
+        if (res.data.userInfo.sex && res.data.userInfo.sex === '1') {
+          that.setData({
             currentSex: 1
           });
         }
         wx.hideLoading();
       },
-      fail:function(res){
+      fail: function (res) {
         console.log(res);
       },
     })
@@ -141,7 +166,8 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+    this.requestInfo();
+    wx.stopPullDownRefresh();
   },
 
   /**
@@ -214,7 +240,7 @@ Page({
     for (var index in this.data.userInfo.school) {
 
       var item = this.data.userInfo.school[index];
-      if (item.area_name === this.data.userInfo.userInfo.area.area_name) {
+      if (item.area_name === this.data.userInfo.area[e.detail.value].area_name) {
         array.push(item);
       }
     }
@@ -243,14 +269,37 @@ Page({
     wx.showLoading({
       title: '',
     })
-    var params = e.detail.value;
+    var params = {};
+    e.detail.value.area_id = that.data.userInfo.area[e.detail.value.area_id].id;
+    e.detail.value.school_id = that.data.userInfo.school[e.detail.value.school_id].id;
+    e.detail.value.nianji_id = that.data.userInfo.nianji[e.detail.value.nianji_id].id;
+    e.detail.value.openId = app.globalData.myUser.openId;
+    if (e.detail.value.realname){
+      params.realname = e.detail.value.realname;
+    }
+    if (e.detail.value.tel) {
+      params.tel = e.detail.value.tel;
+    }
+    if (e.detail.value.realname) {
+      params.realname = e.detail.value.realname;
+    }
+    if (e.detail.value.nianji_id) {
+      params.nianji_id = e.detail.value.nianji_id;
+    }
+    if (e.detail.value.area_id) {
+      params.area_id = e.detail.value.area_id;
+    }
+
+    if (e.detail.value.school_id) {
+      params.school_id = e.detail.value.school_id;
+    }
+    if (e.detail.value.sex) {
+      params.sex = e.detail.value.sex;
+    }
     params.openId = app.globalData.myUser.openId;
+    params.id = app.globalData.myUser.uid;
     if (that.data.selectImage){
       wx.uploadFile({
-        header: {
-          'content-type': 'application/x-www-form-urlencoded'
-        },
-        method: 'POST',
         url: 'https://weixin.ywkedu.com/App/add_stuInfo',
         filePath: 'that.data.selectImage',
         name: 'pic',
@@ -272,10 +321,7 @@ Page({
       })
     }else{
       wx.request({
-        header: {
-          'content-type': 'application/x-www-form-urlencoded'
-        },
-        method: 'POST',
+        method: 'GET',
         url: 'https://weixin.ywkedu.com/App/add_stuInfo',
         data: params,
         success: function (res) {
@@ -295,6 +341,18 @@ Page({
       })
     }
     
+  },
+
+  inputPhone:function(e){
+    this.setData({
+      inputPhone:e.detail.value
+    });
+  },
+
+  inputName: function (e) {
+    this.setData({
+      inputName: e.detail.value
+    });
   },
 
 })

@@ -3,7 +3,7 @@
 
   <view class='top_header' bindtap='toInfo'  style=' background: #7647a0;'>
   
-    <image class='header_image' mode='scaleToFill' src='{{userInfo.userInfo.avatarUrl}}'></image>
+    <image class='header_image' mode='scaleToFill' src='{{userInfo.userInfo.thumb_pic ? userInfo.userInfo.thumb_pic : wxUser.avatarUrl}}'></image>
 
      <image class='header_arrow' src='../Resources/right_arrow.png'></image>
 
@@ -12,11 +12,11 @@
        <view class='name_text'>{{userInfo.userInfo.realname}}</view>
 
        <view class='mobile_text'>{{userInfo.userInfo.tel}}</view>
-
+          
       <view>
-       <view class='grade_text' wx:if="{{userInfo.data.grade}}">{{userInfo.data.grade}}</view>
+       <view class='grade_text' wx:if="{{userInfo.userInfo.nianji_name}}">{{userInfo.userInfo.nianji_name}}</view>
 
-       <view class='grade_text' wx:if="{{userInfo.data.className}}">{{userInfo.data.className}}</view>
+       <view class='grade_text' wx:if="{{userInfo.userInfo.school_name}}">{{userInfo.userInfo.school_name}}</view>
 
       </view>
 
@@ -43,7 +43,7 @@
     
       <view class='option1_value' style='line-height:{{option_height-80}}px;'>{{userInfo.indent.fabu}}</view>
 
-       <view class='option1_name'>未接单</view>
+       <view class='option1_name'>已发布</view>
     
     </view>
 
@@ -51,7 +51,7 @@
     
       <view class='option1_value' style='line-height:{{option_height-80}}px;'>{{userInfo.indent.queren}}</view>
 
-      <view class='option1_name'>已接单</view>
+      <view class='option1_name'>已确认</view>
     
     </view>
 
@@ -89,4 +89,4 @@
 
 </view>
 
-<button style='width:80px;height:80px;border-radius:40px;background:#268746;color:white;position:absolute;right:10px;bottom:10px;line-height:80px;text-align:center;'>签到</button>
+<button style='width:80px;height:80px;border-radius:40px;background:#268746;color:white;position:absolute;right:10px;bottom:10px;line-height:80px;text-align:center;' bindtap='sign'>签到</button>

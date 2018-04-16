@@ -1198,9 +1198,6 @@ Page({
       //data.appkey 用户所属 appkey
       //data.target_username 用户名
       //msg.content 发送成功消息体,见下面消息体详情
-      wx.showToast({
-        title: 'success',
-      })
       that.setData({
         inputValue: ''
       });

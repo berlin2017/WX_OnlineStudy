@@ -9,6 +9,7 @@ Page({
     userInfo:{
     },
     option_height:0,
+    wxUser:{},
   },
 
   /**
@@ -23,6 +24,10 @@ Page({
    */
   onReady: function () {
     var that = this;
+    that.setData({
+      wxUser: app.globalData.myUser
+    });
+
     wx.getSystemInfo({
       success: function(res) {
         that.setData({
@@ -43,7 +48,8 @@ Page({
       method:'GET',
       url: 'https://weixin.ywkedu.com/App/student_my',
       data: {
-        'openId': app.globalData.myUser.openId
+        'openId': app.globalData.myUser.openId,
+        'id': app.globalData.myUser.uid,
       },
       success: function (res) {
         console.log(res);
@@ -164,6 +170,40 @@ Page({
   toHelp: function () {
     wx.navigateTo({
       url: '../teacher/helpHome',
+    })
+  },
+
+  sign:function(){
+    wx.showLoading({
+      title: '',
+    })
+    var that = this;
+    wx.request({
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      method:'POST',
+      url: 'https://weixin.ywkedu.com/App/student_sign',
+      data: {
+        'openId': app.globalData.myUser.openId
+      },
+      success: function (res) {
+        console.log(res);
+        wx.hideLoading();
+        if(res.data.msg == '1'){
+          wx.showToast({
+            title: '签到成功',
+          })
+        }else{
+          wx.showToast({
+            title: res.data.data.data,
+          })
+        }
+       
+      },
+      fail: function (res) {
+        console.log(res);
+      },
     })
   },
 })

@@ -2,7 +2,7 @@
   "pages": [
     
     "pages/loading/loading",
-  "pages/main/main2",
+    "pages/main/main2",
     "pages/test/chating",
     "pages/main/main",
     "pages/chat/test",
@@ -38,12 +38,14 @@
     "pages/student/orderDetail",
     "pages/student/comment",
    
+   "pages/teacher/regist",
     "pages/teacher/user",
     "pages/teacher/myClass",
     "pages/teacher/myStudent",
     "pages/teacher/studentDetail",
-    "pages/teacher/regist",
-    
+   
+    "pages/teacher/agreement",
+
     "pages/teacher/order",
     "pages/teacher/finishedClass",
     "pages/teacher/commentOrder",

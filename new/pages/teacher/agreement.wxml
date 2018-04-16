@@ -1,0 +1,7 @@
+<!--pages/teacher/agreement.wxml-->
+<view class='main_container'>
+  <include src='../common/title'/>
+  <view class='content'>
+    {{content}}
+  </view>
+</view>

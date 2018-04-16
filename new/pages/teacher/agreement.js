@@ -1,14 +1,13 @@
-// pages/student/userWallet.js
-var app = getApp();
-
+// pages/teacher/agreement.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    title:'我的钱包',
-    money:0,
+    title: '平台协议',
+    title_bg: '#268746',
+    content:'',
   },
 
   /**
@@ -22,28 +21,17 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    var that = this;
     wx.showLoading({
       title: '',
     })
-    var that = this;
     wx.request({
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      method: 'POST',
-      url: 'https://weixin.ywkedu.com/App/student_account',
-      data: {
-        'openId': app.globalData.myUser.openId,
-      },
-      success: function (res) {
-        console.log(res);
-        that.setData({
-          money: res.data.account
-        });
+      url: 'https://weixin.ywkedu.com/App/agreement',
+      success:function(res){
         wx.hideLoading();
-      },
-      fail: function (res) {
-        console.log(res);
+        that.setData({
+          content:res.data.content
+        });
       },
     })
   },
@@ -89,22 +77,10 @@ Page({
   onShareAppMessage: function () {
   
   },
+
   back:function(){
     wx.navigateBack({
       
     })
   },
-
-  toCZ:function(){
-    wx.navigateTo({
-      url: 'walletCZ',
-    })
-  },
-
-  toDetail:function(){
-    wx.navigateTo({
-      url: 'walletDetail',
-    })
-  },
-
 })

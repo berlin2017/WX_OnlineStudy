@@ -10,11 +10,11 @@
       <view class='item_layout' wx:for='{{list}}'>
         <view class='item_money'>
           <view style='float:left;'>交易金额：</view>
-          <view style='color:orange;float:left;font-size:21px;line-height:30px;text-align:center;'>{{item.num}}元</view>
+          <view style='color:orange;float:left;font-size:21px;line-height:30px;text-align:center;'>{{item.money}}元</view>
         </view>
 
-        <view class='item_ddbh'>订单编号：{{item.ddbh}}</view>
-        <view class='item_jybh'>交易编号：{{item.jybh}}</view>
+        <view class='item_ddbh'>订单编号：{{item.order_num}}</view>
+        <view class='item_jybh'>交易编号：{{item.order_num}}</view>
         <view class='item_time'>交易时间：{{item.time}}</view>
       </view>
     </view>

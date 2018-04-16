@@ -8,6 +8,7 @@ Page({
     title: '我的钱包',
     title_bg:'#268746',
     isShowDialog:false,
+    money:0,
   },
 
   /**
@@ -21,7 +22,30 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+    wx.showLoading({
+      title: '',
+    })
+    var that = this;
+    wx.request({
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      method: 'POST',
+      url: 'https://weixin.ywkedu.com/App/teacher_account',
+      data: {
+        'openId': app.globalData.myUser.openId,
+      },
+      success: function (res) {
+        console.log(res);
+        that.setData({
+          money: res.data.account
+        });
+        wx.hideLoading();
+      },
+      fail: function (res) {
+        console.log(res);
+      },
+    })
   },
 
   /**

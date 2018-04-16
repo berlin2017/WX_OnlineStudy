@@ -27,19 +27,17 @@ Page({
     showGrade: false,
     gradeValue:[],
     subjects: [
-      { name: '语文', image: '../Resources/ic_yuwen.png', id: '0', checked: false },
-      { name: '数学', image: '../Resources/ic_shuxue.png', id: '1', checked: false },
-      { name: '英语', image: '../Resources/ic_yingyu.png', id: '2', checked: false },
-      { name: '奥数', image: '../Resources/ic_aoshu.png', id: '3', checked: false },
-      { name: '地理', image: '../Resources/ic_dili.png', id: '4', checked: false },
-      { name: '物理', image: '../Resources/ic_wuli.png', id: '5', checked: false },
-      { name: '化学', image: '../Resources/ic_huaxue.png', id: '6', checked: false },
-      { name: '历史', image: '../Resources/ic_lishi.png', id: '7', checked: false }
+      { id: '1', name: '一年级', subject: [{ name: '语文', id: '1'}]},
+      { id: '2', name: '二年级', subject: [{ name: '语文', id: '1' }, { name: '数学', id: '2'}] },
+      { id: '3', name: '三年级', subject: [{ name: '语文', id: '1' }, { name: '数学', id: '2' }, { name: '英语', id: '3'}] },
+      { id: '4', name: '四年级', subject: [{ name: '语文', id: '1' }, { name: '数学', id: '2' }, { name: '英语', id: '3' }, { name: '地理' ,id: '4'}] },
+      { id: '5', name: '五年级', subject: [{ name: '语文', id: '1' }, { name: '数学', id: '2' }, { name: '英语', id: '3' }, { name: '地理', id: '4' }, { name: '历史', id: '5'}] },
     ],
     showSubjects: false,
     subjectValue: [],
     idPic:null,
     jobPic:null,
+    selectSubject:[],
   },
 
   /**
@@ -61,6 +59,43 @@ Page({
    */
   onReady: function () {
 
+  },
+
+  bindMultiPickerChange:function(e){
+    console.log(e);
+    // var class_index = e.detail.value[0];
+    // var subject_index = e.detail.value[0];
+    // this.data.subjects[0][class_index].id
+
+    // if (this.data.selectSubject){
+    //   this.data.selectSubject = new Array();
+    //   this.setData({
+    //     selectSubject: this.data.selectSubject
+    //   });
+    // }
+
+    if (!array_contain(this.data.selectSubject,e.detail.value)){
+      this.data.selectSubject.push(e.detail.value);
+      this.setData({
+        selectSubject: this.data.selectSubject
+      });
+    }else{
+      wx.showToast({
+        title: '已添加过了',
+      })
+    }
+    console.log(this.data.selectSubject);
+  },
+
+  bindcolumnchange:function(e){
+    var that = this;
+    if (e.detail.column == 0){
+      that.data.subjects.pop();
+      that.data.subjects.push(that.data.subjects[0][e.detail.value].subject);
+      that.setData({
+        subjects: that.data.subjects
+      });
+    }
   },
 
   /**
@@ -116,20 +151,36 @@ Page({
       wx.showToast({
         title: '最多选6个',
       })
+      this.setData({
+        subjects: this.data.subjects
+      });
       return;
     }
     console.log(e);
     var that = this;
-    for (var i = 0; i < that.data.grades.length; i++) {
-      if (array_contain(e.detail.value, i)) {
-        that.data.grades[i].checked = true;
-      } else {
-        that.data.grades[i].checked = false;
+    // for (var i = 0; i < that.data.grades.length; i++) {
+    //   if (array_contain(e.detail.value, i)) {
+    //     that.data.grades[i].checked = true;
+    //   } else {
+    //     that.data.grades[i].checked = false;
+    //   }
+    // }
+    // that.setData({
+    //   gradeValue: e.detail.value,
+    //   grades: that.data.grades
+    // });
+    for (var i = 0; i < that.data.subjects.length; i++){
+      for (var j in that.data.subjects[i].subject){
+        that.data.subjects[i].subject[j].checked = false
       }
     }
+    for(var i in e.detail.value){
+      var item = e.detail.value[i];
+      var array = item.split(",");
+      that.data.subjects[array[0]].subject[array[1]].checked = true;
+    }
     that.setData({
-      gradeValue: e.detail.value,
-      grades: that.data.grades
+      subjects: that.data.subjects
     });
   },
 
@@ -209,11 +260,19 @@ Page({
     })
   },
 
-  registe:function(){
+  registe:function(e){
+    console.log(e);
     wx.redirectTo({
       url: 'main',
     })
   },
+
+  toAgreement:function(){
+    wx.navigateTo({
+      url: 'agreement',
+    })
+  },
+
   
 })
 

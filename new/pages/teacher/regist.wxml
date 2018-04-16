@@ -7,37 +7,37 @@
 
     <image class='top_image' src='{{userInfo.image}}' mode='sacleToFill' bindtap='choseHeader'></image>
 
-    <form style=' display: flex;flex-direction: column;padding-bottom:40px;'>
+    <form style=' display: flex;flex-direction: column;padding-bottom:40px;' bindsubmit='registe'>
 
       <view class='item_layout'>
 
         <view class='item_name'>姓名:</view>
-        <input placeholder='请输入姓名' class='item_right'></input>
+        <input placeholder='请输入姓名' class='item_right' name='name'></input>
 
       </view>
 
       <view class='item_layout'>
 
         <view class='item_name'>手机:</view>
-        <input placeholder='请输入手机号码' class='item_right'></input>
+        <input placeholder='请输入手机号码' class='item_right' name='tel'></input>
 
       </view>
 
       <view class='item_layout'>
 
         <view class='item_name'>身份证:</view>
-        <input placeholder='请输入身份证号码' class='item_right'></input>
+        <input placeholder='请输入身份证号码' class='item_right' name='idcard'></input>
 
       </view>
 
 
-      <picker value='{{userInfo.sex}}' range='{{sexs}}' bindchange="changeSex">
+      <picker value='中国' range='{{countries}}' name='country'>
 
         <view class='item_layout'>
 
           <view class='item_name'>国籍:</view>
           <image class='item_arrow' src='../Resources/ic_down.png'></image>
-          <view class='item_value'>{{sexs[userInfo.sex]}}</view>
+          <view class='item_value'>中国</view>
 
         </view>
 
@@ -47,9 +47,9 @@
 
         <view class='item_name'>性别:</view>
         <view class='item_value'>
-          <radio-group>
-            <radio checked="{{userInfo.sex=='男'}}" style='margin-right:10px;'>男</radio>
-            <radio checked="{{userInfo.sex=='女'}}">女</radio>
+          <radio-group name='sex'>
+            <radio checked="{{userInfo.sex=='男'}}" style='margin-right:10px;' value='1'>男</radio>
+            <radio checked="{{userInfo.sex=='女'}}" value='0'>女</radio>
           </radio-group>
         </view>
 
@@ -58,7 +58,7 @@
       <view class='item_layout'>
 
         <view class='item_name'>毕业学校:</view>
-        <input placeholder='请输入毕业学校' class='item_right'></input>
+        <input placeholder='请输入毕业学校' class='item_right' name='school'></input>
 
       </view>
 
@@ -73,14 +73,24 @@
 
       </view>
 
-      <checkbox-group bindchange="subjectChanged" wx:if='{{showSubject}}'>
+      <checkbox-group bindchange="checkboxChange">
+        <view wx:for='{{subjects}}' style='margin:10px;' wx:if='{{showSubject}}'>
+          <view style='float:left;width:100%;text-align:left;'>{{item.name}}:</view>
+
+          <label class="zan-col zan-col-8" wx:for="{{item.subject}}" style='width:33.3333%;float:left;box-sizing:border-box;' wx:for-item="subject" wx:for-index="subjectIndex">
+            <checkbox value="{{index}}" checked="{{subject.checked}}" style='margin-left:10px;' value='{{index}},{{subjectIndex}}' /> {{subject.name}}
+          </label>
+        </view>
+      </checkbox-group>
+
+      <!-- <checkbox-group bindchange="subjectChanged" wx:if='{{showSubject}}'>
         <label class="zan-col zan-col-8" wx:for="{{subjects}}" style='width:33.3333%;float:left;box-sizing:border-box;'>
           <checkbox value="{{index}}" checked="{{item.checked}}" style='margin-left:10px;' /> {{item.name}}
         </label>
 
-      </checkbox-group>
+      </checkbox-group> -->
 
-      <view class='item_layout' bindtap='showGrade'>
+      <!-- <view class='item_layout' bindtap='showGrade'>
 
         <view class='item_name'>教学年级:</view>
         <image class='item_arrow' src='../Resources/ic_down.png'></image>
@@ -98,24 +108,24 @@
           <checkbox value="{{index}}" checked="{{item.checked}}" style='margin-left:10px;' /> {{item.name}}
         </label>
 
-      </checkbox-group>
+      </checkbox-group> -->
 
       <!-- 图片上传 -->
 
       <view class='image_layout' style='width:100%;margin-top:10px;float:left'>
-      
-         <view class='job_image_layout' style='width:50%;float:left;' bindtap='choseJobPic'>
-           <view style='background:#b7c5d6;height:80px;width:94%;margin-left:auto;margin-right:auto;text-align:center;'>
-            <image src='../Resources/ic_add_round.png' style='width:20px;height:20px;margin-left:auto;margin-right:auto;margin-top:30px;' mode='scaleToFill' wx:if='{{jobPic==null}}'></image>  
-             <image src='{{jobPic}}' style='width:100%;height:100%;' mode='scaleToFill'></image>  
+
+        <view class='job_image_layout' style='width:50%;float:left;' bindtap='choseJobPic' name='job_pic' value='{{jobPic}}'>
+          <view style='background:#b7c5d6;height:80px;width:94%;margin-left:auto;margin-right:auto;text-align:center;'>
+            <image src='../Resources/ic_add_round.png' style='width:20px;height:20px;margin-left:auto;margin-right:auto;margin-top:30px;' mode='scaleToFill' wx:if='{{jobPic==null}}'></image>
+            <image src='{{jobPic}}' style='width:100%;height:100%;' mode='scaleToFill'></image>
           </view>
           <view style='text-align:center;color:gray;'>工作证明</view>
         </view>
 
-       <view class='job_image_layout' style='width:50%;float:left;' bindtap='choseIdPic'>
+        <view class='job_image_layout' style='width:50%;float:left;' bindtap='choseIdPic' name='id_pic' value='{{idPic}}'>
           <view style='background:#b7c5d6;height:80px;width:94%;margin-left:auto;margin-right:auto;text-align:center;'>
-            <image src='../Resources/ic_add_round.png' style='width:20px;height:20px;margin-left:auto;margin-right:auto;margin-top:30px;' mode='scaleToFill' wx:if='{{idPic==null}}'></image>  
-             <image src='{{idPic}}' style='width:100%;height:100%;' mode='scaleToFill'></image>  
+            <image src='../Resources/ic_add_round.png' style='width:20px;height:20px;margin-left:auto;margin-right:auto;margin-top:30px;' mode='scaleToFill' wx:if='{{idPic==null}}'></image>
+            <image src='{{idPic}}' style='width:100%;height:100%;' mode='scaleToFill'></image>
           </view>
 
           <view style='text-align:center;color:gray;'>身份证明</view>
@@ -126,12 +136,16 @@
       <textarea class='form_textarea' placeholder='简介' name='remark_input'></textarea>
 
 
-      <checkbox style='margin:10px;float:left;'>平台协议</checkbox>
+      <checkbox-group name='agreement'>
+        <checkbox style='margin:10px;float:left;'  value='1'>
+          <view bindtap='toAgreement'>平台协议</view>
+        </checkbox>
+      </checkbox-group>
+
+      <button class='bottom_layout' form-type='submit'>注册</button>
 
     </form>
 
   </view>
 
 </view>
-
-<view class='bottom_layout' bindtap='registe'>注册</view>

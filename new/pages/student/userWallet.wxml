@@ -8,7 +8,7 @@
     <view class='top_header' style='background: #613588;'>
       <view class='yue_name'>账户余额(元)</view>
 
-      <view class='yue_value'>1000.0</view>
+      <view class='yue_value'>{{money}}</view>
     </view>
 
     <view class='cz_layout' style=' margin-top: 10px; border-top: 1px solid gainsboro;' bindtap='toCZ'>

@@ -128,7 +128,7 @@ Page({
               // }, TIME);
 
 
-              // that.init();
+              that.init();
               console.log('iv:'+iv);
               console.log('encryptedData:' + encryptedData);
               console.log('code:' + info.code);
