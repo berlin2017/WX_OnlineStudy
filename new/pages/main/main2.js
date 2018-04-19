@@ -1,5 +1,5 @@
 // pages/main/main2.js
-
+var app = getApp();
 
 Page({
 
@@ -68,8 +68,37 @@ Page({
   },
 
   toTeacherMain:function(){
-    wx.navigateTo({
-      url: '../teacher/regist',
+
+    wx.showLoading({
+      title: '',
+    })
+    wx.request({
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      url: 'https://weixin.ywkedu.com/App/teacher_check',
+      data:{
+        openId:app.globalData.myUser.openId
+      },
+      success:function(res){
+        wx.hideLoading();
+        if(res.data.msg == 1){
+          wx.navigateTo({
+            url: '../teacher/main',
+          })
+        }else{
+          wx.navigateTo({
+            url: '../teacher/regist',
+          })
+        }
+      },
+      fail: function (res) {
+        wx.hideLoading();
+        wx.showToast({
+          title: '请求失败',
+        })
+      },
     })
   },
 

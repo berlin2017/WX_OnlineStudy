@@ -21,7 +21,7 @@
   border-bottom: 1px solid gainsboro;
  
   height: 40px;
-  margin-left: 10px;
+  /* margin-left: 10px; */
 }
 
 
@@ -304,6 +304,7 @@
 }
 
 .item_time{
+  font-size: 13px;
   line-height: 30px;
   color: gray;
   margin-top: 10px;

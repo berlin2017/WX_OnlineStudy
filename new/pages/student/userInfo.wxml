@@ -5,7 +5,9 @@
 
     <include src="../common/title.wxml" />
 
-    <image class='userinfo_header' src='{{userInfo.userInfo.thumb_pic ? userInfo.userInfo.thumb_pic : wxUser.avatarUrl}}' mode='scaleToFill' bindtap='chooseImage' ></image>
+    <!-- <image class='userinfo_header' src='{{selectImage}}' mode='scaleToFill' bindtap='chooseImage' wx:if='{{selectImage}}'></image> -->
+ <image class='userinfo_header' src='{{userInfo.userInfo.pic ? userInfo.userInfo.pic : wxUser.avatarUrl}}' mode='scaleToFill' bindtap='chooseImage'></image>
+    
 
     <form bindsubmit='commit'>
 

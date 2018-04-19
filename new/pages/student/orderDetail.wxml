@@ -13,19 +13,84 @@
 
         <view class='order_grade_name'>[{{order.grade}}]</view>
         <view class='order_subject_name'>{{order.subject}}</view>
-        <view style='margin-left:20px;color:gray;width:100%;height:30px;'><view style='float:left;'>订单号:</view><view style='margin-left:10px;color:black;float:left;'>{{order.orderNum}}</view></view>
-        <view style='margin-left:20px;color:gray;width:100%;height:30px;'><view style='float:left;'>授课老师:</view><view style='margin-left:10px;color:black;float:left;'>{{order.teacher}}</view></view>
-        <view style='margin-left:20px;color:gray;width:100%;height:30px;'><view style='float:left;'>授课时间:</view><view style='margin-left:10px;color:black;float:left;'>{{order.class_time}}</view></view>
-        <view style='margin-left:20px;color:gray;width:100%;height:30px;'><view style='float:left;'>合计费用:</view><view style='margin-left:10px;color:orangered;float:left;'>{{order.money}}豆</view></view>
-        <view style='margin-left:20px;color:gray;width:100%;height:30px;'><view style='float:left;'>状态:</view><view style='margin-left:10px;color:orangered;float:left;'>上课中...</view></view>
+        <view style='margin-left:20px;color:gray;width:100%;height:30px;'>
+          <view style='float:left;'>订单号:</view>
+          <view style='margin-left:10px;color:black;float:left;'>{{order.orderNum}}</view>
+        </view>
+        <view style='margin-left:20px;color:gray;width:100%;height:30px;'>
+          <view style='float:left;'>授课老师:</view>
+          <view style='margin-left:10px;color:black;float:left;'>{{order.teacher}}</view>
+        </view>
+        <view style='margin-left:20px;color:gray;width:100%;height:30px;'>
+          <view style='float:left;'>授课时间:</view>
+          <view style='margin-left:10px;color:black;float:left;'>{{order.class_time}}</view>
+        </view>
+        <view style='margin-left:20px;color:gray;width:100%;height:30px;'>
+          <view style='float:left;'>合计费用:</view>
+          <view style='margin-left:10px;color:orangered;float:left;'>{{order.price}}豆</view>
+        </view>
+        <view style='margin-left:20px;color:gray;width:100%;height:30px;' wx:if='{{order.state =="0"}}'>
+          <view style='float:left;'>状态:</view>
+          <view style='margin-left:10px;color:orangered;float:left;'>待接单中...</view>
+        </view>
+        <view style='margin-left:20px;color:gray;width:100%;height:30px;' wx:if='{{order.state =="1"}}'>
+          <view style='float:left;'>状态:</view>
+          <view style='margin-left:10px;color:orangered;float:left;'>确认老师中...</view>
+        </view>
+        <view style='margin-left:20px;color:gray;width:100%;height:30px;' wx:if='{{order.state =="2"}}'>
+          <view style='float:left;'>状态:</view>
+          <view style='margin-left:10px;color:orangered;float:left;'>上课中...</view>
+        </view>
+        <view style='margin-left:20px;color:gray;width:100%;height:30px;' wx:if='{{order.state =="3"}}'>
+          <view style='float:left;'>状态:</view>
+          <view style='margin-left:10px;color:orangered;float:left;'>待评价</view>
+        </view>
+        <view style='margin-left:20px;color:gray;width:100%;height:30px;' wx:if='{{order.state =="4"}}'>
+          <view style='float:left;'>状态:</view>
+          <view style='margin-left:10px;color:orangered;float:left;'>已结束</view>
+        </view>
+        <view style='margin-left:20px;color:gray;width:100%;height:30px;' wx:if='{{order.state =="5"}}'>
+          <view style='float:left;'>状态:</view>
+          <view style='margin-left:10px;color:orangered;float:left;'>已取消</view>
+        </view>
 
-         <button style='height:40px;border-radius:20px;background:{{btn_color}};color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{order_type==0||order_type==3}}' bindtap='jump'>{{btn_text}}</button>
+
+
+
+        <button style='height:40px;border-radius:20px;background:{{btn_color}};color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{order.state=="0"||order.state=="3"||order.state=="2"}}' bindtap='jump'>{{btn_text}}</button>
+
+        <button style='height:40px;border-radius:20px;background:red;color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{order.state=="0"}}' bindtap='cancel'>取消订单</button>
+
+
+
       </view>
-
-      
+     
     </view>
+<view style='margin-left:10px;' wx:if='{{order.state=="1"}}'>  已接单老师:</view>
 
-
+ <radio-group bindchange="radioChange" wx:if='{{order.state=="1"}}'>
+        <view wx:for='{{teachers}}' style='margin:10px;'>
+          <radio checked="{{currentIndex == index}}" value='{{index}}'>{{item.name}}</radio>
+        </view>
+      </radio-group>
+      <button style='height:40px;border-radius:20px;background:red;color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{order.state=="1"}}' bindtap='confirm'>确认老师</button>
 
   </view>
+</view>
+
+<view class='dialog' style='width:100%;height:100%;position:fixed;top:0px;z-index:1000000;' wx:if='{{isShowDialog}}'>
+
+  <view class='cover_layout' style='height:100%;background:#373737;opacity:0.5;' bindtap='dismiss'></view>
+  <form bindsubmit='commit'>
+    <view class='dialog_layout' style='width:90%;background:white;opacity:1;border-radius:20px;text-align:center;position: absolute;top: 50%;transform: translateY(-50%);left:5%;overflow:hidden;'>
+      <view class='dialog_title' style='line-height:40px;text-align:center;background:#7647a0;color:white;font-size:21px; '>加价</view>
+      <view style='margin-left:20px;width:90%;margin-left:auto;margin-right:auto;text-align:left;line-height:30px;margin-top:10px;'>加价金额(元)</view>
+      <input style='border-radius:1px;background:whiteSmoke;width:90%;margin-left:auto;margin-right:auto;height:40px;text-align:left;' placeholder='请输入加价金额' type='number' name='money_input' type='number' min='10'></input>
+
+      <view style='margin-left:20px;width:90%;margin-left:auto;margin-right:auto;text-align:left;line-height:20px;font-size:13px;color:gray;' wx:if='{{jiajiaInfo.jiajia}}'>提示:最低加价10元</view>
+      <!-- <input style='border-radius:1px;background:whiteSmoke;width:90%;margin-left:auto;margin-right:auto;height:40px;text-align:left;' placeholder='请输入支付宝账号' type='phone'></input> -->
+
+      <button style='background:#268746;width:80%;margin-left:auto;margin-right:auto;height:40px;color:white;margin-top:20px;margin-bottom:20px;border-radius:20px;text-algin:center;line-height:40px;' form-type='submit'>确认</button>
+    </view>
+  </form>
 </view>

@@ -10,6 +10,7 @@ Page({
     userInfo: {
     },
     option_height: 0,
+    wxUser:{},
   },
 
   /**
@@ -31,6 +32,9 @@ Page({
         })
       },
     })
+    that.setData({
+      wxUser: app.globalData.myUser
+    });
 
     this.requestInfo();
   },
@@ -41,8 +45,11 @@ Page({
     })
     var that = this;
     wx.request({
-      method: 'GET',
-      url: 'https://weixin.ywkedu.com/App/student_my',
+      method: 'POST',
+      header:{
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      url: 'https://weixin.ywkedu.com/App/teacher_my',
       data: {
         'openId': app.globalData.myUser.openId,
         'id': app.globalData.myUser.uid,
@@ -110,7 +117,7 @@ Page({
   },
   toInfo: function () {
     wx.navigateTo({
-      url: 'regist',
+      url: 'regist?type=1',
     })
   },
 
@@ -122,25 +129,25 @@ Page({
 
   toWrong: function () {
     wx.navigateTo({
-      url: 'order',
+      url: 'order' + '?state=2',
     })
   },
 
   toClass: function () {
     wx.navigateTo({
-      url: 'finishedClass',
+      url: 'order' + '?state=3',
     })
   },
 
   toOrder: function () {
     wx.navigateTo({
-      url: 'commentOrder',
+      url: 'order' + '?state=4',
     })
   },
 
   toRelease: function () {
     wx.navigateTo({
-      url: 'finishedOrder',
+      url: 'order' + '?state=5',
     })
   },
 

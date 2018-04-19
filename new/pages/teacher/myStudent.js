@@ -10,12 +10,7 @@ Page({
     title_bg: '#268746',
     title: '我的学生',
     leftText: '',
-    teachers: [
-      { name: '小明', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '智商很高', numbers: 15, ages: 5, grade:'三年级',subjects:['数学','语文'],},
-      { name: '小明', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '智商很高', numbers: 15, ages: 5, grade: '三年级',subjects:['数学', '语文'],},
-      { name: '小明', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '智商很高', numbers: 15, ages: 5, grade: '三年级',subjects:['数学', '语文'],},
-      { name: '小明', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '智商很高', numbers: 15, ages: 5, grade: '三年级',subjects:['数学', '语文'],},
-      { name: '小明', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '智商很高', numbers: 15, ages: 5, grade: '三年级',subjects:['数学', '语文'],}
+    students: [
     ],
     inputShowed: false,
     inputVal: ""
@@ -30,55 +25,67 @@ Page({
     this.setData({
       inputVal: "",
       inputShowed: false,
-      teachers: [
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, }
+      students: [
+        
       ],
     });
   },
   clearInput: function () {
     this.setData({
       inputVal: "",
-      teachers: [
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, }
+      students: [
+       
       ],
     });
   },
   inputTyping: function (e) {
     this.setData({
       inputVal: e.detail.value,
-      teachers: [{ name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, }]
+      // students: [{ name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, }]
     });
     console.log(e.detail.value);
   },
 
   toDetail: function (e) {
-    var index = e.currentTarget.dataset.index;
-    var teacher = this.data.teachers[index];
-    wx.navigateTo({
-      url: 'studentDetail' + '?image=' + teacher.image + '&name=' + teacher.name + '&info=' + teacher.info + '&numbers=' + teacher.numbers + '&ages=' + teacher.ages,
-    })
+    // var index = e.currentTarget.dataset.index;
+    // var teacher = this.data.students[index];
+    // wx.navigateTo({
+    //   url: 'studentDetail' + '?image=' + teacher.image + '&name=' + teacher.name + '&info=' + teacher.info + '&numbers=' + teacher.numbers + '&ages=' + teacher.ages,
+    // })
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    template.tabbar("tabBar", 1, this)//0表示第一个tabbar
+    template.tabbar("tabBar", 2, this)//0表示第一个tabbar
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+    var that = this;
+      wx.showLoading({
+        title: '',
+      })
+      wx.request({
+        url: 'https://weixin.ywkedu.com/App/student_list',
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        data:{
+          openId:app.globalData.myUser.openId
+        },
+        success:function(res){
+          console.log(res);
+          wx.hideLoading();
+          that.setData({
+            students:res.data
+          });
+        },
+      })
   },
 
   /**

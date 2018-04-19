@@ -89,4 +89,4 @@
 
 </view>
 
-<button style='width:80px;height:80px;border-radius:40px;background:#268746;color:white;position:absolute;right:10px;bottom:10px;line-height:80px;text-align:center;' bindtap='sign'>签到</button>
+<button style='width:80px;height:80px;border-radius:40px;background:#268746;color:white;position:fixed;right:10px;bottom:10px;line-height:80px;text-align:center;' bindtap='sign'>签到</button>

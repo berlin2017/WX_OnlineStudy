@@ -4,17 +4,17 @@
 
   <view class='top_layout'>
 
-    <image src='{{image}}' class='image' mode='sacleToFill'></image>
+    <image src='{{detail.id_pic}}' class='image' mode='sacleToFill'></image>
 
 
 
     <view class='info_layout'>
 
-      <text class='name'>{{name}}</text>
+      <text class='name'>{{detail.realname}}</text>
 
-      <text class='info'>{{info}}</text>
+      <text class='info'>辅导科目:{{detail.nianji_kemu_name}}</text>
 
-      <text class='score'>8.8</text>
+      <text class='score'>{{detail.score ? detail.score : 10}}</text>
 
     </view>
 
@@ -23,21 +23,21 @@
 
       <view class='top_item'>
 
-        <text class='top_item_number'>3</text>
+        <text class='top_item_number'>{{detail.teaching}}</text>
         <text class='top_item_name'>教学经验(年)</text>
 
       </view>
 
       <view class='top_item'>
 
-        <text class='top_item_number'>20</text>
-        <text class='top_item_name'>答疑输(题)</text>
+        <text class='top_item_number'>{{detail.dati}}</text>
+        <text class='top_item_name'>答疑数(题)</text>
 
       </view>
 
       <view class='top_item'>
 
-        <text class='top_item_number'>66</text>
+        <text class='top_item_number'>{{detail.studentNum}}</text>
         <text class='top_item_name'>学生人数(人)</text>
 
       </view>
@@ -63,6 +63,30 @@
 
   <view class='intro_container' wx:if='{{activeIndex==0}}'>
 
+    <text style='font-size:17px;font-weight:bold;margin-left:20px;'>基本信息</text>
+    <view style='margin-left:20px;margin-top:10px;widht:100%;height:30px;'>
+      <text style='font-size:13px;float:left;color:gray;'>认证情况:</text>
+      <text style='font-size:13px;float:left;color:black;margin-left:10px'>身份证认证/学历认证</text>
+    </view>
+
+    <view style='margin-left:20px;margin-top:10px;widht:100%;height:30px;'>
+      <text style='font-size:13px;float:left;color:gray;'>教龄:</text>
+      <text style='font-size:13px;float:left;color:black;margin-left:10px'>{{detail.teaching}}年教龄</text>
+    </view>
+
+    <view style='margin-left:20px;margin-top:10px;widht:100%;height:30px;'>
+      <text style='font-size:13px;float:left;color:gray;'>授课年级:</text>
+      <text style='font-size:13px;float:left;color:black;margin-left:10px;position:absolute;'>{{detail.nianji_kemu_name}}</text>
+    </view>
+
+    <text style='font-size:17px;font-weight:bold;margin-top:20px;margin-left:20px;'>个人简介</text>
+    <text style='font-size:13px;float:left;color:black;padding:10px;margin-left:20px;'>{{detail.jianjie}}</text>
+
+  </view>
+
+
+  <!-- <view class='intro_container' wx:if='{{activeIndex==1}}'>
+
     <text style='font-size:17px;font-weight:bold;'>基本信息</text>
     <view style='margin-left:20px;margin-top:10px;'>
       <text style='font-size:13px;float:left;color:gray;'>认证情况:</text>
@@ -89,42 +113,11 @@
 4
 本人性格开朗、为人诚恳、乐观向上、兴趣广泛、拥有较强的组织能力和适应能力、并具有较强的管理策划与组织管理协调能力。</text>
 
-  </view>
-
-
-  <view class='intro_container' wx:if='{{activeIndex==1}}'>
-
-    <text style='font-size:17px;font-weight:bold;'>基本信息</text>
-    <view style='margin-left:20px;margin-top:10px;'>
-      <text style='font-size:13px;float:left;color:gray;'>认证情况:</text>
-      <text style='font-size:13px;float:left;color:black;margin-left:10px'>身份证认证/学历认证</text>
-    </view>
-
-    <view style='margin-left:20px;margin-top:10px;'>
-      <text style='font-size:13px;float:left;color:gray;'>教龄:</text>
-      <text style='font-size:13px;float:left;color:black;margin-left:10px'>3年教龄</text>
-    </view>
-
-    <view style='margin-left:20px;margin-top:10px;'>
-      <text style='font-size:13px;float:left;color:gray;'>授课年级:</text>
-      <text style='font-size:13px;float:left;color:black;margin-left:10px'>小学</text>
-    </view>
-
-    <text style='font-size:17px;font-weight:bold;margin-top:20px;'>个人简介</text>
-    <text style='font-size:13px;float:left;color:black;padding:10px;'>1
-          本人性格热情开朗，待人友好，为人诚实谦虚。工作勤奋，认真负责，能吃苦耐劳，尽职尽责，有耐心。具有亲和力，平易近人，善于与人沟通。 
-2
-活泼开朗、乐观向上、兴趣广泛、适应力强、上手快、勤奋好学、脚踏实地、认真负责、坚毅不拔、吃苦耐劳、勇于迎接新挑战。
-3
-忠实诚信,讲原则，说到做到，决不推卸责任；有自制力，做事情始终坚持有始有终，从不半途而废；肯学习,有问题不逃避,愿意虚心向他人学习；自信但不自负,不以自我为中心；愿意以谦虚态度赞扬接纳优越者,权威者；会用100%的热情和精力投入到工作中；平易近人。为人诚恳,性格开朗,积极进取,适应力强、勤奋好学、脚踏实地，有较强的团队精神,工作积极进取,态度认真。
-4
-本人性格开朗、为人诚恳、乐观向上、兴趣广泛、拥有较强的组织能力和适应能力、并具有较强的管理策划与组织管理协调能力。</text>
-
-  </view>
+  </view> -->
 
 
 
-  <view class='intro_container2' wx:if='{{activeIndex==2}}'>
+  <view class='intro_container2' wx:if='{{activeIndex==1}}'>
 
     <!-- <text style='font-size:17px;font-weight:bold;'>基本信息</text> -->
     <!-- <view style='margin-left:20px;margin-top:10px;'>
@@ -137,12 +130,12 @@
         <text style='color:#268746'>100%</text>
       </view>
       <view style='float:right;margin-right:10px;line-height:40px'>
-        <text style='color:#268746'>180</text>条评论</view>
+        <text style='color:#268746'>{{comments.studentNum.commentsNum}}</text>条评论</view>
       <view style='float:right;margin-right:10px;line-height:40px'>
-        <text style='color:#268746'>33</text>位学员</view>
+        <text style='color:#268746'>{{comments.studentNum.studentNum}}</text>位学员</view>
     </view>
 
-    <view class='comment_item' wx:for='{{comments}}'>
+    <view class='comment_item' wx:for='{{comments.data}}'>
 
       <view class='comment_top_layout'>
 

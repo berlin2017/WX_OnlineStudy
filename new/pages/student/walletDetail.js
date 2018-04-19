@@ -1,5 +1,6 @@
 // pages/student/walletDetail.js
 var app = getApp();
+var util = require('../../utils/util.js');
 Page({
 
   /**

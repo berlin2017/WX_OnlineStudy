@@ -4,9 +4,6 @@ var tabs = [
     name: "老师介绍"
   },
   {
-    name: "在售班课"
-  },
-  {
     name: "学员评价"
   }
 ];
@@ -26,7 +23,7 @@ Page({
     activeIndex: 0,//当前展示的Tab项索引
     sliderWidth: 96,//指示器的宽度,计算得到
     contentHeight: 0,//页面除去头部Tabbar后，内容区的总高度，计算得到
-    comments: [],
+    comments: {},
     nomore:false,
     pageIndex:1,
     star: 0,
@@ -37,6 +34,7 @@ Page({
       '好',
       '非常好',
     ],
+    detail:{},
   },
 
   myStarChoose(e) {
@@ -64,31 +62,37 @@ Page({
 
     console.log(options);
     that.setData({
-      image:options.image,
-      name: options.name,
-      info: options.info,
       id:options.openId,
     });
 
-    this.requestComments();
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    this.requestDetail();
+    this.requestComments();
+  },
+
+  requestDetail:function(){
     var that = this;
     wx.showLoading({
       title: '',
     })
     wx.request({
+      // method: 'POST',
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded'
+      // },
       url: 'https://weixin.ywkedu.com/App/teacher_info',
-      data:{
-        'openId':that.data.id
+      data: {
+        'openId': that.data.id
       },
-      success:function(res){
-        this.setData({
-          detail:res.data
+      success: function (res) {
+        console.log(res);
+        that.setData({
+          detail: res.data
         });
         wx.hideLoading();
       },
@@ -120,36 +124,19 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+    this.requestDetail();
+    this.requestComments();
+    wx.stopPullDownRefresh();
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    this.requestComments();
+    // this.requestComments();
   },
 
   requestComments:function(){
-    var list = [
-      { image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', name: '小明', time: '2018-03-21 14:30:00', content: '老师真的很棒，让我体验了做学生的乐趣!!!', score: 0 },
-      { image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', name: '小明', time: '2018-03-21 14:30:00', content: '老师真的很棒，让我体验了做学生的乐趣!!!', score: 1 },
-      { image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', name: '小明', time: '2018-03-21 14:30:00', content: '老师真的很棒，让我体验了做学生的乐趣!!!', score: 2 },
-      { image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', name: '小明', time: '2018-03-21 14:30:00', content: '老师真的很棒，让我体验了做学生的乐趣!!!', score: 3 },
-      { image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', name: '小明', time: '2018-03-21 14:30:00', content: '老师真的很棒，让我体验了做学生的乐趣!!!', score: 4 },
-      { image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', name: '小明', time: '2018-03-21 14:30:00', content: '老师真的很棒，让我体验了做学生的乐趣!!!', score: 5 }
-    ];
-    if (list.length <= 0) {
-      this.setData({
-        nomore: true
-      });
-    }
-    var array = this.data.comments.concat(list);
-    this.setData({
-      comments: array,
-      pageIndex:this.data.pageIndex+1
-    });
-
     var that = this;
     wx.showLoading({
       title: '',

@@ -104,7 +104,7 @@ Page({
         for (var index in that.data.allSubjects) {
           var item = that.data.allSubjects[index];
           
-          if (item.nianji_name === that.data.grades[that.data.currentGrade].name) {
+          if (item.nianji_id === that.data.grades[that.data.currentGrade].id) {
             array.push(item);
           }
         }
@@ -219,20 +219,30 @@ Page({
       filePath: that.data.image,
       name: 'pic',
       formData: {
-        'nianji': that.data.grades[that.data.currentGrade],
-        'kemu': that.data.subjects[that.data.currentSubject],
+        'nianji_id': that.data.grades[that.data.currentGrade].id,
+        'kemu_id': that.data.subjects[that.data.currentSubject].kemu_id,
         'price':price,
         'beizhu':remark,
-        'student_id':app.globalData.myUser.uid,
+        'openId':app.globalData.myUser.openId,
       },
       success: function (res) {
         console.log(res);
         wx.hideLoading();
+        if (res.data.msg == '0') {
+          wx.showToast({
+            title: res.data.data,
+          })
+          return;
+        }
         wx.showToast({
           title: 'success',
           duration:3000,
+          complete:function(res){
+            wx.switchTab({
+              url: 'allOrder',
+            })
+          },
         })
-       
       }
     })
   },

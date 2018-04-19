@@ -15,7 +15,7 @@
       </view>
     </view>
 
-    <input placeholder='输入充值金额' type='number' style='background:whiteSmoke;height:40px;clear:both;margin:10px;margin-top:10px;' value='{{money}}'></input>
+    <!-- <input placeholder='输入充值金额' type='number' style='background:whiteSmoke;height:40px;clear:both;margin:10px;margin-top:10px;' value='{{money}}'></input> -->
 
     <button class='home_send_btn' bindtap='pay'>立即充值</button>
 

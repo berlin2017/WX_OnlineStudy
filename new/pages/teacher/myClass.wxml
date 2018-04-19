@@ -25,13 +25,15 @@
       <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
     </view>
 
+ <include src='../common/empty' wx:if='{{orders.length<=0}}' />
+    <include src='../common/empty' wx:if='{{!orders}}' />
 
-    <view class='item_layout' style='border-radius:10px;width:94%;margin-left:3%;background:#edeff5;margin-top:10px;margin-bottom:10px;display:flex;flex-direction: column;position:relative;overflow:hidden;' wx:for='{{orders}}' bindtap='toDetail' data-index='{{index}}' wx:if='{{item.order_type!=0}}'>
+    <view class='item_layout' style='border-radius:10px;width:94%;margin-left:3%;background:#edeff5;margin-top:10px;margin-bottom:10px;display:flex;flex-direction: column;position:relative;overflow:hidden;' wx:for='{{orders}}' bindtap='toDetail' data-index='{{index}}' wx:if='{{item.state!="0"}}' wx:if='{{orders.length>0}}'>
 
       <view style='display:fixed;'>
-        <view class='subject_name'>{{item.subject}}</view>
+        <view class='subject_name'>{{item.kemu_name}}</view>
 
-        <view class='grade_name'>[{{item.grade}}]</view>
+        <view class='grade_name'>[{{item.nianji_name}}]</view>
       </view>
 
       <view style='display:fixed;'>
@@ -39,10 +41,10 @@
         <view style='float:left;display:flex;flex-direction: column;'>
           <view>
             <image class='user_image' mode='scaleToFill' src='{{item.user_icon}}'></image>
-            <view class='user_name'>{{item.user_name}}</view>
+            <view class='user_name'>{{item.realname}}</view>
           </view>
-          <view class='user_money'>{{item.money}}豆</view>
-          <view class='item_time'>{{item.time}}</view>
+          <view class='user_money'>{{item.price}}豆</view>
+          <view class='item_time'>{{item.create_time}}</view>
         </view>
 
       </view>
@@ -53,10 +55,10 @@
       </view>
 
       <view style='background:#7647a0; width:160px;height:160px;position:absolute;top:-80px;right:-80px;border-radius:80px;color:white;'>
-        <view style='margin-top:100px;width:80px;text-align:center;line-height:20px;' wx:if='{{item.order_type==0}}' >未接单</view>
-        <view style='margin-top:100px;width:80px;text-align:center;line-height:20px;' wx:if='{{item.order_type==1}}' >已接单</view>
-        <view style='margin-top:100px;width:80px;text-align:center;line-height:20px;' wx:if='{{item.order_type==2}}' >授课中</view>
-        <view style='margin-top:100px;width:80px;text-align:center;line-height:20px;' wx:if='{{item.order_type==3}}' >待评价</view>
+        <view style='margin-top:100px;width:80px;text-align:center;line-height:20px;' wx:if='{{item.state=="0"}}' >未接单</view>
+        <view style='margin-top:100px;width:80px;text-align:center;line-height:20px;' wx:if='{{item.state=="1"}}' >已接单</view>
+        <view style='margin-top:100px;width:80px;text-align:center;line-height:20px;' wx:if='{{item.state=="2"}}' >授课中</view>
+        <view style='margin-top:100px;width:80px;text-align:center;line-height:20px;' wx:if='{{item.state=="3"}}' >待评价</view>
       </view>
 
     </view>

@@ -1,14 +1,13 @@
 /* pages/student/myteacher.wxss */
-
 @import '../common/title.wxss';
 
-.item_image{
+.item_image {
   width: 60px;
   height: 60px;
   border-radius: 30px;
 }
 
-.item_name{
+.item_name {
   margin-top: 10px;
   font-size: 19px;
   font-weight: bold;
@@ -16,7 +15,7 @@
   text-align: center;
 }
 
-.item_subject{
+.item_subject {
   margin-top: 10px;
   font-size: 15px;
   color: gray;
@@ -24,7 +23,7 @@
   text-align: center;
 }
 
-.item_layout{
+.item_layout {
   float: left;
   width: 50%;
 }

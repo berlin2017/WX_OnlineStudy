@@ -10,11 +10,6 @@ Page({
     title:'我的老师',
     leftText:'',
     teachers: [
-      { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers:15 ,ages:5,},
-      { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5,},
-      { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5,},
-      { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5,},
-      { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, }
       ],
     inputShowed: false,
     inputVal: ""
@@ -29,40 +24,53 @@ Page({
     this.setData({
       inputVal: "",
       inputShowed: false,
-      teachers: [
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, }
-      ],
+      // teachers: [
+       
+      // ],
     });
   },
   clearInput: function () {
     this.setData({
       inputVal: "",
-      teachers: [
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, },
-        { name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, }
-      ],
+      // teachers: [
+       
+      // ],
     });
   },
   inputTyping: function (e) {
+    console.log(e);
     this.setData({
       inputVal: e.detail.value,
-      teachers: [{ name: '李老师', image: 'http://www.fzlqqqm.com/uploads/allimg/20150806/201508062253342606.jpg', info: '小学语文/数学', numbers: 15, ages: 5, }]
+      // teachers: []
     });
     console.log(e.detail.value);
+    this.search();
+  },
+
+  search:function(){
+    var that = this;
+    wx.showLoading({
+      title: '',
+    })
+    wx.request({
+      url: 'https://weixin.ywkedu.com/App/search_teacher',
+      data: {
+        'name': that.data.inputVal
+      },
+      success: function (res) {
+        that.setData({
+          teachers: res.data
+        });
+        wx.hideLoading();
+      },
+    })
   },
 
   toDetail:function(e){
     var index = e.currentTarget.dataset.index;
     var teacher = this.data.teachers[index];
     wx.navigateTo({
-      url: 'teacherDetail' + '?image=' + teacher.image + '&name=' + teacher.name + '&info=' + teacher.info + '&numbers=' + teacher.numbers + '&ages=' + teacher.ages + '&openId=' + teacher.openId,
+      url: 'teacherDetail' + '?openId=' + teacher.openid,
     })
   },
 
@@ -124,7 +132,8 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+    this.requestList();
+    wx.stopPullDownRefresh();
   },
 
   /**

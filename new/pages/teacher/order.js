@@ -9,12 +9,9 @@ Page({
     title_bg: '#268746',
     inputShowed: false,
     inputVal: "",
-    images: [
-      'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522726278037&di=23a3f6e356fa7b30e251d2dad073faa4&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01499057fc7f95a84a0e282bfe3089.jpg',
-      'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522726278037&di=23a3f6e356fa7b30e251d2dad073faa4&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01499057fc7f95a84a0e282bfe3089.jpg',
-      'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522726278037&di=23a3f6e356fa7b30e251d2dad073faa4&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01499057fc7f95a84a0e282bfe3089.jpg'
-    ],
+    images: [],
     imageWidth: 0,
+    orders:[],
   },
 
   showInput: function () {
@@ -54,7 +51,46 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+
+  },
+
+  requestList: function () {
+    var that = this;
+    wx.showLoading({
+      title: '',
+    })
+    wx.request({
+      url: 'https://weixin.ywkedu.com/App/teacher_indent_my',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        openId: app.globalData.myUser.openId
+      },
+      success: function (res) {
+        console.log(res);
+        wx.hideLoading();
+        if (!res.data) {
+          return;
+        }
+        var array = new Array();
+        for (var i = 0; i < res.data.length; i++) {
+          var item = res.data[i];
+          item.create_time = util.formatTime(new Date(parseInt(item.create_time)));
+          array.push(item);
+        }
+        that.setData({
+          orders: array
+        });
+      },
+      fail: function (res) {
+        wx.hideLoading();
+        wx.showToast({
+          title: '数据请求失败',
+        })
+      },
+    })
   },
 
   /**

@@ -1,4 +1,5 @@
 // pages/student/walletCZ.js
+var app = getApp();
 Page({
 
   /**
@@ -95,12 +96,53 @@ Page({
   },
 
   pay:function(){
-    wx.requestPayment({
-      timeStamp: '',
-      nonceStr: '',
-      package: '',
-      signType: '',
-      paySign: '',
+    var that = this;
+    wx.showLoading({
+      title: '',
+    })
+    wx.login({
+      success: result => {
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        console.log(result);
+        wx.request({
+          url: 'https://weixin.ywkedu.com/App/zhifu',
+          // method: 'POST',
+          // header: {
+          //   'content-type': 'application/x-www-form-urlencoded'
+          // },
+          data: {
+            code: result.code,
+            total_fee: that.data.moneys[that.data.selectIndex].cz_money
+          },
+          success: function (res) {
+            var data = res.data;
+            console.log(data);
+            console.log(res);
+            wx.requestPayment({
+              'timeStamp': data.jsApiParameters.timeStamp,
+              'nonceStr': data.jsApiParameters.nonceStr,
+              'package': data.jsApiParameters.package,
+              'signType': 'MD5',
+              'paySign': data.jsApiParameters.paySign,
+              'success': function (res) {
+                console.log(res);
+                wx.hideLoading();
+                console.log('支付成功');
+              },
+              'fail': function (res) {
+                wx.hideLoading();
+                console.log('支付失败');
+              }
+            })
+          },
+          fail: function (res) {
+            wx.hideLoading();
+            wx.showToast({
+              title: '请求失败',
+            })
+          },
+        })
+      }
     })
   },
 

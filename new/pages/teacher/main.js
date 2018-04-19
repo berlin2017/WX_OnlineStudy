@@ -1,6 +1,7 @@
 // pages/teacher/main.js
 const app = getApp()
 var template = require('tabbar.js');
+var util = require('../../utils/util.js');
 Page({
 
   /**
@@ -8,10 +9,8 @@ Page({
    */
   data: {
     images: [
-      'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522726278037&di=23a3f6e356fa7b30e251d2dad073faa4&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01499057fc7f95a84a0e282bfe3089.jpg',
-      'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522726278037&di=23a3f6e356fa7b30e251d2dad073faa4&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01499057fc7f95a84a0e282bfe3089.jpg',
-      'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522726278037&di=23a3f6e356fa7b30e251d2dad073faa4&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01499057fc7f95a84a0e282bfe3089.jpg'
     ],
+    orders:[],
     imageWidth:0,
   },
 
@@ -30,7 +29,46 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    this.requestPage();
+  },
 
+  requestPage:function(){
+    var that = this;
+    wx.showLoading({
+      title: '',
+    })
+    wx.request({
+      url: 'https://weixin.ywkedu.com/App/teacher_home',
+      data:{
+        openId:app.globalData.myUser.openId
+      },
+      method:'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success:function(e){
+        wx.hideLoading();
+        console.log(e);
+        var array = new Array();
+        if (e.data.indent){
+          for (var i = 0; i < e.data.indent.length; i++) {
+            var item = e.data.indent[i];
+            item.create_time = util.formatTime(new Date(parseInt(item.create_time) * 1000));
+            array.push(item);
+          }
+        }
+        that.setData({
+          images:e.data.slide,
+          orders: array
+        });
+      },
+      fail: function (e) {
+        wx.hideLoading();
+        wx.showToast({
+          title: '请求失败',
+        })
+      },
+    })
   },
 
   /**
@@ -58,7 +96,8 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    this.requestPage();
+    wx.stopPullDownRefresh();
   },
 
   /**

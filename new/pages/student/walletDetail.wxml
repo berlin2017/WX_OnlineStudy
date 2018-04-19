@@ -5,8 +5,9 @@
   <include src='../common/title' />
 
   <view class='content'>
-
-    <view class='list'>
+    <include src='../common/empty' wx:if='{{list.length<=0}}' />
+    <include src='../common/empty' wx:if='{{!list}}' />
+    <view class='list' wx:if='{{list.length>0}}'>
       <view class='item_layout' wx:for='{{list}}'>
         <view class='item_money'>
           <view style='float:left;'>交易金额：</view>

@@ -25,18 +25,20 @@
             <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
         </view>
 
-    <view class="zan-row">
-      <view class="zan-col zan-col-12" wx:for='{{teachers}}' style='display: flex;flex-direction: column;align-items:center;justify-content: space-between;border-bottom: 1px solid gainsboro;border-right: 1px solid gainsboro;padding:10px;width:50%;float:left;box-sizing:border-box;' bindtap='toDetail' data-index='{{index}}'>
+    <include src= '../common/empty' wx:if='{{!students}}'/>
+    <include src= '../common/empty' wx:if='{{students.length<=0}}'/>
+    <view class="zan-row" wx:if='{{students.length>0}}'>
+      <view class="zan-col zan-col-12" wx:for='{{students}}' style='display: flex;flex-direction: column;align-items:center;justify-content: space-between;border-bottom: 1px solid gainsboro;border-right: 1px solid gainsboro;padding:10px;width:50%;float:left;box-sizing:border-box;' bindtap='toDetail' data-index='{{index}}'>
        
-        <image src='{{item.image}}' mode='scaleToFill' class='item_image'></image>
+        <image src='{{item.thumb_pic}}' mode='scaleToFill' class='item_image'></image>
 
-        <view class='item_name'>{{item.name}}</view>
+        <view class='item_name'>{{item.realname}}</view>
 
-        <view class='item_subject'>年级:{{item.grade}}</view>
+        <view class='item_subject'>年级:{{item.ninaji_name}}</view>
 
-        <view class='item_subject'>科目:{{item.subjects}}</view>
+        <view class='item_subject'>学校:{{item.school_name}}</view>
 
-        <view class='item_subject'>备注:{{item.info}}</view>
+        <!-- <view class='item_subject'>备注:{{item.info}}</view> -->
 
 
       </view>

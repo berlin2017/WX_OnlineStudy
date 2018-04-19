@@ -301,7 +301,7 @@ Page({
     if (that.data.selectImage){
       wx.uploadFile({
         url: 'https://weixin.ywkedu.com/App/add_stuInfo',
-        filePath: 'that.data.selectImage',
+        filePath: that.data.selectImage,
         name: 'pic',
         formData:params,
         success: function (res) {
@@ -321,7 +321,10 @@ Page({
       })
     }else{
       wx.request({
-        method: 'GET',
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
         url: 'https://weixin.ywkedu.com/App/add_stuInfo',
         data: params,
         success: function (res) {

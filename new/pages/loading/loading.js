@@ -1,6 +1,8 @@
 // pages/loading/loading.js
 var app = getApp();
 var TIME = 1000;
+var JMessage = require('../../jpush/jmessage-wxapplet-sdk-1.4.0.min.js')
+var md5 = require('../../jpush/md5.js')
 Page({
 
   /**
@@ -100,6 +102,102 @@ Page({
     
   },
 
+  initJpush:function(){
+    var that = this;
+    //jpush
+    var jim = new JMessage({
+      // debug : true
+    });
+    var time = Date.parse(new Date());
+    var random_str = "022cd9fd995849b";
+    var s = "appkey=" + "20a1f8331c8e462116c4d24e" + "&timestamp=" + time + "&random_str=" + random_str + "&key=fc92fd7140c3e9b228d368fb"
+    var signature = md5.hexMD5(s);
+    jim.init({
+      "appkey": "20a1f8331c8e462116c4d24e",
+      "random_str": random_str,
+      "signature": signature,
+      "timestamp": time,
+      "flag": 1,
+    }).onSuccess(function (data) {
+      //TODO
+      console.log('im初始化成功');
+      app.globalData.jim = jim;
+      that.init();
+    }).onFail(function (data) {
+      //TODO
+      console.log('im初始化失败');
+      that.initJpush();
+    });
+    
+  },
+
+  regist:function(){
+    app.globalData.jim.register({
+      'username': result.data.openId,
+      'password': 'ah123456',
+      'is_md5': false,
+      'nickname': app.globalData.userInfo.nickName,
+      'media_id': app.globalData.userInfo.avatarUrl,
+    }).onSuccess(function (data) {
+      //data.code 返回码
+      //data.message 描述
+      app.globalData.jim.login({
+        'username': result.data.openId,
+        'password': 'ah123456'
+      }).onSuccess(function () {
+        wx.showToast({
+          title: '登录成功',
+        })
+        setTimeout(function () {
+          wx.redirectTo({
+            url: '../main/main2',
+          })
+        }, TIME);
+      }).onFail(function (data) {
+        //同上
+        console.log(data);
+        wx.showToast({
+          title: '登录失败',
+        })
+        setTimeout(function () {
+          wx.redirectTo({
+            url: '../main/main2',
+          })
+        }, TIME);
+      });
+    }).onFail(function (data) {
+      // 同上
+      if (data.code == 882002) {
+        app.globalData.jim.login({
+          'username': result.data.openId,
+          'password': 'ah123456'
+        }).onSuccess(function () {
+          wx.showToast({
+            title: '登录成功',
+          })
+          setTimeout(function () {
+            wx.redirectTo({
+              url: '../main/main2',
+            })
+          }, TIME);
+        }).onFail(function (data) {
+          //同上
+          console.log(data);
+          wx.showToast({
+            title: '登录失败',
+          })
+          setTimeout(function () {
+            wx.redirectTo({
+              url: '../main/main2',
+            })
+          }, TIME);
+        });
+      } else {
+        console.log('注册失败');
+      }
+    });
+  },
+
   init: function () {
     var that = this;
     var iv = app.globalData.res.iv;
@@ -135,6 +233,10 @@ Page({
               return;
             }
             app.globalData.myUser = result.data;
+            console.log(app.globalData.jim.isInit());
+            if (!app.globalData.jim || !app.globalData.jim.isInit()){
+              that.initJpush();
+            }
             app.globalData.jim.register({
               'username': result.data.openId,
               'password': 'ah123456',

@@ -1,4 +1,5 @@
 // pages/teacher/userWallet.js
+var app = getApp();
 Page({
 
   /**

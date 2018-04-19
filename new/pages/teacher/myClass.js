@@ -51,7 +51,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    template.tabbar("tabBar", 2, this)//0表示第一个tabbar
+    template.tabbar("tabBar", 1, this)//0表示第一个tabbar
     var width = wx.getSystemInfoSync().windowWidth * 0.4;
     this.setData({
       imageWidth: width
@@ -65,11 +65,50 @@ Page({
 
   },
 
+  requestList: function () {
+    var that = this;
+    wx.showLoading({
+      title: '',
+    })
+    wx.request({
+      url: 'https://weixin.ywkedu.com/App/teacher_indent_my',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        openId: app.globalData.myUser.openId
+      },
+      success: function (res) {
+        console.log(res);
+        wx.hideLoading();
+        if (!res.data) {
+          return;
+        }
+        var array = new Array();
+        for (var i = 0; i < res.data.length; i++) {
+          var item = res.data[i];
+          item.create_time = util.formatTime(new Date(parseInt(item.create_time)));
+          array.push(item);
+        }
+        that.setData({
+          orders: array
+        });
+      },
+      fail: function (res) {
+        wx.hideLoading();
+        wx.showToast({
+          title: '数据请求失败',
+        })
+      },
+    })
+  },
+
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.requestList();
   },
 
   /**
@@ -90,7 +129,8 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    this.requestList();
+    wx.stopPullDownRefresh();
   },
 
   /**

@@ -6,15 +6,15 @@
 
   <view class='top_header' bindtap='toInfo'  >
   
-    <image class='header_image' mode='scaleToFill' src='{{userInfo.icon}}'></image>
+    <image class='header_image' mode='scaleToFill' src='{{userInfo.userInfo.pic ? userInfo.userInfo.pic : wxUser.avatarUrl}}'></image>
 
      <image class='header_arrow' src='../Resources/right_arrow.png'></image>
 
     <view class='header_info_layout'>
     
-       <view class='name_text'>{{userInfo.name}}</view>
+       <view class='name_text'>{{userInfo.name ? userInfo.name : wxUser.nickName}}</view>
 
-       <view class='mobile_text'>{{userInfo.mobile}}</view>
+       <view class='mobile_text'>{{userInfo.userInfo.tel}}</view>
 
       <view style='display:none;'>
        <view class='grade_text'>{{userInfo.grade}}</view>
@@ -33,7 +33,7 @@
     
       <image class='header_arrow2' src='../Resources/right_arrow.png'></image>
 
-      <view class='user_money_number'>￥100.0</view>
+      <view class='user_money_number'>￥{{userInfo.account}}</view>
 
     </view> 
   
@@ -44,7 +44,7 @@
   
     <view class='option1_layout' style='height:{{option_height}}px;width:{{option_height}}px;' bindtap='toWrong'>
     
-      <view class='option1_value' style='line-height:{{option_height-80}}px;'>8</view>
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>{{userInfo.indent.qiangdan}}</view>
 
        <view class='option1_name'>已抢单</view>
     
@@ -52,7 +52,7 @@
 
      <view class='option2_layout' style='height:{{option_height}}px;width:{{option_height}}px;' bindtap='toClass'>
     
-      <view class='option1_value' style='line-height:{{option_height-80}}px;'>12</view>
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>{{userInfo.indent.shangke}}</view>
 
       <view class='option1_name'>上课中</view>
     
@@ -60,7 +60,7 @@
 
      <view class='option3_layout' style='height:{{option_height}}px;width:{{option_height}}px;' bindtap='toOrder'>
     
-      <view class='option1_value' style='line-height:{{option_height-80}}px;'>3</view>
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>{{userInfo.indent.pingjia}}</view>
 
        <view class='option1_name'>学生评价</view>
     
@@ -68,7 +68,7 @@
 
      <view class='option4_layout' style='height:{{option_height}}px;width:{{option_height}}px;' bindtap='toRelease'>
     
-      <view class='option1_value' style='line-height:{{option_height-80}}px;'>0</view>
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>{{userInfo.indent.shouru ? userInfo.indent.shouru :0}}</view>
 
       <view class='option1_name'>今日收入</view>
     

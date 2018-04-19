@@ -80,14 +80,14 @@
       {
         "pagePath": "pages/student/allOrder",
         "text": "我的订单",
-        "iconPath": "pages/Resources/ic_tab_home.png",
-        "selectedIconPath": "pages/Resources/ic_tab_home_light.png"
+        "iconPath": "pages/Resources/tab_order.png",
+        "selectedIconPath": "pages/Resources/tab_order_light.png"
       },
       {
         "pagePath": "pages/student/myteacher",
         "text": "我的老师",
-        "iconPath": "pages/Resources/ic_tab_myteacher.png",
-        "selectedIconPath": "pages/Resources/ic_tab_myteacher.png"
+        "iconPath": "pages/Resources/tab_myteacher.png",
+        "selectedIconPath": "pages/Resources/tab_myteacher_light.png"
       },
     
       {

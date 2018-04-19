@@ -27,6 +27,7 @@
 .info {
   color: white;
   font-size: 15px;
+  margin-left:10px;
 }
 
 .info_layout {
@@ -138,6 +139,7 @@ swiper-item {
   display: flex;
   padding: 10px;
   flex-direction: column;
+  width: 100%;
 }
 
 .intro_container2{
