@@ -1,4 +1,6 @@
 // pages/student/teacherDetail.js
+var app = getApp();
+var util = require('../../utils/util.js');
 var tabs = [
   {
     name: "老师介绍"
@@ -147,6 +149,10 @@ Page({
         'openId':that.data.id,
       },
       success:function(res){
+        console.log(res);
+        for (var i = 0; i < res.data.data.length; i++) {
+          res.data.data[i].time = util.formatTime(new Date(parseInt(res.data.data[i].time) * 1000));
+        }
         that.setData({
           comments:res.data
         });
@@ -180,7 +186,9 @@ Page({
   },
 
   toSend:function(){
-
+    wx.navigateTo({
+      url: 'sendQuestion',
+    })
   }
 
 })

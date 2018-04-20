@@ -44,7 +44,7 @@
   
     <view class='option1_layout' style='height:{{option_height}}px;width:{{option_height}}px;' bindtap='toWrong'>
     
-      <view class='option1_value' style='line-height:{{option_height-80}}px;'>{{userInfo.indent.qiangdan}}</view>
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>{{userInfo.indent.yiqiangSum}}</view>
 
        <view class='option1_name'>已抢单</view>
     
@@ -52,7 +52,7 @@
 
      <view class='option2_layout' style='height:{{option_height}}px;width:{{option_height}}px;' bindtap='toClass'>
     
-      <view class='option1_value' style='line-height:{{option_height-80}}px;'>{{userInfo.indent.shangke}}</view>
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>{{userInfo.indent.shangkeSum}}</view>
 
       <view class='option1_name'>上课中</view>
     
@@ -60,15 +60,15 @@
 
      <view class='option3_layout' style='height:{{option_height}}px;width:{{option_height}}px;' bindtap='toOrder'>
     
-      <view class='option1_value' style='line-height:{{option_height-80}}px;'>{{userInfo.indent.pingjia}}</view>
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>{{userInfo.indent.daipingSum}}</view>
 
-       <view class='option1_name'>待评价</view>
+       <view class='option1_name'>已评价</view>
     
     </view>
 
      <view class='option4_layout' style='height:{{option_height}}px;width:{{option_height}}px;' bindtap='toRelease'>
     
-      <view class='option1_value' style='line-height:{{option_height-80}}px;'>{{userInfo.indent.shouru ? userInfo.indent.shouru :0}}</view>
+      <view class='option1_value' style='line-height:{{option_height-80}}px;'>{{userInfo.indent.num ? userInfo.indent.num :0}}</view>
 
       <view class='option1_name'>今日收入</view>
     

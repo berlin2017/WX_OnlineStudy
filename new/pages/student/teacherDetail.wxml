@@ -14,7 +14,7 @@
 
       <text class='info'>辅导科目:{{detail.nianji_kemu_name}}</text>
 
-      <text class='score'>{{detail.score ? detail.score : 10}}</text>
+      <text class='score'>{{detail.teacher_score ? detail.teacher_score : 10}}</text>
 
     </view>
 
@@ -139,13 +139,13 @@
 
       <view class='comment_top_layout'>
 
-        <image src='{{item.image}}' class='comment_item_image' mode='scaleToFill'></image>
+        <image src='{{item.pic}}' class='comment_item_image' mode='scaleToFill' wx:if='{{item.pic}}'></image>
 
         <view style='display:flex;flex-direction: column;'>
 
-          <view class='comment_item_name'>{{item.name}}</view>
+          <view class='comment_item_name'>{{item.student_name}}</view>
 
-          <view class='comment_item_time'>{{item.time}}</view>
+          <view class='comment_item_time' wx:if='{{item.time}}'>{{item.time}}</view>
 
         </view>
 
@@ -153,14 +153,14 @@
 
           <block wx:for="{{starMap}}" wx:for-item="itemName">
 
-            <text wx:if="{{item.score>=index+1}}" style="padding-right: .5em" class="zan-c-green" data-star="{{index+1}}">★</text>
-            <text wx:if="{{item.score<index+1}}" style="padding-right: .5em" class="zan-c-gray-dark" data-star="{{index+1}}">☆</text>
+            <text wx:if="{{item.score/2>=index+1}}" style="padding-right: .5em" class="zan-c-green" data-star="{{index+1}}">★</text>
+            <text wx:if="{{item.score/2<index+1}}" style="padding-right: .5em" class="zan-c-gray-dark" data-star="{{index+1}}">☆</text>
           </block>
         </view>
 
       </view>
 
-      <view class='comment_item_content'>{{item.content}}</view>
+      <view class='comment_item_content'>{{item.comment}}</view>
 
 
     </view>

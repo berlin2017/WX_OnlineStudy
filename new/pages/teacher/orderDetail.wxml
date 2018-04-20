@@ -61,9 +61,9 @@
 
 
 
-        <button style='height:40px;border-radius:20px;background:{{btn_color}};color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{order.state=="0"||order.state=="3"||order.state=="2"}}' bindtap='jump'>{{btn_text}}</button>
+        <button style='height:40px;border-radius:20px;background:{{btn_color}};color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{order.state=="0"||order.state=="2"}}' bindtap='jump'>{{btn_text}}</button>
 
-        <button style='height:40px;border-radius:20px;background:red;color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{order.state=="2"}}' bindtap='cancel'>结束课程</button>
+        <button style='height:40px;border-radius:20px;background:red;color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{order.state=="2"}}' bindtap='finish'>结束课程</button>
 
 
 

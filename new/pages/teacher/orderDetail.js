@@ -66,7 +66,27 @@ Page({
     })
   },
 
-
+  finish:function(){
+    var that = this;
+    wx.showLoading({
+      title: '',
+    })
+    wx.request({
+      url: 'https://weixin.ywkedu.com/App/class_is_over',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        indent_id: that.data.id
+      },
+      success: function (res) {
+        console.log(res);
+        wx.hideLoading();
+        that.requestDetail();
+      },
+    })
+  },
 
 
   update: function () {

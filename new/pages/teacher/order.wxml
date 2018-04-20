@@ -25,7 +25,7 @@
  <include src='../common/empty' wx:if='{{orders.length<=0}}' />
     <include src='../common/empty' wx:if='{{!orders}}' />
 
-    <view class='item_layout' style='border-radius:10px;width:94%;margin-left:3%;background:#edeff5;margin-top:10px;margin-bottom:10px;display:flex;flex-direction: column;position:relative;overflow:hidden;' wx:for='{{orders}}' bindtap='toDetail' wx:if='{{orders.length>0}}'>
+    <view class='item_layout' style='border-radius:10px;width:94%;margin-left:3%;background:#edeff5;margin-top:10px;margin-bottom:10px;display:flex;flex-direction: column;position:relative;overflow:hidden;' wx:for='{{orders}}' bindtap='toDetail' wx:if='{{orders.length>0}}' data-index='{{index}}'>
 
       <view style='display:fixed;'>
         <view class='subject_name'>{{item.kemu_name}}</view>

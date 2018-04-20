@@ -15,6 +15,7 @@ Page({
     imageWidth: 0,
     orders:[],
     state:0,
+    requestUrl:null,
   },
 
   showInput: function () {
@@ -50,20 +51,25 @@ Page({
     });
     
     var title ='订单列表';
+    var requestUrl = 'https://weixin.ywkedu.com/App/teacher_indent_my'
     switch (options.state){
       case '1':
         title = '已抢单';
+        requestUrl = 'https://weixin.ywkedu.com/App/teacher_yiqiang';
       break;
       case '2':
         title = '上课中';
+        requestUrl = 'https://weixin.ywkedu.com/App/teacher_shangke';
         break;
       case '3':
         title = '待评价';
+        requestUrl = 'https://weixin.ywkedu.com/App/teacher_yiping';
         break;
     }
     this.setData({
       state: options.state,
-      title:title
+      title:title,
+      requestUrl: requestUrl
     });
   },
 
@@ -80,7 +86,7 @@ Page({
       title: '',
     })
     wx.request({
-      url: 'https://weixin.ywkedu.com/App/teacher_indent_my',
+      url: that.data.requestUrl,
       method: 'POST',
       header: {
         'content-type': 'application/x-www-form-urlencoded'
@@ -160,9 +166,11 @@ Page({
       
     })
   },
-  toDetail:function(){
+  toDetail:function(e){
+    var that = this;
+    var item = that.data.orders[e.currentTarget.dataset.index];
     wx.navigateTo({
-      url: 'orderDetail'+'?order_type='+0,
+      url: 'orderDetail'+'?id='+item.indent_id,
     })
   },
 })
