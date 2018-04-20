@@ -435,9 +435,39 @@ Page({
   registe: function (form_data) {
     var that = this;
     console.log(form_data);
-    if (!form_data.detail.value.realname || !form_data.detail.value.tel || !form_data.detail.value.biye_school || !form_data.detail.value.age || !form_data.detail.value.idnumber || !form_data.detail.value.jianjie) {
+    if (!form_data.detail.value.jianjie) {
       wx.showToast({
-        title: '请填写所有资料',
+        title: '请填写简介',
+      })
+      return;
+    }
+    if (!form_data.detail.value.idnumber) {
+      wx.showToast({
+        title: '请填写身份证号码',
+      })
+      return;
+    }
+    if (!form_data.detail.value.age) {
+      wx.showToast({
+        title: '请填写教龄名',
+      })
+      return;
+    }
+    if (!form_data.detail.value.biye_school) {
+      wx.showToast({
+        title: '请填写毕业学校',
+      })
+      return;
+    }
+    if (!form_data.detail.value.tel) {
+      wx.showToast({
+        title: '请填写手机号码',
+      })
+      return;
+    }
+    if (!form_data.detail.value.realname) {
+      wx.showToast({
+        title: '请填写真实姓名',
       })
       return;
     }

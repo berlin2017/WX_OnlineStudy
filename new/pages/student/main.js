@@ -1,4 +1,6 @@
 // pages/student/main.js
+var app = getApp();
+
 Page({
 
   /**
@@ -89,16 +91,44 @@ Page({
   },
 
   toSend:function(){
-    wx.navigateTo({
-      url: 'sendQuestion',
-    })
-    // wx.navigateTo({
-    //   url: '../test/chatList',
-    // })
+    
+    this.requestInfo();
+
   },
   toTest:function(){
     wx.navigateTo({
       url: '../test/chating',
+    })
+  },
+
+  requestInfo: function () {
+    wx.showLoading({
+      title: '',
+    })
+    var that = this;
+    wx.request({
+      method: 'GET',
+      url: 'https://weixin.ywkedu.com/App/student_info',
+      data: {
+        'openId': app.globalData.myUser.openId,
+        'id': app.globalData.myUser.uid,
+      },
+      success: function (res) {
+        console.log(res);
+        wx.hideLoading();
+        if(res.data.userInfo.tel&&res.data.userInfo.realname){
+          wx.navigateTo({
+            url: 'sendQuestion',
+          })
+        }else{
+          wx.showToast({
+            title: '请先完善资料',
+          })
+        }
+      },
+      fail: function (res) {
+        console.log(res);
+      },
     })
   },
 })

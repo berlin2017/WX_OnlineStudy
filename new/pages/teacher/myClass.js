@@ -1,6 +1,7 @@
 // pages/teacher/main.js
 const app = getApp()
 var template = require('tabbar.js');
+var util = require('../../utils/util.js');
 Page({
 
   /**
@@ -13,13 +14,6 @@ Page({
     inputShowed: false,
     inputVal: "",
     orders: [
-      { orderNum: 'KC2018040310000', subject: '地理', user_name: '陈小明', user_icon: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522726278037&di=23a3f6e356fa7b30e251d2dad073faa4&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01499057fc7f95a84a0e282bfe3089.jpg', grade: '高三', remark: '词语的一般解释表册上供填写附注的栏目；第二种意思指在备注栏内所加的注解说明', money: 30, time: '2018-03-29 17:30', order_type: 0, class_type: 0, teacher: '阿飞老师', class_time: '19:00~21:00' },
-
-      { orderNum: 'KC2018040310000', subject: '地理', user_name: '陈小明', user_icon: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522726278037&di=23a3f6e356fa7b30e251d2dad073faa4&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01499057fc7f95a84a0e282bfe3089.jpg', grade: '高三', remark: '词语的一般解释表册上供填写附注的栏目；第二种意思指在备注栏内所加的注解说明', money: 30, time: '2018-03-29 17:30', order_type: 1, class_type: 0, teacher: '阿飞老师', class_time: '19:00~21:00' },
-
-      { orderNum: 'KC2018040310000', subject: '地理', user_name: '陈小明', user_icon: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522726278037&di=23a3f6e356fa7b30e251d2dad073faa4&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01499057fc7f95a84a0e282bfe3089.jpg', grade: '高三', remark: '词语的一般解释表册上供填写附注的栏目；第二种意思指在备注栏内所加的注解说明', money: 30, time: '2018-03-29 17:30', order_type: 2, class_type: 0, teacher: '阿飞老师', class_time: '19:00~21:00' },
-
-      { orderNum: 'KC2018040310000', subject: '地理', user_name: '陈小明', user_icon: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522726278037&di=23a3f6e356fa7b30e251d2dad073faa4&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01499057fc7f95a84a0e282bfe3089.jpg', grade: '高三', remark: '词语的一般解释表册上供填写附注的栏目；第二种意思指在备注栏内所加的注解说明', money: 30, time: '2018-03-29 17:30', order_type: 3, class_type: 0, teacher: '阿飞老师', class_time: '19:00~21:00' },
     ],
     imageWidth: 0,
   },
@@ -88,7 +82,7 @@ Page({
         var array = new Array();
         for (var i = 0; i < res.data.length; i++) {
           var item = res.data[i];
-          item.create_time = util.formatTime(new Date(parseInt(item.create_time)));
+          item.create_time = util.formatTime(new Date(parseInt(item.create_time) * 1000));
           array.push(item);
         }
         that.setData({
@@ -155,8 +149,9 @@ Page({
 
   toDetail: function (e) {
     var item = this.data.orders[e.currentTarget.dataset.index];
+    var that = this;
     wx.navigateTo({
-      url: 'orderDetail' + '?order_type=' + item.order_type,
+      url: 'orderDetail' + '?id=' + item.indent_id,
     })
   },
 

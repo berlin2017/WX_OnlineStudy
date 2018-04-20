@@ -11,13 +11,24 @@ Page({
     },
     option_height: 0,
     wxUser:{},
+    enable:false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    template.tabbar("tabBar", 3, this)//0表示第一个tabbar
+    if(options.enable!= 1){
+      this.setData({
+        enable: true
+      })
+      template.tabbar("tabBar", 3, this)//0表示第一个tabbar
+    }else{
+      this.setData({
+        enable:false
+      })
+    }
+    
   },
 
   /**
@@ -36,7 +47,7 @@ Page({
       wxUser: app.globalData.myUser
     });
 
-    this.requestInfo();
+  
   },
 
   requestInfo: function () {
@@ -71,7 +82,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.requestInfo();
   },
 
   /**
@@ -129,26 +140,26 @@ Page({
 
   toWrong: function () {
     wx.navigateTo({
-      url: 'order' + '?state=2',
+      url: 'order' + '?state=1',
     })
   },
 
   toClass: function () {
     wx.navigateTo({
-      url: 'order' + '?state=3',
+      url: 'order' + '?state=2',
     })
   },
 
   toOrder: function () {
     wx.navigateTo({
-      url: 'order' + '?state=4',
+      url: 'order' + '?state=3',
     })
   },
 
   toRelease: function () {
-    wx.navigateTo({
-      url: 'order' + '?state=5',
-    })
+    // wx.navigateTo({
+    //   url: 'order' + '?state=5',
+    // })
   },
 
   toHelp: function () {

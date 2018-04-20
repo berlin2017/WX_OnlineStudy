@@ -87,6 +87,23 @@ Page({
           wx.navigateTo({
             url: '../teacher/main',
           })
+          // wx.navigateTo({
+          //   url: '../teacher/user?enable=1',
+          // })
+        } else if (res.data.msg == 0){
+          wx.showToast({
+            title: '账户审核中...',
+          })
+          wx.navigateTo({
+            url: '../teacher/user?enable=1',
+          })
+        } else if (res.data.msg == 2) {
+          wx.showToast({
+            title: '账户被冻结,请联系管理员',
+          })
+          wx.navigateTo({
+            url: '../teacher/user?enable=1',
+          })
         }else{
           wx.navigateTo({
             url: '../teacher/regist',

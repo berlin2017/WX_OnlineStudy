@@ -128,6 +128,7 @@ Page({
                 console.log(res);
                 wx.hideLoading();
                 console.log('支付成功');
+                that.requestPaySuccess(data.jsApiParameters.nonceStr);
               },
               'fail': function (res) {
                 wx.hideLoading();
@@ -143,6 +144,38 @@ Page({
           },
         })
       }
+    })
+  },
+
+  requestPaySuccess:function(e){
+    wx.showLoading({
+      title: '',
+    })
+    wx.request({
+      url: 'https://weixin.ywkedu.com/App/zhifu_order',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        openId: app.globalData.myUser.openId,
+        out_trade_no:e,
+        money: that.data.moneys[that.data.selectIndex].cz_money,
+        zeng_money: that.data.moneys[that.data.selectIndex].zs_money
+      },
+      success: function (res) {
+        wx.hideLoading();
+        console.log(res);
+        wx.showToast({
+          title: 'Success',
+        })
+      },
+      fail: function (res) {
+        wx.hideLoading();
+        wx.showToast({
+          title: '请求失败',
+        })
+      },
     })
   },
 

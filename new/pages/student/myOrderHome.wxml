@@ -56,6 +56,8 @@
         <view style='margin-top:100px;width:80px;text-align:center;line-height:20px;' wx:if='{{item.state==1}}' >已接单</view>
         <view style='margin-top:100px;width:80px;text-align:center;line-height:20px;' wx:if='{{item.state==2}}' >授课中</view>
         <view style='margin-top:100px;width:80px;text-align:center;line-height:20px;' wx:if='{{item.state==3}}' >待评价</view>
+        <view style='margin-top:100px;width:80px;text-align:center;line-height:20px;' wx:if='{{item.state==4}}' >已结束</view>
+        <view style='margin-top:100px;width:80px;text-align:center;line-height:20px;' wx:if='{{item.state==5}}' >已取消</view>
       </view>
 
     </view>

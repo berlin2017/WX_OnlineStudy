@@ -1,4 +1,6 @@
 // pages/teacher/orderDetail.js
+var app = getApp();
+var util = require('../../utils/util.js');
 Page({
 
   /**
@@ -12,7 +14,6 @@ Page({
     isShowDialog:false,
     id:null,
     jiajiaInfo:{},
-    teachers: [{ name: 'a' }, { name: 'b' }, { name: 'c' }, { name: 'd' },],
     currentIndex:0,
   },
 
@@ -29,7 +30,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    this.requestDetail();
+    
   },
 
   requestDetail:function(){
@@ -38,7 +39,7 @@ Page({
       title: '',
     })
     wx.request({
-      url: 'https://weixin.ywkedu.com/App/premium',
+      url: 'https://weixin.ywkedu.com/App/student_indentXQ',
       method: 'POST',
       header: {
         'content-type': 'application/x-www-form-urlencoded'
@@ -47,8 +48,15 @@ Page({
         indent_id:that.data.id
       },
       success: function (res) {
+        console.log(res);
         wx.hideLoading();
-        res.data.info.state = '2';
+        if (res.data.info.start_time){
+          res.data.info.start_time = util.formatTime(new Date(parseInt(res.data.info.start_time) * 1000));
+        }
+
+        if (res.data.info.end_time) {
+          res.data.info.end_time = util.formatTime(new Date(parseInt(res.data.info.end_time) * 1000));
+        }
         that.setData({
           order: res.data.info
         });
@@ -175,7 +183,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.requestDetail();
   },
 
   /**
@@ -228,24 +236,100 @@ Page({
       //   url: 'sendQuestion',
       // })
       that.requestJiaJia();
+    } else if (that.data.order.state == '1') {
+
     }else if (that.data.order.state == '2') {
       wx.navigateTo({
-        url: '../test/chating',
+        url: '../test/chating' + '?id='+that.data.order.teachers[0].openid +'&type=2',
       })
     }else if (that.data.order.state == '3'){
   
         wx.navigateTo({
-          url: 'comment' + '?image=' + that.data.order.teacher_icon + '&name=' + that.data.order.teacher + '&info=' + that.data.order.teacher_info+'&star='+that.data.order.star ,
+          url: 'comment' + '?id=' + that.data.order.teachers[0].openid +'&indent_id=' + that.data.id,
       })
     } 
+  },
+
+  confirmTeacher:function(){
+    var that = this;
+    wx.showLoading({
+      title: '',
+    })
+    wx.request({
+      url: 'https://weixin.ywkedu.com/App/confirm_teacher',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        indent_id: that.data.id,
+        teacher_openid: that.data.order.teachers[that.data.currentIndex].openId
+      },
+      success: function (res) {
+        console.log(res);
+        if (res.data.msg == 1) {
+          wx.showToast({
+            title: '成功',
+          })
+          that.setData({
+            isShowDialog: false
+          });
+          that.requestDetail();
+        } else {
+          wx.showToast({
+            title: res.data.data,
+          })
+        }
+      },
+      fail: function () {
+        wx.showToast({
+          title: '请求失败',
+        })
+      },
+    })
   },
 
   commit:function(e){
     var money = e.detail.value.money_input;
     console.log(money);
-    this.setData({
-      isShowDialog: false
-    });
+    
+
+    var that = this;
+    wx.showLoading({
+      title: '',
+    })
+    wx.request({
+      url: 'https://weixin.ywkedu.com/App/update_premium',
+      method:'POST',
+      header:{
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data:{
+        indent_id: that.data.id,
+        price: parseInt(that.data.order.price),
+        jiajia: parseInt(money),
+      },
+      success:function(res){
+        if(res.data.msg == 1){
+          wx.showToast({
+            title: '加价成功',
+          })
+          that.setData({
+            isShowDialog: false
+          });
+          that.requestDetail();
+        }else{
+          wx.showToast({
+            title: res.data.data,
+          })
+        }
+      },
+      fail:function(){
+        wx.showToast({
+          title: '请求失败',
+        })
+      },
+    })
   },
 
   dismiss:function(){
@@ -260,4 +344,12 @@ Page({
     });
   },
   
+
+  toTeacherDetail:function(e){
+    var index = e.currentTarget.dataset.index;
+    var teacher = this.data.order.teachers[index];
+    wx.navigateTo({
+      url: 'teacherDetail' + '?openId=' + teacher.openid,
+    })
+  },
 })

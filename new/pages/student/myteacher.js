@@ -99,6 +99,7 @@ Page({
         'openId': app.globalData.myUser.openId
       },
       success: function (res) {
+        console.log(res);
         that.setData({
           teachers: res.data
         });

@@ -4,7 +4,7 @@
 
   <view class='top_layout'>
 
-    <image src='{{detail.id_pic}}' class='image' mode='sacleToFill'></image>
+    <image src='{{detail.pic}}' class='image' mode='sacleToFill'></image>
 
 
 

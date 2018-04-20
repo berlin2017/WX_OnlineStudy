@@ -13,6 +13,7 @@ Page({
     messageArr: [], //[{text, time, sendOrReceive: 'send', displayTimeHeader, nodes: []},{type: 'geo',geo: {lat,lng,title}}]
     inputValue: '',//文本框输入内容
     focusFlag: false,//控制输入框失去焦点与否
+    user_type:null,
   },
   onUnload() {
 
@@ -22,11 +23,33 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      title: options.nickName,
-      toId: options.name,
-      toNickName: options.nickName,
-      chatToLogo: options.logo
+      toId: options.id,
+      user_type:options.type
     });
+  },
+
+  requestUserInfo:function(){
+    wx.showLoading({
+      title: '',
+    })
+    var that = this;
+    wx.request({
+      url: 'https://weixin.ywkedu.com/App/chat',
+      data:{
+        type: that.data.user_type,
+        openId:that.data.toId,
+      },
+      method:'POST',
+      header:{
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success:function(res){
+        wx.setData({
+          chatToLogo: res.data.avatarUrl,
+          toNickName:'老师'
+        });
+      },
+    })
   },
 
   onShow: function () {

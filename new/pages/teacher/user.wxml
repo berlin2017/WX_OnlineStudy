@@ -1,6 +1,6 @@
 <!--pages/teacher/user.wxml-->
 <import src="tabbar.wxml"/>
-<template is="tabBar" data="{{tabBar:bindData.tabBar}}"/>
+<template is="tabBar" data="{{tabBar:bindData.tabBar}}" wx:if='{{enable}}'/>
 
 <view class='main_container'> 
 
@@ -62,7 +62,7 @@
     
       <view class='option1_value' style='line-height:{{option_height-80}}px;'>{{userInfo.indent.pingjia}}</view>
 
-       <view class='option1_name'>学生评价</view>
+       <view class='option1_name'>待评价</view>
     
     </view>
 

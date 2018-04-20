@@ -1,17 +1,20 @@
 // pages/teacher/order.js
+var app = getApp();
+var util = require('../../utils/util.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    title:'授课',
+    title:'订单列表',
     title_bg: '#268746',
     inputShowed: false,
     inputVal: "",
     images: [],
     imageWidth: 0,
     orders:[],
+    state:0,
   },
 
   showInput: function () {
@@ -45,6 +48,23 @@ Page({
     this.setData({
       imageWidth: width
     });
+    
+    var title ='订单列表';
+    switch (options.state){
+      case '1':
+        title = '已抢单';
+      break;
+      case '2':
+        title = '上课中';
+        break;
+      case '3':
+        title = '待评价';
+        break;
+    }
+    this.setData({
+      state: options.state,
+      title:title
+    });
   },
 
   /**
@@ -77,7 +97,7 @@ Page({
         var array = new Array();
         for (var i = 0; i < res.data.length; i++) {
           var item = res.data[i];
-          item.create_time = util.formatTime(new Date(parseInt(item.create_time)));
+          item.create_time = util.formatTime(new Date(parseInt(item.create_time) * 1000));
           array.push(item);
         }
         that.setData({
@@ -97,7 +117,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    this.requestList();
   },
 
   /**

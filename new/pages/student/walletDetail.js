@@ -123,7 +123,7 @@ Page({
         var array = new Array();
         for (var i = 0; i < res.data.detail.length; i++) {
           var item = res.data.detail[i];
-          item.time = util.formatTime(new Date(item.time));
+          item.time = util.formatTime(new Date(item.time) * 1000);
           array.push(item);
         }
         that.setData({

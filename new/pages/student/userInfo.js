@@ -310,6 +310,9 @@ Page({
           wx.showToast({
             title: '修改成功',
           })
+          wx.navigateBack({
+            
+          })
         },
         fail: function (res) {
           console.log(res);
@@ -332,6 +335,9 @@ Page({
           wx.hideLoading();
           wx.showToast({
             title: '修改成功',
+          })
+          wx.navigateBack({
+
           })
         },
         fail: function (res) {

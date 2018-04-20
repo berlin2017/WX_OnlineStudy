@@ -4,52 +4,56 @@
   <view class='content'>
 
     <view style='width:80%;background:white;margin-left:auto;margin-right:auto;border-radius:10px;margin-top:20px;position:relative;padding-top:10px;'>
-      <image src='{{order.user_icon}}' mode='scaleToFill' class='header_icon'></image>
-      <view class='order_user_name'>{{order.user_name}}</view>
+      <image src='{{order.pic}}' mode='scaleToFill' class='header_icon'></image>
+      <view class='order_user_name'>{{order.student_name}}</view>
 
 
-      <view style='background:#edeff5;padding-bottom:20px;border-radius:10px;'>
+      <view style='background:#edeff5;padding-bottom:20px;border-bottom-left-radius:10px;border-bottom-right-radius:10px;'>
 
 
-        <view class='order_grade_name'>[{{order.grade}}]</view>
-        <view class='order_subject_name'>{{order.subject}}</view>
-        <view style='margin-left:20px;color:gray;width:100%;height:30px;'>
-          <view style='float:left;'>订单号:</view>
-          <view style='margin-left:10px;color:black;float:left;'>{{order.orderNum}}</view>
+        <view class='order_grade_name'>[{{order.nianji_name}}]</view>
+        <view class='order_subject_name'>{{order.kemu_name}}</view>
+        <view style='padding-left:20px;color:gray;width:100%;height:30px;display:flex;'>
+          <view style='float:left;line-height:30px;'>订单号:</view>
+          <view style='margin-left:10px;color:black;float:left;line-height:30px;font-size:13px;'>{{order.order_num}}</view>
         </view>
-        <view style='margin-left:20px;color:gray;width:100%;height:30px;'>
+        <view style='padding-left:20px;color:gray;width:100%;height:30px;display:flex;' wx:if='{{order.teacher}}'>
           <view style='float:left;'>授课老师:</view>
           <view style='margin-left:10px;color:black;float:left;'>{{order.teacher}}</view>
         </view>
-        <view style='margin-left:20px;color:gray;width:100%;height:30px;'>
-          <view style='float:left;'>授课时间:</view>
-          <view style='margin-left:10px;color:black;float:left;'>{{order.class_time}}</view>
+        <view style='padding-left:20px;color:gray;width:100%;height:30px;display:flex;' wx:if='{{order.start_time}}'>
+          <view style='float:left;'>开课时间:</view>
+          <view style='margin-left:10px;color:black;float:left;'>{{order.start_time}}</view>
         </view>
-        <view style='margin-left:20px;color:gray;width:100%;height:30px;'>
+        <view style='padding-left:20px;color:gray;width:100%;height:30px;display:flex;' wx:if='{{order.end_time}}'>
+          <view style='float:left;'>结束时间:</view>
+          <view style='margin-left:10px;color:black;float:left;'>{{order.end_time}}</view>
+        </view>
+        <view style='padding-left:20px;color:gray;width:100%;height:30px;display:flex;'>
           <view style='float:left;'>合计费用:</view>
           <view style='margin-left:10px;color:orangered;float:left;'>{{order.price}}豆</view>
         </view>
-        <view style='margin-left:20px;color:gray;width:100%;height:30px;' wx:if='{{order.state =="0"}}'>
+        <view style='padding-left:20px;color:gray;width:100%;height:30px;display:flex;' wx:if='{{order.state =="0"}}'>
           <view style='float:left;'>状态:</view>
           <view style='margin-left:10px;color:orangered;float:left;'>待接单中...</view>
         </view>
-        <view style='margin-left:20px;color:gray;width:100%;height:30px;' wx:if='{{order.state =="1"}}'>
+        <view style='padding-left:20px;color:gray;width:100%;height:30px;display:flex;' wx:if='{{order.state =="1"}}'>
           <view style='float:left;'>状态:</view>
           <view style='margin-left:10px;color:orangered;float:left;'>确认老师中...</view>
         </view>
-        <view style='margin-left:20px;color:gray;width:100%;height:30px;' wx:if='{{order.state =="2"}}'>
+        <view style='padding-left:20px;color:gray;width:100%;height:30px;display:flex;' wx:if='{{order.state =="2"}}'>
           <view style='float:left;'>状态:</view>
           <view style='margin-left:10px;color:orangered;float:left;'>上课中...</view>
         </view>
-        <view style='margin-left:20px;color:gray;width:100%;height:30px;' wx:if='{{order.state =="3"}}'>
+        <view style='padding-left:20px;color:gray;width:100%;height:30px;display:flex;' wx:if='{{order.state =="3"}}'>
           <view style='float:left;'>状态:</view>
           <view style='margin-left:10px;color:orangered;float:left;'>待评价</view>
         </view>
-        <view style='margin-left:20px;color:gray;width:100%;height:30px;' wx:if='{{order.state =="4"}}'>
+        <view style='padding-left:20px;color:gray;width:100%;height:30px;display:flex;' wx:if='{{order.state =="4"}}'>
           <view style='float:left;'>状态:</view>
           <view style='margin-left:10px;color:orangered;float:left;'>已结束</view>
         </view>
-        <view style='margin-left:20px;color:gray;width:100%;height:30px;' wx:if='{{order.state =="5"}}'>
+        <view style='padding-left:20px;color:gray;width:100%;height:30px;display:flex;' wx:if='{{order.state =="5"}}'>
           <view style='float:left;'>状态:</view>
           <view style='margin-left:10px;color:orangered;float:left;'>已取消</view>
         </view>
@@ -66,14 +70,17 @@
       </view>
      
     </view>
-<view style='margin-left:10px;' wx:if='{{order.state=="1"}}'>  已接单老师:</view>
+<view style='margin-left:10px;width:100%;clear:both' wx:if='{{order.state=="1"&&order.teachers&&order.teachers.length>0}}'>  已接单老师:</view>
 
  <radio-group bindchange="radioChange" wx:if='{{order.state=="1"}}'>
-        <view wx:for='{{teachers}}' style='margin:10px;'>
-          <radio checked="{{currentIndex == index}}" value='{{index}}'>{{item.name}}</radio>
+        <view wx:for='{{order.teachers}}' style='height:60px;margin-left:10px;'>
+          <radio checked="{{currentIndex == index}}" value='{{index}}' style='top:20px;'>{{item.openId}}
+         
+          </radio>
+          <image src='{{item.pic}}' style='width:40px;height:40px;border-radius:20px;top:10px;' mode='scaleToFill' bindtap='toTeacherDetail' data-index='{{index}}'></image>
         </view>
       </radio-group>
-      <button style='height:40px;border-radius:20px;background:red;color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{order.state=="1"}}' bindtap='confirm'>确认老师</button>
+      <button style='height:40px;border-radius:20px;background:red;color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{order.state=="1"}}' bindtap='confirmTeacher'>确认老师</button>
 
   </view>
 </view>

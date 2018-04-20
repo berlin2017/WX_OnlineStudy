@@ -4,19 +4,21 @@
   <include src='../common/title' />
   <view class='content'>
 
+
+
     <view class='top_layout'>
 
-      <image src='{{image}}' class='image' mode='sacleToFill'></image>
+      <image src='{{detail.teacher_info.pic}}' class='image' mode='sacleToFill'></image>
 
 
 
       <view class='info_layout'>
 
-        <text class='name'>{{name}}</text>
+        <text class='name'>{{detail.teacher_info.realname}}</text>
 
-        <text class='info'>{{info}}</text>
+        <text class='info'>辅导科目:{{detail.teacher_info.nianji_kemu_name}}</text>
 
-        <text class='score'>{{star}}</text>
+        <text class='score'>{{detail.teacher_info.score ? detail.teacher_info.score : 10}}</text>
 
       </view>
 
@@ -27,20 +29,22 @@
 
       <block wx:for="{{starMap}}" wx:for-item="itemName">
 
-        <text wx:if="{{myStar>=index+1}}" style="padding-right: .5em" class="zan-c-green" data-star="{{index+1}}" >★</text>
+        <text wx:if="{{myStar>=index+1}}" style="padding-right: .5em" class="zan-c-green" data-star="{{index+1}}">★</text>
         <text wx:if="{{myStar<index+1}}" style="padding-right: .5em" class="zan-c-gray-dark" data-star="{{index+1}}">☆</text>
       </block>
 
-      
+
     </view>
     <view style='float:left;line-height:60px;text-align:center;margin-left:10px;'>{{starMap[myStar-1]}}</view>
 
-    <view style='width:100%;clear:both;'>
-    <view style='margin-left:10px;margin-top:10px;'>评语:</view>
-    <input placeholder='请用一句话概括老师' style='margin-left:20px;margin-right:20px;background:whiteSmoke;border-radius:10px;margin-top:10px;height:40px;'></input>
-    </view>
-    
-     <button style='height:40px;border-radius:20px;background:red;color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' bindtap='commit'>提交评价</button>
+    <form bindsubmit='confirm'>
+      <view style='width:100%;clear:both;'>
+        <view style='margin-left:10px;margin-top:10px;'>评语:</view>
+        <input placeholder='请用一句话概括老师' style='margin-left:20px;margin-right:20px;background:whiteSmoke;border-radius:10px;margin-top:10px;height:40px;' name='input'></input>
+      </view>
+
+      <button style='height:40px;border-radius:20px;background:red;color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' form-type='submit'>提交评价</button>
+    </form>
   </view>
 
 </view>

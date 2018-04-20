@@ -120,9 +120,50 @@ Page({
     })
   },
 
-  toDetail:function(){
+  toDetail:function(e){
+    var that = this;
     wx.navigateTo({
-      url: 'orderDetail',
+      url: 'orderDetail' + '?id=' + that.data.orders[e.currentTarget.dataset.index].indent_id,
+    })
+  },
+
+  confirmOrder:function(e){
+    var that = this;
+    wx.showLoading({
+      title: '',
+    })
+
+    wx.request({
+      url: 'https://weixin.ywkedu.com/App/up_indent',
+      method:'POST',
+      header:{
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data:{
+        indent_id:e.currentTarget.dataset.id,
+        openId:app.globalData.myUser.openId
+      },
+      success:function(res){
+        wx.hideLoading();
+        console.log(res);
+        if(res.data.msg == 1){
+          wx.showToast({
+            title: '抢单成功',
+          })
+          that.requestPage();
+        }else{
+          wx.showToast({
+            title: res.data.data,
+          })
+        }
+        
+      },
+      fail:function(){
+        wx.hideLoading();
+        wx.showToast({
+          title: '请求失败',
+        })
+      },
     })
   },
 
