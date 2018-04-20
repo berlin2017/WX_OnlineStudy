@@ -78,7 +78,8 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       data: {
-        indent_id: that.data.id
+        indent_id: that.data.id,
+        openId:app.globalData.myUser.openId
       },
       success: function (res) {
         console.log(res);
