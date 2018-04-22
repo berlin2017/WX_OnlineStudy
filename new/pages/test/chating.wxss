@@ -58,7 +58,7 @@
   opacity: .6;
 }
  .chatinput-input {
-  width: 440rpx;
+  width: 510rpx;
   min-height: 70rpx; 
   border-radius: 40rpx;
   border: 1px solid #ccc;
@@ -70,7 +70,7 @@
   font-size: 30rpx;
 }
 .chatinput-voice-mask {
-  width: 440rpx;
+  width: 510rpx;
   height: 76rpx; 
   line-height: 76rpx;
   display: inline-block;

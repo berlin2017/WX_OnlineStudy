@@ -229,7 +229,7 @@ Page({
 
     })
   },
-  jump:function(){
+  jump:function(e){
     var that = this;
     if (that.data.order.state == '0'){
       // wx.navigateTo({
@@ -250,11 +250,12 @@ Page({
     } 
   },
 
-  confirmTeacher:function(){
+  confirmTeacher:function(e){
     var that = this;
     wx.showLoading({
       title: '',
     })
+    var teacherid = that.data.order.teachers[that.data.currentIndex].openid;
     wx.request({
       url: 'https://weixin.ywkedu.com/App/confirm_teacher',
       method: 'POST',
@@ -263,7 +264,7 @@ Page({
       },
       data: {
         indent_id: that.data.id,
-        teacher_openid: that.data.order.teachers[that.data.currentIndex].openId
+        teacher_openid: teacherid
       },
       success: function (res) {
         console.log(res);
@@ -274,6 +275,7 @@ Page({
           that.setData({
             isShowDialog: false
           });
+          that.sendMsg(e, teacherid);
           that.requestDetail();
         } else {
           wx.showToast({
@@ -288,13 +290,71 @@ Page({
       },
     })
   },
+  
+  sendMsg:function(e,id){
+    var that = this;
+    wx.showLoading({
+      title: '',
+    })
+    wx.request({
+      url: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx72667dd95df8c05d&secret=d91961063b0948f5607319523f2376b8',
+      success:function(res){
+        var token = res.data.access_token;
+        var d = {
+          touser: id,
+          template_id: 'AnAV2i1TpSQwyp0_so6Sco3OOklPdy032foGZPv85V4',//这个是1、申请的模板消息id，  
+          form_id: e.detail.formId,
+          data: {//测试完发现竟然value或者data都能成功收到模板消息发送成功通知，是bug还是故意？？【鄙视、鄙视、鄙视...】 下面的keyword*是你1、设置的模板消息的关键词变量  
+
+            "keyword1": {
+              "value": '已接单',
+              "color": "#4a4a4a"
+            },
+            "keyword2": {
+              "value": util.formatTime(new Date()),
+              "color": "#9b9b9b"
+            },
+            "keyword3": {
+              "value": that.data.order.student_name,
+              "color": "#9b9b9b"
+            },
+            "keyword4": {
+              "value": that.data.order.order_num,
+              "color": "#9b9b9b"
+            },
+          },
+          color: '#ccc',
+          emphasis_keyword: 'keyword1.DATA'
+        }  
+        wx.request({
+          url: 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token='+token,
+          method:'POST',
+          data:d,
+          success: function (res) {
+            wx.hideLoading();
+            console.log(res);
+          },
+          fail:function(res){
+            wx.hideLoading();
+            console.log(res);
+          },
+        })
+      },
+    })
+  },
 
   commit:function(e){
     var money = e.detail.value.money_input;
     console.log(money);
-    
+  
 
     var that = this;
+    if (parseInt(money) < parseInt(that.data.jiajiaInfo.min_money)) {
+      wx.showToast({
+        title: '最低加价 ' + that.data.jiajiaInfo.min_money,
+      })
+      return;
+    }
     wx.showLoading({
       title: '',
     })

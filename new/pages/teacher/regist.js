@@ -507,8 +507,12 @@ Page({
 
     if(that.data.headerPic){
       that.uploadHeader(form_data);
-    }else{
+    } else if (that.data.idPic){
       that.uploadId(form_data);
+    } else if (that.data.jobPic){
+      that.uploadJob(form_data);
+    }else{
+      that.commit(form_data);
     }
 
   },
@@ -524,12 +528,12 @@ Page({
         params.pic = that.data.userInfo.info.pic;
       }
       if (!that.data.jobUrl) {
-        params.work_pic = that.data.userInfo.info.jobUrl;
+        params.work_pic = that.data.userInfo.info.work_pic;
       }else{
         params.work_pic = that.data.jobUrl;
       }
       if (!that.data.idUrl) {
-        params.id_pic = that.data.userInfo.info.idUrl;
+        params.id_pic = that.data.userInfo.info.id_pic;
       }else{
         params.id_pic = that.data.idUrl;
       }

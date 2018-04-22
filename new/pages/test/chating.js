@@ -14,6 +14,7 @@ Page({
     inputValue: '',//文本框输入内容
     focusFlag: false,//控制输入框失去焦点与否
     user_type:null,
+    showCall:false,
   },
   onUnload() {
 
@@ -26,6 +27,20 @@ Page({
       toId: options.id,
       user_type:options.type
     });
+  },
+
+  cancelCall:function(){
+    this.setData({
+      showCall:false
+    });
+  },
+
+  showCall:function(e){
+    var type = e.currentTarget.dataset.type;
+    this.setData({
+      showCall: true
+    });
+
   },
 
   requestUserInfo:function(){
@@ -44,9 +59,9 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success:function(res){
-        wx.setData({
-          chatToLogo: res.data.avatarUrl,
-          toNickName:'老师'
+        wx.hideLoading();
+        that.setData({
+          chatToLogo: res.data.pic,
         });
       },
     })
@@ -60,8 +75,8 @@ Page({
           'password': 'ah123456'
         })
       }
-
     }
+    this.requestUserInfo();
   },
 
   onReady: function () {

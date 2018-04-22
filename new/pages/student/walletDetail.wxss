@@ -35,6 +35,7 @@
   line-height: 30px;
   text-align: left;
   color: gray;
+  font-size: 13px;
 }
 
 .item_time {

@@ -83,9 +83,11 @@ confirm:function(e){
         wx.showToast({
           title: '感谢你的评价',
         })
-        wx.navigateBack({
-          
-        })
+        setTimeout(function(){
+          wx.navigateBack({
+
+          })
+        },2000);
       }else{
         wx.showToast({
           title: res.data.data,

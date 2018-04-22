@@ -38,6 +38,7 @@
         <text class='form_name'>价格:</text>
         <input class='form_input' value='0' type='number' name='price_input'></input>
      </view>
+        <text class='form_name' style='font-size:13px;'>提示:起步价{{subjects[currentSubject].min_money}}</text>
 
       <textarea class='form_textarea' placeholder='备注' name='remark_input'></textarea>
 

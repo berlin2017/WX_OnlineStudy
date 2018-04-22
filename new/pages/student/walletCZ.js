@@ -128,7 +128,7 @@ Page({
                 console.log(res);
                 wx.hideLoading();
                 console.log('支付成功');
-                that.requestPaySuccess(data.jsApiParameters.nonceStr);
+                that.requestPaySuccess(data.order.out_trade_no);
               },
               'fail': function (res) {
                 wx.hideLoading();
@@ -148,6 +148,7 @@ Page({
   },
 
   requestPaySuccess:function(e){
+    var that = this;
     wx.showLoading({
       title: '',
     })

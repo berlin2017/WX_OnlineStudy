@@ -23,30 +23,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    wx.showLoading({
-      title: '',
-    })
-    var that = this;
-    wx.request({
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      method: 'POST',
-      url: 'https://weixin.ywkedu.com/App/student_account_detail',
-      data: {
-        'openId': app.globalData.myUser.openId,
-      },
-      success: function (res) {
-        console.log(res);
-        that.setData({
-          money: res.data.account
-        });
-        wx.hideLoading();
-      },
-      fail: function (res) {
-        console.log(res);
-      },
-    })
+    this.requestList();
   },
 
   /**
@@ -82,6 +59,7 @@ Page({
    */
   onReachBottom: function () {
     this.requestList();
+    wx.stopPullDownRefresh();
   },
 
   /**
@@ -123,7 +101,7 @@ Page({
         var array = new Array();
         for (var i = 0; i < res.data.detail.length; i++) {
           var item = res.data.detail[i];
-          item.time = util.formatTime(new Date(item.time) * 1000);
+          item.time = util.formatTime(new Date(parseInt(item.time) * 1000));
           array.push(item);
         }
         that.setData({

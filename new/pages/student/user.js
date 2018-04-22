@@ -178,6 +178,7 @@ Page({
       title: '',
     })
     var that = this;
+    var num = Math.floor(Math.random() * 5 + 1);
     wx.request({
       header: {
         'content-type': 'application/x-www-form-urlencoded'
@@ -185,15 +186,19 @@ Page({
       method:'POST',
       url: 'https://weixin.ywkedu.com/App/student_sign',
       data: {
-        'openId': app.globalData.myUser.openId
+        'openId': app.globalData.myUser.openId,
+        'sum':num
       },
       success: function (res) {
         console.log(res);
         wx.hideLoading();
         if(res.data.msg == '1'){
           wx.showToast({
-            title: '签到成功',
+            title: '签到成功,赠送' + num+'优币',
           })
+          setTimeout(function () {
+            that.requestInfo();
+          }, 2000)
         }else{
           wx.showToast({
             title: res.data.data.data,

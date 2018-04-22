@@ -67,6 +67,11 @@ Page({
       },
       success: function (res) {
         console.log(res);
+        if (parseInt(res.data.indent.num)/10000>=1){
+          res.data.indent.num = (parseInt(res.data.indent.num) / 10000).toFixed(1) +'w'
+        } else if (parseInt(res.data.indent.num) / 1000 >= 1){
+          res.data.indent.num = (parseInt(res.data.indent.num) / 1000).toFixed(1) + 'k'
+        }
         that.setData({
           userInfo: res.data
         });

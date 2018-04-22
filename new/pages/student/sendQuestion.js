@@ -199,17 +199,25 @@ Page({
   },
   
   send:function(e){
+    var that =this;
     if (!this.data.image){
       wx.showToast({
         title: '请选择题目照片',
       })
       return;
    }
+
+   
     var price = e.detail.value['price_input'];
     var remark = e.detail.value['remark_input'];
     console.log(price);
     console.log(remark);
-
+    if (parseInt(price) < parseInt(that.data.subjects[that.data.currentSubject].min_money)){
+      wx.showToast({
+        title: '起步价 ' + that.data.subjects[that.data.currentSubject].min_money,
+      })
+      return;
+    }
     wx.showLoading({
       title: '',
     })
@@ -226,23 +234,23 @@ Page({
         'openId':app.globalData.myUser.openId,
       },
       success: function (res) {
+        res = JSON.parse(res.data);
         console.log(res);
         wx.hideLoading();
-        if (res.data.msg == '0') {
+        if (!res.msg == 'ok' && !res.msg == '0') {
           wx.showToast({
-            title: res.data.data,
+            title: res.data,
           })
           return;
         }
         wx.showToast({
           title: 'success',
-          duration:3000,
-          complete:function(res){
-            wx.switchTab({
-              url: 'allOrder',
-            })
-          },
         })
+        setTimeout(function () {
+          wx.switchTab({
+            url: 'allOrder',
+          })
+        }, 2000);
       }
     })
   },
