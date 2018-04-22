@@ -93,6 +93,7 @@ Page({
       },
       success: function (res) {
         console.log(res);
+        res.data.teacher_score = res.data.teacher_score.toFixed(1);
         that.setData({
           detail: res.data
         });

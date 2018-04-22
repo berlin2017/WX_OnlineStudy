@@ -22,7 +22,7 @@
       <!-- 消息记录 -->
       <view class='record-wrapper' id="recordWrapper">
         <view wx:for="{{messageArr}}" wx:for-item="message" wx:key="{{message.time}}">
-          <view class='record-item-time-wrapper' wx:if="{{message.ctime_ms != ''}}">
+          <view class='record-item-time-wrapper' wx:if="{{message.ctime_ms}}">
             <text class='record-item-time'>{{message.ctime_ms}}</text>
           </view>
           <view wx:if="{{message.from_username != toId}}" class='record-chatting-item self' style='justify-content: {{message.type === "tip" ? "center" : "flex-end"}}' data-message="{{message}}" bindlongpress='showEditorMenu'>
@@ -38,10 +38,12 @@
                 << 1>> 1}}''</view>
             </view>
 
-            <view wx:if="{{message.content.msg_type === 'audio'}}" class='audio-wrapper' data-audio="{{message.audio}}" catchtap='playAudio' style='background-color:rgb(128,161,213);color: #000;'>
+            <view wx:if="{{message.content.msg_type === 'file'}}" class='audio-wrapper' data-audio="{{message.content.msg_body.media_id}}" catchtap='playAudio' style='background-color:rgb(128,161,213);color: #000;'>
               <image src='{{iconBase64Map.iconVoiceWhite}}' class='image'></image>
               <text class='text'>{{message.audio.dur / 1000 << 1 >> 1}}''</text>
             </view>
+
+            <image wx:if="{{message.content.msg_type === 'image'}}" src='{{message.content.msg_body.media_id}}' class='record-chatting-item-text' style='width:{{message.content.msg_body.width}}px;height:{{message.content.msg_body.height}}px'></image>
 
             <rich-text nodes="{{message.nodes}}" wx:if="{{message.content.msg_type === 'text'}}" class='record-chatting-item-text'>{{message.content.msg_body.text}}</rich-text>
             <rich-text nodes="{{message.nodes}}" wx:if="{{message.content.msg_type === 'tip'}}" class='tip-rich-text'>{{message.text}}</rich-text>
@@ -64,14 +66,13 @@
                 << 1>> 1}}''</view>
             </view>
 
-            <view wx:if="{{message.content.msg_type === 'audio'}}" data-audio="{{message.audio}}" catchtap='playAudio' class='audio-wrapper'>
+            <view wx:if="{{message.content.msg_type === 'file'}}" data-audio="{{message.content.msg_body.media_id}}" catchtap='playAudio' class='audio-wrapper'>
               <image src='{{iconBase64Map.iconVoiceGrey}}' class='image'></image>
               <text class='text' style='color:#000;'>{{message.audio.dur / 1000 << 1 >> 1}}''</text>
             </view>
 
-            <rich-text  wx:if="{{message.content.msg_type === 'text'}}"
-              class='record-chatting-item-text' style='color:#000;background-color:#fff;'>{{message.content.msg_body.text}}</rich-text>
-              <image  wx:if="{{message.content.msg_type === 'image'}}" src='{{message.content.msg_body.media_id}}' class='record-chatting-item-text' style='width:{{message.content.msg_body.width}}px;height:{{message.content.msg_body.height}}px'></image>
+            <rich-text wx:if="{{message.content.msg_type === 'text'}}" class='record-chatting-item-text' style='color:#000;background-color:#fff;'>{{message.content.msg_body.text}}</rich-text>
+            <image wx:if="{{message.content.msg_type === 'image'}}" src='{{message.content.msg_body.media_id}}' class='record-chatting-item-text' style='width:{{message.content.msg_body.width}}px;height:{{message.content.msg_body.height}}px'></image>
             <rich-text wx:if="{{message.content.msg_type === 'tip'}}" class='tip-rich-text'>{{message.text}}</rich-text>
           </view>
 
@@ -99,12 +100,12 @@
               <image src="../Resources/iconImage@2x.png" class='image'></image>
               <text class='text'>图片</text>
             </view>
-             <view class='more-subcontent-item' catchtap='showCall' data-type='1'>
-               <image src="../Resources/vioce_call.png" class='image'></image> 
+            <view class='more-subcontent-item' catchtap='showCall' data-type='1'>
+              <image src="../Resources/vioce_call.png" class='image'></image>
               <text class='text'>语音通话</text>
             </view>
             <view class='more-subcontent-item' catchtap='showCall' data-type='2'>
-              <image  class='image' src='../Resources/video_call.png'></image>
+              <image class='image' src='../Resources/video_call.png'></image>
               <text class='text'>视频通话</text>
             </view>
 
@@ -121,7 +122,7 @@
               <image src="{{iconBase64Map.iconFingerGuess}}" class='image'></image>
               <text class='text'>猜拳</text>
             </view> -->
-            
+
           </view>
           <!-- <view style='display:flex;justify-content: space-between;'>
             <view class='more-subcontent-item' catchtap='choosePosition'>
@@ -144,20 +145,20 @@
   </view>
 </view>
 
-<view class='call_layout' style='width:100%;height:100%;position:fixed;top:0px;z-index:1000000;background:gray;' wx:if='{{showCall}}'>
+<view class='call_layout' style='width:100%;height:100%;position:fixed;top:0px;z-index:1000000;background:gray;transform: translate(-50%, -50%);' wx:if='{{showCall}}'>
 
   <view class='top_layout' style='margin-top:40px;display:relative;'>
     <image src='{{chatToLogo}}' class='call_logo' wx:if='{{chatToLogo}}' style='width:60px;height:60px;margin-left:20px;float:left;'></image>
     <image src='../Resources/default-icon.png' class='call_logo' wx:if='{{!chatToLogo}}' style='width:60px;height:60px;margin-left:20px;float:left;'></image>
     <view style='float:left;margin-left:15px;'>
-     <view class='call_nickname' style='font-size:17px;color:white;'>berlin</view>
-    <view class='call_tip' style='font-size:13px;color:white;'>正在等待对方接受邀请</view>
+      <view class='call_nickname' style='font-size:17px;color:white;'>berlin</view>
+      <view class='call_tip' style='font-size:13px;color:white;'>正在等待对方接受邀请</view>
     </view>
-   
+
   </view>
 
   <view class='bottom_layout' style='bottom:20px;display:absolute;position:fixed;text-align:center;width:100%;'>
     <image src='../Resources/call_end.png' class='end_call' style='width:40px;height:40px;background:red;border-radius:30px;padding:10px;' bindtap='cancelCall'></image>
     <view class='cancel_text' style='font-size:13px;color:white;'>取消</view>
   </view>
-</view> 
+</view>

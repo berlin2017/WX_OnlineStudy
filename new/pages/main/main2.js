@@ -83,6 +83,7 @@ Page({
       },
       success:function(res){
         wx.hideLoading();
+        console.log(res);
         if(res.data.msg == 1){
           wx.navigateTo({
             url: '../teacher/main',
@@ -102,7 +103,7 @@ Page({
             title: '账户被冻结,请联系管理员',
           })
           wx.navigateTo({
-            url: '../teacher/user?enable=1',
+            url: '../teacher/user?en1able=1',
           })
         }else{
           wx.navigateTo({

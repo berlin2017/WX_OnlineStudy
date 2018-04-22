@@ -155,30 +155,33 @@ Page({
         that.setData({
           subjects: array
         });
-        var array = that.data.userInfo.info.nianji_kemu.split('/');
-        for(var index in array){
-          var str = array[index];
-          var nianji_id = str.substr(0,1);
-          var kemu_ids = str.substr(2,str.length);
-          var kemus = kemu_ids.split(',');
-          for(var index2 in kemus){
-            var kemu_id = kemus[index2];
-            for(var index3 in that.data.subjects){
-              var item = that.data.subjects[index3];
-              if(item.id == nianji_id){
-                var arrar2 = item.subject;
-                for(var index4 in arrar2){
-                  if(arrar2[index4].kemu_id == kemu_id){
-                    arrar2[index4].checked = true;
+        if (that.data.userInfo.info.nianji_kemu){
+          var array = that.data.userInfo.info.nianji_kemu.split('/');
+          for (var index in array) {
+            var str = array[index];
+            var nianji_id = str.substr(0, 1);
+            var kemu_ids = str.substr(2, str.length);
+            var kemus = kemu_ids.split(',');
+            for (var index2 in kemus) {
+              var kemu_id = kemus[index2];
+              for (var index3 in that.data.subjects) {
+                var item = that.data.subjects[index3];
+                if (item.id == nianji_id) {
+                  var arrar2 = item.subject;
+                  for (var index4 in arrar2) {
+                    if (arrar2[index4].kemu_id == kemu_id) {
+                      arrar2[index4].checked = true;
+                    }
                   }
                 }
               }
             }
+            that.setData({
+              subjects: that.data.subjects
+            });
           }
-          that.setData({
-            subjects:that.data.subjects
-          });
         }
+      
 
       },
       fail: function (data) {

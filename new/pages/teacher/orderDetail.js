@@ -176,7 +176,7 @@ Page({
 
     } else if (that.data.order.state == '2') {
       wx.navigateTo({
-        url: '../test/chating' + '?id=' + that.data.order.openid + '&type=1',
+        url: '../test/chating' + '?id=' + that.data.order.student_openid + '&type=1',
       })
     } else if (that.data.order.state == '3') {
 
