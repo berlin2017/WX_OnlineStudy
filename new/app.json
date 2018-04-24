@@ -1,6 +1,8 @@
 {
   "pages": [
     
+    "pages/test/videoCall",
+    "pages/test/videoCall2",
     "pages/loading/loading",
     "pages/main/main2",
     "pages/test/chating",
@@ -8,7 +10,6 @@
     "pages/chat/test",
     "pages/chat/chatRoom",
    "pages/test/chatList",
-    
     "pages/teacher/main",
    
     "pages/teacher/userWallet",

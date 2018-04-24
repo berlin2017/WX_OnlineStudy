@@ -16,64 +16,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // var that = this;
-    // // 调用登录接口
-    // wx.login({
-    //   success(result) {
-    //     if (result) {
-    //       // util.showSuccess('登录成功')
-    //       that.setData({
-    //         userInfo: result,
-    //         logged: true
-    //       })
-    //     } else {
-    //       // 如果不是首次登录，不会返回用户信息，请求用户信息接口获取
-    //       qcloud.request({
-    //         url: config.service.requestUrl,
-    //         login: true,
-    //         success(result) {
-    //           // util.showSuccess('登录成功')
-    //           that.setData({
-    //             userInfo: result.data.data,
-    //             logged: true
-    //           })
-    //         },
 
-    //         fail(error) {
-    //           wx.showModal({
-    //             title: '请求失败',
-    //             content: '请求失败',
-    //             success: function (res) {
-    //               if (res.confirm) {
-    //                 console.log('用户点击确定')
-    //                 // that.init();
-    //               } else if (res.cancel) {
-    //                 console.log('用户点击取消')
-    //               }
-    //             }
-    //           })
-    //           console.log('request fail', error)
-    //         }
-    //       })
-    //     }
-    //   },
-
-    //   fail(error) {
-    //     wx.showModal({
-    //       title: '登录失败',
-    //       content: '登录失败',
-    //       success: function (res) {
-    //         if (res.confirm) {
-    //           console.log('用户点击确定')
-    //           // that.init();
-    //         } else if (res.cancel) {
-    //           console.log('用户点击取消')
-    //         }
-    //       }
-    //     })
-    //     console.log('登录失败', error)
-    //   }
-    // });
 
 
   },
