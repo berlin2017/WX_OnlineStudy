@@ -145,7 +145,7 @@
 
       <checkbox-group name='agreement'>
         <checkbox style='margin:10px;float:left;'  value='1' checked='{{userInfo.info.id ? true :false}}'>
-          <view bindtap='toAgreement'>平台协议</view>
+          <view bindtap='toAgreement'>点击查看注册协议</view>
         </checkbox>
       </checkbox-group>
 

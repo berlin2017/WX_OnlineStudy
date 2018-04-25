@@ -210,8 +210,11 @@ Page({
           wx.showToast({
             title: '抢单成功',
           })
-          that.requestDetail();
-          that.sendMsg(e,0);
+          setTimeout(function(){
+            that.requestDetail();
+            that.sendMsg(e, 0);
+          },2000);
+         
         } else {
           wx.showToast({
             title: res.data.data,

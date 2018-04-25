@@ -271,7 +271,7 @@ Page({
     })
     var params = {};
     e.detail.value.area_id = that.data.userInfo.area[e.detail.value.area_id].id;
-    e.detail.value.school_id = that.data.userInfo.school[e.detail.value.school_id].id;
+    e.detail.value.school_id = that.data.areaSchools[e.detail.value.school_id].id;
     e.detail.value.nianji_id = that.data.userInfo.nianji[e.detail.value.nianji_id].id;
     e.detail.value.openId = app.globalData.myUser.openId;
     if (e.detail.value.realname){

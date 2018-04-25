@@ -587,13 +587,21 @@ Page({
             wx.showToast({
               title: '更新资料成功',
             })
+            setTimeout(function(){
+              wx.navigateBack({
+                
+              })
+            },2000);
           }else{
             wx.showToast({
               title: '注册成功',
             })
-            wx.redirectTo({
-              url: 'main',
-            })
+            setTimeout(function(){
+              wx.redirectTo({
+                url: 'main',
+              })
+            },2000);
+           
           }
          
 

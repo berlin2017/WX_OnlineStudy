@@ -190,43 +190,44 @@
 
 </view>
 
-<view class='voicecall_layout' style='width:100%;height:100%;position:fixed;top:0px;z-index:1000000;background:gray;' wx:if='{{calling}}'>
 
-  <view class='top_layout' style='margin-top:40px;display:relative;' wx:if='{{call_type != 1}}'>
-    <image src='{{chatToLogo}}' class='call_logo' wx:if='{{chatToLogo}}' style='width:60px;height:60px;margin-left:20px;float:left;'></image>
-    <image src='../Resources/default-icon.png' class='call_logo' wx:if='{{!chatToLogo}}' style='width:60px;height:60px;margin-left:20px;float:left;'></image>
-    <view style='float:left;margin-left:15px;'>
-      <view class='call_nickname' style='font-size:17px;color:white;'>{{toNickName}}</view>
-      <view class='call_tip' style='font-size:13px;color:white;'>通话中...</view>
-    </view>
+<view style="width:100%;height: 100%; background-color: black;z-index:1000000000;position:absolute;top:0px;" wx:if='{{calling}}'>
+  <view style="width:100%;height:100%;">
+    <live-player style="width:100%;height:100%; position:absolute;" id="video-livePlayer" mode="live" min-cache="1" max-cache="3" autoplay="true" src="{{otherPlay}}" bindstatechange="onPlayEvent" bindfullscreenchange="onFullScreenChange" enable-camera='{{call_type==1}}'>
 
+
+      <cover-view class='top_layout' style='position:absolute;top:40px;display:flex;width:100%;' wx:if='{{call_type !=1 }} '>
+        <cover-image src='{{chatToLogo}}' class='call_logo' style='width:60px;height:60px;margin-left:20px;'></cover-image>
+        <!-- <cover-image src='../Resources/default-icon.png ' class='call_logo ' wx:if='{{!chatToLogo}} ' style='width:60px;height:60px;margin-left:20px;float:left; '></cover-image> -->
+        <cover-view style='margin-left:15px;'>
+          <cover-view class='call_nickname ' style='font-size:17px;color:white; '>{{toNickName}}</cover-view>
+          <cover-view class='call_tip ' style='font-size:13px;color:white;margin-top:10px;'>通话中...</cover-view>
+        </cover-view>
+
+      </cover-view>
+
+      <cover-view style='position:absolute;bottom:20px;width:100%;text-align:center;'>
+        <cover-image src='../Resources/uncall.png' class='end_call' style='width:60px;height:60px;border-radius:30px;margin-left:auto;margin-right:auto;' bindtap='cancelCall'></cover-image>
+        <cover-view style='font-size:13px;color:white;margin-left:auto;margin-right:auto; '>取消</cover-view>
+      </cover-view>
+
+
+       <cover-view style="width:150px;height: 240px; background-color: black;" wx:if='{{call_type==1}}'>
+        <cover-view style="width:100%;height:100%; position:relative;">
+          <live-pusher style="width:100%; height: 100%;" id="camera-push" waiting-image="https://mc.qcloudimg.com/static/img/daeed8616ac5df256c0591c22a65c4d3/pause_publish.jpg" url="{{selfPush}}" enable-camera='{{call_type==1}} ' autopush="true" bindstatechange="onPushEvent">
+          </live-pusher>
+
+
+        </cover-view>
+      </cover-view> 
+
+       <cover-view style="width:0px;height: 0px; background-color: black;" wx:if='{{call_type==0}}'>
+        <cover-view style="width:100%;height:100%; position:relative;">
+          <live-pusher style="width:100%; height: 100%;" id="camera-push" waiting-image="https://mc.qcloudimg.com/static/img/daeed8616ac5df256c0591c22a65c4d3/pause_publish.jpg" url="{{selfPush}}" enable-camera='{{call_type==1}} ' autopush="true" bindstatechange="onPushEvent">
+          </live-pusher>
+        </cover-view>
+      </cover-view> 
+
+    </live-player>
   </view>
-
-
-  <!-- <camera device-position="front" flash="off" binderror="error" style="width: 180px;; height: 320px;position:relative;" wx:if='{{call_type == 1}}'> -->
-
-    <!-- <cover-view style='width:100%;position:absolute;bottom:10px;'>
-    
-    <cover-image src='../Resources/uncall.png' class='end_call' style='width:60px;height:60px;border-radius:30px;margin-left:auto;margin-right:auto;' bindtap='endCall'></cover-image>
-    <cover-view class='cancel_text' style='font-size:13px;color:white;margin-left:auto;margin-right:auto;text-align:center;margin-top:10px;'>取消</cover-view>
-
-    </cover-view> -->
-
-  <!-- </camera> -->
-
-  <live-pusher url='{{selfPush}}' style="width: 160px;; height: 240px;position:relative;" wx:if='{{call_type == 1}}'>
-
-
-  </live-pusher>
-
-
-   <!-- <live-player src='{{otherPlay}}' style="width: 100%; height: 100%;position:relative;" wx:if='{{call_type == 1}}'>
-
-  </live-player> -->
-
- <view class='bottom_layout' style='bottom:20px;display:absolute;position:fixed;text-align:center;width:100%;'>
-    <image src='../Resources/uncall.png' class='end_call' style='width:60px;height:60px;border-radius:30px;' bindtap='cancelCall'></image>
-    <view class='cancel_text' style='font-size:13px;color:white;'>取消</view>
-  </view>
-
 </view>

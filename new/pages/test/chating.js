@@ -27,6 +27,9 @@ Page({
 
   onHide:function(){
     this.endCall();
+    wx.setKeepScreenOn({
+      keepScreenOn: false,
+    })
   },
 
   onUnload() {
@@ -41,9 +44,6 @@ Page({
       toId: options.id,
       user_type: options.type
     });
-    wx.setTopBarText({
-      text: 'hello, world!'
-    })
     if(options.call_type){
       this.setData({
         showInvite: true,
@@ -84,6 +84,7 @@ Page({
       showInvite: false,
       calling:true
     });
+   
     if (this.data.call_type == 0) {
       this.sendRequest('接受语音通话');
     } else if (this.data.call_type == 1) {
@@ -198,9 +199,9 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success: function (res) {
-
+        console.log(res);
         wx.hideLoading();
-        if (that.data.user_type == 2) {
+        if (that.data.user_type == 1) {
           that.setData({
             chatToLogo: res.data.student_info.pic,
             toNickName: res.data.student_info.realname,
@@ -254,6 +255,9 @@ Page({
       this.initJpush();
     }
     this.requestUserInfo();
+    wx.setKeepScreenOn({
+      keepScreenOn: true,
+    })
   },
 
   initJpush: function () {

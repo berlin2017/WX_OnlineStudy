@@ -1,28 +1,14 @@
-<!--pages/test/videoCall2.wxml-->
-<view class='voicecall_layout' style='width:100%;height:100%;position:fixed;top:0px;z-index:1000000;background:gray;'>
-
-
-
-
-  <!-- <camera device-position="front" flash="off" binderror="error" style="width: 180px;; height: 320px;position:relative;" wx:if='{{call_type == 1}}'> -->
-
-    <!-- <cover-view style='width:100%;position:absolute;bottom:10px;'>
-    
-    <cover-image src='../Resources/uncall.png' class='end_call' style='width:60px;height:60px;border-radius:30px;margin-left:auto;margin-right:auto;' bindtap='endCall'></cover-image>
-    <cover-view class='cancel_text' style='font-size:13px;color:white;margin-left:auto;margin-right:auto;text-align:center;margin-top:10px;'>取消</cover-view>
-
-    </cover-view> -->
-
-  <!-- </camera> -->
-
-  <live-player src='rtmp://22787.liveplay.myqcloud.com/live/22787_oFAg65Orq-qA99GhGCjTxcFwWgb8420' style="width: 160px;; height: 240px;position:relative;">
-
-
-  </live-player>
-
-
-   <!-- <live-player src='{{otherPlay}}' style="width: 100%; height: 100%;position:relative;" wx:if='{{call_type == 1}}'>
-
-  </live-player> -->
-
+<!--pages/push/push.wxml-->
+<view style="width:100%;height: 80%; background-color: black;">
+  <view style="width:100%;height:100%;">
+    <live-pusher
+      style="width:100%; height: 100%;"
+      id="camera-push"
+      waiting-image="https://mc.qcloudimg.com/static/img/daeed8616ac5df256c0591c22a65c4d3/pause_publish.jpg"
+      url="rtmp://3891.livepush.myqcloud.com/live/3891_user_333a75ea_1d51?bizid=3891&txSecret=02c8fbc64b320e87cf8712150e92c633&txTime=5AE91422" 
+      enable-camera="true"
+      autopush="true"
+      bindstatechange="onPushEvent">
+    </live-pusher> 
+  </view>
 </view>

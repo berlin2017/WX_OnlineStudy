@@ -1,28 +1,16 @@
-<!--pages/test/videoCall.wxml-->
-<view class='voicecall_layout' style='width:100%;height:100%;position:fixed;top:0px;z-index:1000000;background:gray;'>
-
-
-
-
-  <!-- <camera device-position="front" flash="off" binderror="error" style="width: 180px;; height: 320px;position:relative;" wx:if='{{call_type == 1}}'> -->
-
-    <!-- <cover-view style='width:100%;position:absolute;bottom:10px;'>
-    
-    <cover-image src='../Resources/uncall.png' class='end_call' style='width:60px;height:60px;border-radius:30px;margin-left:auto;margin-right:auto;' bindtap='endCall'></cover-image>
-    <cover-view class='cancel_text' style='font-size:13px;color:white;margin-left:auto;margin-right:auto;text-align:center;margin-top:10px;'>取消</cover-view>
-
-    </cover-view> -->
-
-  <!-- </camera> -->
-
-  <live-pusher url='rtmp://22787.liveplay.myqcloud.com/live/22787_oFAg65Orq-qA99GhGCjTxcFwWgb8420' style="width: 160px;; height: 240px;position:relative;">
-
-
-  </live-pusher>
-
-
-   <!-- <live-player src='{{otherPlay}}' style="width: 100%; height: 100%;position:relative;" wx:if='{{call_type == 1}}'>
-
-  </live-player> -->
-
-</view>
+<!--pages/play/play.wxml-->
+<view style="width:100%;height: 100%; background-color: black;"> 
+  <view style="width:100%;height:100%; position:relative;">  
+    <live-player
+      style="width:100%;height:100%; position:absolute;"
+      id="video-livePlayer"
+      mode="live"
+      min-cache="1"
+      max-cache="3"
+      autoplay= "true"
+      src="rtmp://live.hkstv.hk.lxdns.com/live/hks" 
+      bindstatechange="onPlayEvent"
+      bindfullscreenchange="onFullScreenChange"> 
+     </live-player>  
+   </view>  
+</view>  

@@ -125,10 +125,45 @@ Page({
     });
   },
 
-  comfirm:function(){
-    this.setData({
-      isShowDialog: false
-    });
+  commit:function(e){
+  
+
+    wx.showLoading({
+      title: '',
+    })
+    var that = this;
+    wx.request({
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      method: 'POST',
+      url: 'https://weixin.ywkedu.com/App/teacher_tixian',
+      data: {
+        'openId': app.globalData.myUser.openId,
+        money:e.detail.value.money,
+        zhifu_account: e.detail.value.account,
+      },
+      success: function (res) {
+        console.log(res);
+        wx.hideLoading();
+        if(res.data.msg == 1){
+          that.setData({
+            isShowDialog: false
+          });
+          wx.showToast({
+            title: '提交成功,请等待',
+          })
+        }else{
+          wx.showToast({
+            title: res.data.data,
+          })
+        }
+       
+      },
+      fail: function (res) {
+        console.log(res);
+      },
+    })
   },
 
 })

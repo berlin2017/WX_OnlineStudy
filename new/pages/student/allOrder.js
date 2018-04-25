@@ -78,7 +78,7 @@ Page({
         var array = new Array();
         for (var i = 0; i < res.data.length; i++) {
           var item = res.data[i];
-          item.create_time = util.formatTime(new Date(parseInt(item.create_time) * 1000));
+          item.time = util.formatTime(new Date(parseInt(item.time) * 1000));
           array.push(item);
         }
         that.setData({

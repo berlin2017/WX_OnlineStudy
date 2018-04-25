@@ -53,7 +53,7 @@ Page({
         if (e.data.indent){
           for (var i = 0; i < e.data.indent.length; i++) {
             var item = e.data.indent[i];
-            item.create_time = util.formatTime(new Date(parseInt(item.create_time) * 1000));
+            item.time = util.formatTime(new Date(parseInt(item.time) * 1000));
             array.push(item);
           }
         }
@@ -150,13 +150,19 @@ Page({
           wx.showToast({
             title: '抢单成功',
           })
-          that.requestPage();
+          setTimeout(function(){
+            // that.requestPage();
+            wx.redirectTo({
+              url: 'myClass',
+            })
+          },2000);
+         
         }else{
           wx.showToast({
             title: res.data.data,
           })
         }
-        
+      
       },
       fail:function(){
         wx.hideLoading();

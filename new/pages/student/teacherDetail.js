@@ -39,6 +39,12 @@ Page({
     detail:{},
   },
 
+  back:function(){
+    wx.navigateBack({
+      
+    })
+  },
+
   myStarChoose(e) {
     let star = parseInt(e.target.dataset.star) || 0;
     this.setData({

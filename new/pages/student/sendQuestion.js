@@ -244,7 +244,7 @@ Page({
           return;
         }
         wx.showToast({
-          title: 'success',
+          title: '发布成功',
         })
         setTimeout(function () {
           wx.switchTab({

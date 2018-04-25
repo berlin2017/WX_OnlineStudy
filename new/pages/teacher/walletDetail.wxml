@@ -11,14 +11,14 @@
       <view class='item_layout' wx:for='{{list}}'>
         <view class='item_money'>
           <view style='float:left;'>金额：</view>
-          <view style='color:orange;float:left;font-size:21px;line-height:30px;text-align:center;'>{{item.price}}优豆</view>
+          <view style='color:orange;float:left;font-size:21px;line-height:30px;text-align:center;'>{{item.money}}优豆</view>
         </view>
 
         <!-- <view class='item_ddbh'>订单编号：{{item.out_trade_no}}</view> -->
-        <view class='item_time' wx:if='{{item.type==1}}'>描述：充值获得{{item.price}}优豆</view>
-         <view class='item_time' wx:if='{{item.type==2}}'>描述：签到获得{{item.price}}优豆</view>
-          <view class='item_time' wx:if='{{item.type==3}}'>描述：退款获得{{item.price}}优豆</view>
-          <view class='item_time' wx:if='{{item.type==4}}'>描述：发布题目减少{{item.price}}优豆</view>
+        <view class='item_time' wx:if='{{item.type==1}}'>描述：订单收入{{item.money}}优豆</view>
+         <view class='item_time' wx:if='{{item.type==2}}'>描述：提现减少{{item.money}}优豆</view>
+          <view class='item_time' wx:if='{{item.type==3}}'>描述：接单奖励获得{{item.money}}优豆</view>
+           <!-- <view class='item_time' wx:if='{{item.type==5}}'>描述：提现失败获得{{item.money}}优豆</view> -->
         <view class='item_time'>时间：{{item.time}}</view>
         
       </view>

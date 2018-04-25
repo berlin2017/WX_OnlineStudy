@@ -3,7 +3,7 @@
 <view class='main_container' style='margin-bottom:50px;'>
 
   <view class='top_layout'>
-
+  <image class='back' src='../Resources/ic_back.png' bindtap='back'></image>
     <image src='{{detail.pic}}' class='image' mode='sacleToFill'></image>
 
 

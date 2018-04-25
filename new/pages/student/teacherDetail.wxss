@@ -10,6 +10,14 @@
   align-items: center;
 }
 
+.back{
+  width: 24px;
+  height: 24px;
+  top: 30px;
+  position:absolute;
+  left:10px;
+}
+
 .image {
   width: 60px;
   height: 60px;

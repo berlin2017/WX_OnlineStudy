@@ -8,6 +8,7 @@ Page({
    */
   data: {
     title: '账单明细',
+    title_bg: '#268746',
     list: [
     ],
   },
@@ -59,7 +60,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-   
+    
   },
 
   /**
@@ -75,7 +76,7 @@ Page({
     })
   },
 
-  requestList:function(){
+  requestList: function () {
     wx.showLoading({
       title: '',
     })
@@ -85,20 +86,20 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       method: 'POST',
-      url: 'https://weixin.ywkedu.com/App/student_account_detail',
+      url: 'https://weixin.ywkedu.com/App/teacher_account_detail',
       data: {
         'openId': app.globalData.myUser.openId,
       },
       success: function (res) {
         console.log(res);
         wx.hideLoading();
-        if(res.data.code == "0"){
+        if (res.data.code == "0") {
           wx.showToast({
             title: res.data.data.data,
           })
           return;
         }
-        if(!res.data){
+        if (!res.data) {
           return;
         }
         var array = new Array();

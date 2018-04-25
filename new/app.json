@@ -1,11 +1,16 @@
 {
   "pages": [
-    
-    "pages/test/videoCall",
-    "pages/test/videoCall2",
     "pages/loading/loading",
+      "pages/test/chating",
+    "pages/test/videoCall2",
+      
+ 
+  
+    "pages/test/videoCall",
+   
+   
     "pages/main/main2",
-    "pages/test/chating",
+   
     "pages/main/main",
     "pages/chat/test",
     "pages/chat/chatRoom",
@@ -13,7 +18,7 @@
     "pages/teacher/main",
    
     "pages/teacher/userWallet",
-   
+   "pages/teacher/walletDetail",
     "pages/student/walletDetail",
   
 
