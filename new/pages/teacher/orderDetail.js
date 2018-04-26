@@ -46,7 +46,8 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       data: {
-        indent_id: that.data.id
+        indent_id: that.data.id,
+        openId:app.globalData.myUser.openId,
       },
       success: function (res) {
         console.log(res);
@@ -63,6 +64,13 @@ Page({
         });
         that.update();
       },
+    })
+  },
+
+  previewImage: function () {
+    var that = this;
+    wx.previewImage({
+      urls: [that.data.order.indent_pic],
     })
   },
 
@@ -84,7 +92,7 @@ Page({
       success: function (res) {
         console.log(res);
         wx.hideLoading();
-        that.sendMsg(e,1);
+        // that.sendMsg(e,1);
         that.requestDetail();
       },
     })
@@ -94,11 +102,8 @@ Page({
   update: function () {
     var color = null;
     var btn_text = null;
+   
     switch (this.data.order.state) {
-      case '0':
-        color = '#7647a0';
-        btn_text = '抢单';
-        break;
       case '2':
         color = '#7647a0';
         btn_text = '进入聊天室';
@@ -107,6 +112,10 @@ Page({
         color = 'orangered';
         btn_text = '立即评价';
         break;
+    }
+    if (this.data.order.msg == 1) {
+      color = '#7647a0';
+      btn_text = '抢单';
     }
     this.setData({
       order: this.data.order,
@@ -119,6 +128,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    app.globalData.isInChatPage = false;
     this.requestDetail();
   },
 
@@ -161,22 +171,24 @@ Page({
 
   },
   back: function () {
+    app.globalData.isInChatPage = false;
     wx.navigateBack({
 
     })
   },
   jump: function (e) {
     var that = this;
-    if (that.data.order.state == '0') {
+    if (that.data.order.state == '0' || that.data.order.state == '1') {
       // wx.navigateTo({
       //   url: 'sendQuestion',
       // })
-      that.confirmOrder(e);
-    } else if (that.data.order.state == '1') {
-
+      if(that.data.order.msg=='1'){
+        that.confirmOrder(e);
+      }
+      
     } else if (that.data.order.state == '2') {
       wx.navigateTo({
-        url: '../test/chating' + '?id=' + that.data.order.student_openid + '&type=1',
+        url: '../test/chating' + '?id=' + that.data.order.student_openid + '&type=1' + '&orderId=' + that.data.id,
       })
     } else if (that.data.order.state == '3') {
 
@@ -201,7 +213,8 @@ Page({
       },
       data: {
         indent_id: that.data.id,
-        openId: app.globalData.myUser.openId
+        openId: app.globalData.myUser.openId,
+        form_id:e.detail.formId,
       },
       success: function (res) {
         wx.hideLoading();
@@ -212,7 +225,7 @@ Page({
           })
           setTimeout(function(){
             that.requestDetail();
-            that.sendMsg(e, 0);
+            // that.sendMsg(e, 0);
           },2000);
          
         } else {
@@ -233,6 +246,7 @@ Page({
   
 
   sendMsg: function (e,msg_type) {
+    console.log(e);
     var title = '已接单';
     if(msg_type == 1){
       title = '已结束';
@@ -246,7 +260,7 @@ Page({
       success: function (res) {
         var token = res.data.access_token;
         var d = {
-          touser: that.data.order.student_openid,
+          touser: app.globalData.myUser.openId,
           template_id: 'AnAV2i1TpSQwyp0_so6Sco3OOklPdy032foGZPv85V4',//这个是1、申请的模板消息id，  
           form_id: e.detail.formId,
           data: {//测试完发现竟然value或者data都能成功收到模板消息发送成功通知，是bug还是故意？？【鄙视、鄙视、鄙视...】 下面的keyword*是你1、设置的模板消息的关键词变量  

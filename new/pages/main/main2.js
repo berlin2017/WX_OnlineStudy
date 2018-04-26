@@ -103,20 +103,20 @@ Page({
           data.messages[index].ctime_ms = util.formatTime(new Date(data.messages[index].ctime_ms));
           var msgs = history.concat(data.messages);
           wx.setStorage({
-            key: data.messages[index].from_username,
+            key: data.messages[index].content.msg_body.extras.orderId,
             data: JSON.stringify(msgs),
           })
         }
         if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '发起视频通话') {
           console.log('发起视频通话');
           wx.navigateTo({
-            url: '../test/chating' + '?id=' + data.messages[0].content.from_id + '&type=' + e + '&call_type=1',
+            url: '../test/chating' + '?id=' + data.messages[0].content.from_id + '&type=' + app.globalData.userType + '&orderId=' + data.messages[index].content.msg_body.extras.orderId + '&call_type=1',
           })
           return;
         } else if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '发起语音通话') {
           console.log('发起语音通话');
           wx.navigateTo({
-            url: '../test/chating' + '?id=' + data.messages[0].content.from_id + '&type=' + e + '&call_type=0',
+            url: '../test/chating' + '?id=' + data.messages[0].content.from_id + '&type=' + app.globalData.userType + '&orderId=' + data.messages[index].content.msg_body.extras.orderId + '&call_type=0',
           })
           return;
         }
@@ -127,7 +127,7 @@ Page({
             if (res.confirm) {
               console.log('用户点击确定')
               wx.navigateTo({
-                url: '../test/chating' + '?id=' + data.messages[0].content.from_id + '&type=' + e,
+                url: '../test/chating' + '?id=' + data.messages[0].content.from_id + '&type=' + app.globalData.userType+ '&orderId=' + data.messages[index].content.msg_body.extras.orderId,
               })
             } else if (res.cancel) {
               console.log('用户点击取消')
@@ -141,7 +141,7 @@ Page({
 
   toTeacherMain: function () {
     this.intMsgReceive(1);
-
+    app.globalData.userType = 1;
     wx.showLoading({
       title: '',
     })
@@ -168,20 +168,27 @@ Page({
           wx.showToast({
             title: '账户审核中...',
           })
-          wx.navigateTo({
-            url: '../teacher/user?enable=1',
-          })
+          setTimeout(function () {
+            wx.navigateTo({
+              url: '../teacher/user?enable=1',
+            })
+          }, 1000);
+
         } else if (res.data.msg == 2) {
           wx.showToast({
             title: '账户被冻结,请联系管理员',
           })
-          wx.navigateTo({
-            url: '../teacher/user?en1able=1',
-          })
+          setTimeout(function () {
+            wx.navigateTo({
+              url: '../teacher/user?en1able=1',
+            })
+          }, 1000);
+
         } else {
           wx.navigateTo({
             url: '../teacher/regist',
           })
+
         }
       },
       fail: function (res) {
@@ -194,6 +201,7 @@ Page({
   },
 
   toStudentMain: function () {
+    app.globalData.userType = 2;
     this.intMsgReceive(2);
     wx.switchTab({
       url: '../student/main',

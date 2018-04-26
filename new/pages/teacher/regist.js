@@ -334,12 +334,17 @@ Page({
       if (s.lastIndexOf(',') == s.length - 1) {
         s = s.substr(0, s.length - 1);
       }
-      id_string = id_string + s + '/';
+      if(s!=''){
+        id_string = id_string + s + '/';
+      }
 
       if (name_str.lastIndexOf(',') == name_str.length - 1) {
         name_str = name_str.substr(0, name_str.length - 1);
       }
-      name_string = name_string + name_str + '/';
+      if (s != '') {
+        name_string = name_string + name_str + '/';
+      }
+     
     }
     if (id_string.lastIndexOf('/') == id_string.length - 1) {
       id_string = id_string.substr(0, id_string.length - 1);
@@ -438,30 +443,30 @@ Page({
   registe: function (form_data) {
     var that = this;
     console.log(form_data);
-    if (!form_data.detail.value.jianjie) {
-      wx.showToast({
-        title: '请填写简介',
-      })
-      return;
-    }
-    if (!form_data.detail.value.idnumber) {
-      wx.showToast({
-        title: '请填写身份证号码',
-      })
-      return;
-    }
-    if (!form_data.detail.value.age) {
-      wx.showToast({
-        title: '请填写教龄名',
-      })
-      return;
-    }
-    if (!form_data.detail.value.biye_school) {
-      wx.showToast({
-        title: '请填写毕业学校',
-      })
-      return;
-    }
+    // if (!form_data.detail.value.jianjie) {
+    //   wx.showToast({
+    //     title: '请填写简介',
+    //   })
+    //   return;
+    // }
+    // if (!form_data.detail.value.idnumber) {
+    //   wx.showToast({
+    //     title: '请填写身份证号码',
+    //   })
+    //   return;
+    // }
+    // if (!form_data.detail.value.age) {
+    //   wx.showToast({
+    //     title: '请填写教龄名',
+    //   })
+    //   return;
+    // }
+    // if (!form_data.detail.value.biye_school) {
+    //   wx.showToast({
+    //     title: '请填写毕业学校',
+    //   })
+    //   return;
+    // }
     if (!form_data.detail.value.tel) {
       wx.showToast({
         title: '请填写手机号码',
@@ -475,24 +480,24 @@ Page({
       return;
     }
 
-    if (that.data.regist_type == '0'&&!this.data.headerPic) {
-      wx.showToast({
-        title: '请选择用户头像',
-      })
-      return;
-    }
-    if (that.data.regist_type == '0' &&!this.data.idPic) {
-      wx.showToast({
-        title: '请选择身份证明',
-      })
-      return;
-    }
-    if (that.data.regist_type == '0' &&!this.data.jobPic) {
-      wx.showToast({
-        title: '请选择工作证明',
-      })
-      return;
-    }
+    // if (that.data.regist_type == '0'&&!this.data.headerPic) {
+    //   wx.showToast({
+    //     title: '请选择用户头像',
+    //   })
+    //   return;
+    // }
+    // if (that.data.regist_type == '0' &&!this.data.idPic) {
+    //   wx.showToast({
+    //     title: '请选择身份证明',
+    //   })
+    //   return;
+    // }
+    // if (that.data.regist_type == '0' &&!this.data.jobPic) {
+    //   wx.showToast({
+    //     title: '请选择工作证明',
+    //   })
+    //   return;
+    // }
 
     if (that.data.regist_type == '0'&&!this.data.nianji_kemu) {
       wx.showToast({
@@ -520,7 +525,64 @@ Page({
 
   },
 
+
+  sendMsg: function (e) {
+    console.log(e);
+    var title = '已接单';
+    var that = this;
+    wx.showLoading({
+      title: '',
+    })
+    wx.request({
+      url: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx72667dd95df8c05d&secret=d91961063b0948f5607319523f2376b8',
+      success: function (res) {
+        var token = res.data.access_token;
+        var d = {
+          touser: app.globalData.myUser.openId,
+          template_id: 'AnAV2i1TpSQwyp0_so6Sco3OOklPdy032foGZPv85V4',//这个是1、申请的模板消息id，  
+          form_id: e.detail.formId,
+          data: {//测试完发现竟然value或者data都能成功收到模板消息发送成功通知，是bug还是故意？？【鄙视、鄙视、鄙视...】 下面的keyword*是你1、设置的模板消息的关键词变量  
+
+            "keyword1": {
+              "value": title,
+              "color": "#4a4a4a"
+            },
+            "keyword2": {
+              "value": util.formatTime(new Date()),
+              "color": "#9b9b9b"
+            },
+            "keyword3": {
+              "value": 'keywords3',
+              "color": "#9b9b9b"
+            },
+            "keyword4": {
+              "value": 'keywords4',
+              "color": "#9b9b9b"
+            },
+          },
+          color: '#ccc',
+          emphasis_keyword: 'keyword1.DATA'
+        }
+        wx.request({
+          url: 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=' + token,
+          method: 'POST',
+          data: d,
+          success: function (res) {
+            wx.hideLoading();
+            console.log(res);
+          },
+          fail: function (res) {
+            wx.hideLoading();
+            console.log(res);
+          },
+        })
+      },
+    })
+  },
+
+
   commit: function (form_data){
+    this.sendMsg(form_data);
     var that = this;
     var params = {};
     var request_url = 'https://weixin.ywkedu.com/App/register';
@@ -529,6 +591,8 @@ Page({
       params.id = that.data.userInfo.info.id;
       if (!that.data.headerUrl) {
         params.pic = that.data.userInfo.info.pic;
+      }else{
+        params.pic = that.data.headerUrl;
       }
       if (!that.data.jobUrl) {
         params.work_pic = that.data.userInfo.info.work_pic;
@@ -555,6 +619,8 @@ Page({
       params.id_pic = that.data.idUrl;
       params.nianji_kemu = that.data.nianji_kemu;
       params.nianji_kemu_name = that.data.nianji_kemu_name;
+      console.log('form_id:' + form_data.detail.formId);
+      params.form_id = form_data.detail.formId;
     }
     
     params.realname = form_data.detail.value.realname;
@@ -594,11 +660,11 @@ Page({
             },2000);
           }else{
             wx.showToast({
-              title: '注册成功',
+              title: '注册成功,请等待审核',
             })
             setTimeout(function(){
               wx.redirectTo({
-                url: 'main',
+                url: '../teacher/user?enable=1',
               })
             },2000);
            
@@ -607,7 +673,7 @@ Page({
 
         } else {
           wx.showToast({
-            title: '请求失败',
+            title: res.data.data.data,
           })
         }
 

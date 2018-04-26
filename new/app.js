@@ -104,6 +104,7 @@ App({
     res:null,
     jim:null,
     userInfo: null,
+    userType:2,
   }  
 
 })

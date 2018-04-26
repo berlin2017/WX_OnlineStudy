@@ -96,9 +96,9 @@ Page({
 
   },
   toTest:function(){
-    wx.navigateTo({
-      url: '../test/chating',
-    })
+    // wx.navigateTo({
+    //   url: '../test/chating',
+    // })
   },
 
   requestInfo: function () {

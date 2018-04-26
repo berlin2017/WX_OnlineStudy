@@ -33,10 +33,11 @@
         <view style='float:left;color:gray;display:inline-block;line-height:40px;width:15%;font-size:15px;margin-left:10px;'>备注:</view>
         <view style='float:left;display:inline;display:inline-block;margin-left:10px;width:78%;font-size:15px;line-height:40px;height:40px;overflow:hidden;'>{{item.beizhu}}</view>
       </view>
-
-      <view style='background:#7647a0; width:160px;height:160px;position:absolute;top:-80px;right:-80px;border-radius:80px;color:white;' catchtap='confirmOrder' data-id='{{item.indent_id}}'>
-        <view style='margin-top:100px;width:80px;text-align:center;line-height:20px;'>抢单</view>
-      </view>
+      <!-- <form bindsubmit='confirmOrder' report-submit> -->
+      <button style='background:#7647a0; width:160px;height:160px;position:absolute;top:-80px;right:-80px;border-radius:80px;color:white;' >
+        <view style='margin-top:100px;width:80px;text-align:center;line-height:20px;'>详情</view>
+       </button> 
+      <!-- </form> -->
     </view>
   <!-- </view> -->
 

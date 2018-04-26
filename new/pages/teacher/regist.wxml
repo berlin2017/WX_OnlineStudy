@@ -7,7 +7,7 @@
 
     <image class='top_image' src='{{headerPic ? headerPic:userInfo.info.pic}}' mode='sacleToFill' bindtap='choseHeader'></image>
 
-    <form style=' display: flex;flex-direction: column;padding-bottom:40px;' bindsubmit='registe'>
+    <form style=' display: flex;flex-direction: column;padding-bottom:40px;' bindsubmit='registe' report-submit>
 
       <view class='item_layout'>
 

@@ -6,13 +6,13 @@
 
   <view class='top_header' bindtap='toInfo'  >
   
-    <image class='header_image' mode='scaleToFill' src='{{userInfo.userInfo.pic ? userInfo.userInfo.pic : wxUser.avatarUrl}}'></image>
+    <image class='header_image' mode='scaleToFill' src='{{userInfo.userInfo.pic!="null" ? userInfo.userInfo.pic : wxUser.avatarUrl}}'></image>
 
      <image class='header_arrow' src='../Resources/right_arrow.png'></image>
 
     <view class='header_info_layout'>
     
-       <view class='name_text'>{{userInfo.name ? userInfo.name : wxUser.nickName}}</view>
+       <view class='name_text'>{{userInfo.userInfo.realname ? userInfo.userInfo.realname : wxUser.nickName}}</view>
 
        <view class='mobile_text'>{{userInfo.userInfo.tel}}</view>
 

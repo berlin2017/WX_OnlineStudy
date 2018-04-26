@@ -11,7 +11,7 @@
     <text class='form_title'>课程需求</text>
   </view>
 
-  <form class='form_layout' bindsubmit='send'>
+  <form class='form_layout' bindsubmit='send' report-submit>
     
      <text style=' float: left;font-size: 15px;color:gray;width:100%;'>请选择题目图片:</text>
      <image src='../Resources/ic_add.png' style='width:80px;height:80px;margin:10px;' wx:if='{{!chosed}}' bindtap='choseImage'></image>

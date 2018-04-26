@@ -123,6 +123,13 @@ Page({
     })
   },
 
+  previewImage:function(){
+    var that = this;
+    wx.previewImage({
+      urls: [that.data.order.indent_pic],
+    })
+  },
+
   comfirm:function(){
     var that = this;
     wx.showLoading({
@@ -240,7 +247,7 @@ Page({
 
     }else if (that.data.order.state == '2') {
       wx.navigateTo({
-        url: '../test/chating' + '?id='+that.data.order.teachers[0].openid +'&type=2',
+        url: '../test/chating' + '?id=' + that.data.order.teachers[0].openid + '&type=2'+'&orderId=' + that.data.id,
       })
     }else if (that.data.order.state == '3'){
   
@@ -264,7 +271,8 @@ Page({
       },
       data: {
         indent_id: that.data.id,
-        teacher_openid: teacherid
+        teacher_openid: teacherid,
+        form_id:e.detail.formId,
       },
       success: function (res) {
         console.log(res);
@@ -275,7 +283,7 @@ Page({
           that.setData({
             isShowDialog: false
           });
-          that.sendMsg(e, teacherid);
+          // that.sendMsg(e, teacherid);
           that.requestDetail();
         } else {
           wx.showToast({
@@ -349,12 +357,23 @@ Page({
   
 
     var that = this;
+    if (!money){
+      wx.showToast({
+        title: '请填写金额',
+      })
+      return;
+    }
+    if (!that.data.jiajiaInfo.min_money || that.data.jiajiaInfo.min_money==0){
+      that.data.jiajiaInfo.min_money = 5;
+    }
+
     if (parseInt(money) < parseInt(that.data.jiajiaInfo.min_money)) {
       wx.showToast({
         title: '最低加价 ' + that.data.jiajiaInfo.min_money,
       })
       return;
     }
+   
     wx.showLoading({
       title: '',
     })

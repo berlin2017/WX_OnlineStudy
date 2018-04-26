@@ -43,7 +43,7 @@
               <text class='text'>{{message.audio.dur / 1000 << 1 >> 1}}''</text>
             </view>
 
-            <image wx:if="{{message.content.msg_type === 'image'}}" src='{{message.content.msg_body.media_id}}' class='record-chatting-item-text' style='width:{{message.content.msg_body.width}}px;height:{{message.content.msg_body.height}}px' bindtap='previewImage'
+            <image wx:if="{{message.content.msg_type === 'image'}}" src='{{message.content.msg_body.media_id}}' class='record-chatting-item-text' style='width:{{parseInt(message.content.msg_body.width)/10}}px;height:{{parseInt(message.content.msg_body.height)/10}}px' bindtap='previewImage'
               data-src='{{message.content.msg_body.media_id}}'></image>
 
             <rich-text nodes="{{message.nodes}}" wx:if="{{message.content.msg_type === 'text'}}" class='record-chatting-item-text'>{{message.content.msg_body.text}}</rich-text>
@@ -73,7 +73,7 @@
             </view>
 
             <rich-text wx:if="{{message.content.msg_type === 'text'}}" class='record-chatting-item-text' style='color:#000;background-color:#fff;'>{{message.content.msg_body.text}}</rich-text>
-            <image wx:if="{{message.content.msg_type === 'image'}}" src='{{message.content.msg_body.media_id}}' class='record-chatting-item-text' style='width:{{message.content.msg_body.width}}px;height:{{message.content.msg_body.height}}px' bindtap='previewImage'
+            <image wx:if="{{message.content.msg_type === 'image'}}" src='{{message.content.msg_body.media_id}}' class='record-chatting-item-text' style='width:{{parseInt(message.content.msg_body.width)/10}}px;height:{{parseInt(message.content.msg_body.height)/10}}px' bindtap='previewImage'
               data-src='{{message.content.msg_body.media_id}}'></image>
             <rich-text wx:if="{{message.content.msg_type === 'tip'}}" class='tip-rich-text'>{{message.text}}</rich-text>
           </view>

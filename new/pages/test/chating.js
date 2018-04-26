@@ -5,6 +5,7 @@ var md5 = require('../../jpush/md5.js')
 
 Page({
   data: {
+    orderId: null,
     chatToLogo: '',
     toId: '',
     toNickName: '',
@@ -18,15 +19,17 @@ Page({
     user_type: null,
     showCall: false,
     loginAccountLogo: null,
-    botoom_view:null,
-    height:0,
-    showInvite:false,
-    call_type:0,
-    calling:false,
+    botoom_view: null,
+    height: 0,
+    showInvite: false,
+    call_type: 0,
+    calling: false,
   },
 
-  onHide:function(){
-    this.endCall();
+  onHide: function () {
+    console.log('onhide');
+    // this.endCall();
+    app.globalData.isInChatPage = false;
     wx.setKeepScreenOn({
       keepScreenOn: false,
     })
@@ -42,23 +45,24 @@ Page({
     console.log(options);
     this.setData({
       toId: options.id,
-      user_type: options.type
+      user_type: options.type,
+      orderId: options.orderId,
     });
-    if(options.call_type){
+    if (options.call_type) {
       this.setData({
         showInvite: true,
-        call_type : options.call_type,
+        call_type: options.call_type,
         showCall: false,
         calling: false
       });
     }
   },
 
-  endCall:function(){
+  endCall: function () {
     this.setData({
       showInvite: false,
       showCall: false,
-      calling:false
+      calling: false
     });
     if (this.data.call_type == 0) {
       this.sendRequest('结束语音通话');
@@ -67,24 +71,24 @@ Page({
     }
   },
 
-  cancelInvite:function(){
+  cancelInvite: function () {
     this.setData({
       showInvite: false
     });
-    if(this.data.call_type == 0){
+    if (this.data.call_type == 0) {
       this.sendRequest('拒绝语音通话');
-    } else if(this.data.call_type == 1){
+    } else if (this.data.call_type == 1) {
       this.sendRequest('拒绝视频通话');
     }
-    
+
   },
 
   acceptInvite: function () {
     this.setData({
       showInvite: false,
-      calling:true
+      calling: true
     });
-   
+
     if (this.data.call_type == 0) {
       this.sendRequest('接受语音通话');
     } else if (this.data.call_type == 1) {
@@ -207,10 +211,10 @@ Page({
             toNickName: res.data.student_info.realname,
             title: res.data.teacher_info.realname,
             loginAccountLogo: res.data.teacher_info.pic,
-            selfPlay : res.data.teacher_info.play,
-            selfPush :res.data.teacher_info.push,
-            otherPlay : res.data.student_info.play,
-            otherPush : res.data.student_info.push,
+            selfPlay: res.data.teacher_info.play,
+            selfPush: res.data.teacher_info.push,
+            otherPlay: res.data.student_info.play,
+            otherPush: res.data.student_info.push,
           });
         } else {
           that.setData({
@@ -218,10 +222,10 @@ Page({
             toNickName: res.data.teacher_info.realname,
             title: res.data.student_info.realname,
             loginAccountLogo: res.data.student_info.pic,
-            selfPlay : res.data.student_info.play,
-            selfPush : res.data.student_info.push,
-            otherPlay : res.data.teacher_info.play,
-            otherPush : res.data.teacher_info.push,
+            selfPlay: res.data.student_info.play,
+            selfPush: res.data.student_info.push,
+            otherPlay: res.data.teacher_info.play,
+            otherPush: res.data.teacher_info.push,
           });
         }
 
@@ -232,7 +236,7 @@ Page({
           });
           that.sendRequest('发起语音通话');
 
-        } else if (e == 1){
+        } else if (e == 1) {
           that.setData({
             showCall: true
           });
@@ -243,10 +247,6 @@ Page({
     })
   },
 
-
-  onHide: function () {
-    app.globalData.isInChatPage = false;
-  },
 
   onShow: function () {
     this.reloadMsg();
@@ -283,7 +283,17 @@ Page({
       app.globalData.jim.login({
         'username': app.globalData.myUser.openId,
         'password': 'ah123456'
-      })
+      }).onSuccess(function () {
+        wx.showToast({
+          title: '登录成功',
+        })
+      }).onFail(function (data) {
+        //同上
+        console.log(data);
+        wx.showToast({
+          title: '登录失败',
+        })
+      });
     }).onFail(function (data) {
       //TODO
       console.log('im初始化失败');
@@ -299,12 +309,13 @@ Page({
     // })
     app.globalData.jim.onMsgReceive(function (data) {
       console.log(data);
-      var history = wx.getStorageSync(that.data.toId);
+      var history = wx.getStorageSync(that.data.orderId);
       if (!history || history == '') {
         history = [];
       } else {
         history = JSON.parse(history);
       }
+      var array = [];
       for (var index in data.messages) {
         if (!app.globalData.isInChatPage) {
           wx.showModal({
@@ -314,7 +325,7 @@ Page({
               if (res.confirm) {
                 console.log('用户点击确定')
                 wx.navigateTo({
-                  url: '../test/chating' + '?id=' + data.messages[0].content.from_id + '&type=' + e,
+                  url: '../test/chating' + '?id=' + data.messages[index].content.from_id + '&type=' + app.globalData.userType + '&orderId=' + data.messages[index].content.msg_body.extras.orderId,
                 })
               } else if (res.cancel) {
                 console.log('用户点击取消')
@@ -332,95 +343,110 @@ Page({
               //data.code 返回码
               //data.message 描述
               //data.url 资源临时访问路径
-              data.messages[index].content.msg_body.media_id = res.url
+              data.messages[index].content.msg_body.media_id = res.url;
+              data.messages[index].ctime_ms = util.formatTime(new Date(data.messages[index].ctime_ms));
+              history.push(data.messages[index]);
+              wx.setStorage({
+                key: that.data.orderId,
+                data: JSON.stringify(history),
+              })
+              that.setData({
+                messageArr: history,
+              });
+              that.scrollToBottom();
+              console.log('------总消息-----');
+              console.log(history);
             }).onFail(function (res) {
               //data.code 返回码
               //data.message 描述
             });
-          } else if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '发起视频通话'){
-            console.log('发起视频通话');
+          } else {
+            if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '发起视频通话') {
+              console.log('发起视频通话');
+              that.setData({
+                showInvite: true,
+                call_type: 1,
+              });
+            } else if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '发起语音通话') {
+              console.log('发起语音通话');
+              that.setData({
+                showInvite: true,
+                call_type: 0,
+              });
+            } else if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '拒绝语音通话') {
+              console.log('拒绝语音通话');
+              that.setData({
+                showCall: false,
+                showInvite: false,
+              });
+            } else if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '拒绝视频通话') {
+              console.log('拒绝视频通话');
+              that.setData({
+                showCall: false,
+                showInvite: false,
+              });
+            } else if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '接受语音通话') {
+              console.log('接受语音通话');
+              that.setData({
+                calling: true,
+                showCall: false,
+                showInvite: false,
+              });
+            } else if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '接受视频通话') {
+              console.log('接受视频通话');
+              that.setData({
+                calling: true,
+                showCall: false,
+                showInvite: false,
+              });
+            }
+            else if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '结束语音通话') {
+              console.log('结束语音通话');
+              that.setData({
+                showInvite: false,
+                showCall: false,
+                calling: false
+              });
+            } else if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '结束视频通话') {
+              console.log('结束视频通话');
+              that.setData({
+                showInvite: false,
+                showCall: false,
+                calling: false
+              });
+            } else if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '取消语音通话') {
+              console.log('取消语音通话');
+              that.setData({
+                showInvite: false,
+                showCall: false,
+                calling: false
+              });
+            } else if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '取消视频通话') {
+              console.log('取消视频通话');
+              that.setData({
+                showInvite: false,
+                showCall: false,
+                calling: false
+              });
+            }
+            data.messages[index].ctime_ms = util.formatTime(new Date(data.messages[index].ctime_ms));
+
+            history.push(data.messages[index]);
+            wx.setStorage({
+              key: that.data.orderId,
+              data: JSON.stringify(history),
+            })
             that.setData({
-              showInvite:true,
-              call_type:1,
+              messageArr: history,
             });
-          } else if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '发起语音通话') {
-            console.log('发起语音通话');
-            that.setData({
-              showInvite: true,
-              call_type: 0,
-            });
-          } else if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '拒绝语音通话') {
-            console.log('拒绝语音通话');
-            that.setData({
-              showCall: false,
-              showInvite: false,
-            });
-          } else if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '拒绝视频通话') {
-            console.log('拒绝视频通话');
-            that.setData({
-              showCall: false,
-              showInvite: false,
-            });
-          } else if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '接受语音通话') {
-            console.log('接受语音通话');
-            that.setData({
-              calling: true,
-              showCall: false,
-              showInvite:false,
-            });
-          } else if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '接受视频通话') {
-            console.log('接受视频通话');
-            that.setData({
-              calling: true,
-              showCall:false,
-              showInvite: false,
-            });
+            that.scrollToBottom();
+            console.log('------总消息-----');
+            console.log(history);
+
           }
-          else if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '结束语音通话') {
-            console.log('结束语音通话');
-            that.setData({
-              showInvite: false,
-              showCall: false,
-              calling: false
-            });
-          } else if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '结束视频通话') {
-            console.log('结束视频通话');
-            that.setData({
-              showInvite: false,
-              showCall: false,
-              calling: false
-            });
-          } else if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '取消语音通话') {
-            console.log('取消语音通话');
-            that.setData({
-              showInvite: false,
-              showCall: false,
-              calling: false
-            });
-          } else if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '取消视频通话') {
-            console.log('取消视频通话');
-            that.setData({
-              showInvite: false,
-              showCall: false,
-              calling: false
-            });
-          }
-          data.messages[index].ctime_ms = util.formatTime(new Date(data.messages[index].ctime_ms));
 
         }
       }
-
-      var msgs = history.concat(data.messages);
-      wx.setStorage({
-        key: that.data.toId,
-        data: JSON.stringify(msgs),
-      })
-      that.setData({
-        messageArr: msgs,
-      });
-      that.scrollToBottom();
-      console.log('------总消息-----');
-      console.log(msgs);
 
     });
 
@@ -428,7 +454,7 @@ Page({
 
   reloadMsg: function () {
     var that = this;
-    var history = wx.getStorageSync(that.data.toId);
+    var history = wx.getStorageSync(that.data.orderId);
     var array = JSON.parse(history);
     console.log(array);
     that.setData({
@@ -452,7 +478,7 @@ Page({
     let self = this
     wx.createSelectorQuery().select('#recordWrapper').boundingClientRect(function (rect) {
       console.log(rect)
-      if(!rect){
+      if (!rect) {
         return;
       }
       if (self.data.emojiFlag || self.data.moreFlag || self.data.focusFlag) {
@@ -462,7 +488,7 @@ Page({
         })
       } else {
         wx.pageScrollTo({
-          scrollTop: rect.height+64,
+          scrollTop: rect.height + 64,
           duration: 100
         })
       }
@@ -1580,7 +1606,7 @@ Page({
       'target_nickname': that.data.toNickName,
       'content': text,
       'appkey': '20a1f8331c8e462116c4d24e',
-      'no_offline': true,
+      'extras': { orderId: that.data.orderId },
     }).onSuccess(function (data, msg) {
       //data.code 返回码
       //data.message 描述
@@ -1611,13 +1637,13 @@ Page({
 
   addSelfMsg: function (msg) {
     var that = this;
-    var history = wx.getStorageSync(that.data.toId);
+    var history = wx.getStorageSync(that.data.orderId);
     if (!history || history == '') {
       history = [];
     } else {
       history = JSON.parse(history);
     }
-    if (msg.from_username == that.data.toId) {
+    if (msg.target_name == that.data.toId) {
 
       if (msg.content.msg_type === 'image' || msg.content.msg_type === 'file') {
         app.globalData.jim.getResource({
@@ -1627,23 +1653,36 @@ Page({
           //data.message 描述
           //data.url 资源临时访问路径
           msg.content.msg_body.media_id = res.url
+          msg.ctime_ms = util.formatTime(new Date(msg.ctime_ms));
+          history.push(msg);
+          wx.setStorage({
+            key: that.data.orderId,
+            data: JSON.stringify(history),
+          })
+          that.setData({
+            messageArr: history,
+          });
+          that.scrollToBottom();
         }).onFail(function (res) {
           //data.code 返回码
           //data.message 描述
         });
+      }else{
+        msg.ctime_ms = util.formatTime(new Date(msg.ctime_ms));
+        history.push(msg);
+        wx.setStorage({
+          key: that.data.orderId,
+          data: JSON.stringify(history),
+        })
+        that.setData({
+          messageArr: history,
+        });
+        that.scrollToBottom();
       }
-      msg.ctime_ms = util.formatTime(new Date(msg.ctime_ms));
+     
 
     }
-    history.push(msg);
-    wx.setStorage({
-      key: that.data.toId,
-      data: JSON.stringify(history),
-    })
-    that.setData({
-      messageArr: history,
-    });
-    that.scrollToBottom();
+   
   },
 
   /**

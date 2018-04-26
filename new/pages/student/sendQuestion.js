@@ -17,6 +17,7 @@ Page({
     subjects: [],
     currentSubject:0,
     allSubjects:[],
+    userInfo:null,
   },
 
   changeGrade:function(e){
@@ -57,8 +58,35 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    this.requestSubjects();
+    this.requestInfo();
   },
+
+  requestInfo: function () {
+    wx.showLoading({
+      title: '',
+    })
+    var that = this;
+    wx.request({
+      method: 'GET',
+      url: 'https://weixin.ywkedu.com/App/student_my',
+      data: {
+        'openId': app.globalData.myUser.openId,
+        'id': app.globalData.myUser.uid,
+      },
+      success: function (res) {
+        console.log(res);
+        that.setData({
+          userInfo: res.data
+        });
+        wx.hideLoading();
+        that.requestSubjects();
+      },
+      fail: function (res) {
+        console.log(res);
+      },
+    })
+  },
+
 
   requestSubjects: function () {
     console.log('----------科目列表---------');
@@ -75,6 +103,7 @@ Page({
         that.setData({
           allSubjects: data.data
         });
+       
         that.requestGrades();
       },
       fail: function (data) {
@@ -98,6 +127,14 @@ Page({
         that.setData({
           grades: data.data
         });
+
+        for (var index in data.data) {
+          if (data.data[index].name == that.data.userInfo.userInfo.nianji_name){
+            that.setData({
+              currentGrade:index,
+            });
+          }
+        }
 
         //设置科目
         var array = [];
@@ -232,6 +269,7 @@ Page({
         'price':price,
         'beizhu':remark,
         'openId':app.globalData.myUser.openId,
+        'form_id':e.detail.formId,
       },
       success: function (res) {
         res = JSON.parse(res.data);
