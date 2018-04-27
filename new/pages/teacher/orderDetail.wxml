@@ -3,7 +3,7 @@
   <include src='../common/title' />
   <view class='content'>
 
-    <view style='width:80%;background:white;margin-left:auto;margin-right:auto;border-radius:10px;margin-top:20px;position:relative;padding-top:10px;'>
+    <view style='width:80%;background:white;margin-left:auto;margin-right:auto;border-radius:10px;margin-top:20px;position:relative;padding-top:10px;margin-bottom:20px;'>
       <image src='{{order.pic}}' mode='scaleToFill' class='header_icon'></image>
       <view class='order_user_name'>{{order.student_name}}</view>
 
@@ -53,15 +53,24 @@
           <view style='float:left;'>状态:</view>
           <view style='margin-left:10px;color:orangered;float:left;'>已结束</view>
         </view>
+         <view style='padding-left:20px;color:gray;width:100%;height:30px;display:flex;' wx:if='{{order.state =="4"}}'>
+          <view style='float:left;'>评分:</view>
+          <view style='margin-left:10px;color:orangered;float:left;'>{{order.score}}</view>
+        </view>
+         <view style='padding-left:20px;color:gray;width:100%;height:30px;display:flex;' wx:if='{{order.state =="4"}}'>
+          <view style='float:left;'>评价:</view>
+          <view style='margin-left:10px;color:orangered;float:left;'>{{order.comment}}</view>
+        </view>
         <view style='padding-left:20px;color:gray;width:100%;height:30px;display:flex;' wx:if='{{order.state =="5"}}'>
           <view style='float:left;'>状态:</view>
           <view style='margin-left:10px;color:orangered;float:left;'>已取消</view>
         </view>
 
-        <view style='padding-left:20px;color:gray;width:100%;height:30px;display:flex;' wx:if='{{order.msg =="0"}}'>
+        <view style='padding-left:20px;color:gray;width:100%;height:30px;display:flex;' wx:if='{{order.msg =="0"&&order.state == "1"}}'>
           <view style='float:left;'>状态:</view>
           <view style='margin-left:10px;color:orangered;float:left;'>已抢单,待确认</view>
         </view>
+
 
         <view style='padding-left:20px;color:gray;width:100%;height:30px;display:flex;' wx:if='{{order.indent_pic}}'>
           <view style='float:left;'>详情:</view>
@@ -76,7 +85,11 @@
 
 
         <form name='test' report-submit bindsubmit='jump'>
-          <button style='height:40px;border-radius:20px;background:{{btn_color}};color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{order.msg=="1"||order.state=="2"}}' form-type='submit'>{{btn_text}}</button>
+          <button style='height:40px;border-radius:20px;background:{{btn_color}};color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{order.state=="2"}}' form-type='submit'>{{btn_text}}</button>
+
+           <button style='height:40px;border-radius:20px;background:{{btn_color}};color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{order.msg=="1"&&order.state=="0"}}' form-type='submit'>{{btn_text}}</button>
+
+           <button style='height:40px;border-radius:20px;background:{{btn_color}};color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{order.msg=="1"&&order.state=="1"}}' form-type='submit'>{{btn_text}}</button>
         </form>
 
         <form name='test2' report-submit bindsubmit='finish'>

@@ -1,5 +1,5 @@
 <!--pages/teacher/order.wxml-->
-<view class='main_container'>
+<view class='main_container' style='margin-bottom:106rpx;'>
 
   <include src='../common/title' />
 

@@ -3,7 +3,7 @@
   <include src='../common/title' />
   <view class='content'>
 
-    <view style='width:80%;background:white;margin-left:auto;margin-right:auto;border-radius:10px;margin-top:20px;position:relative;padding-top:10px;'>
+    <view style='width:80%;background:white;margin-left:auto;margin-right:auto;border-radius:10px;margin-top:20px;position:relative;padding-top:10px;margin-bottom:20px;'>
       <image src='{{order.pic}}' mode='scaleToFill' class='header_icon'></image>
       <view class='order_user_name'>{{order.student_name}}</view>
 

@@ -2,7 +2,7 @@
 <import src="tabbar.wxml"/>
 <template is="tabBar" data="{{tabBar:bindData.tabBar}}" wx:if='{{enable}}'/>
 
-<view class='main_container'> 
+<view class='main_container' style='margin-bottom:106rpx;'> 
 
   <view class='top_header' bindtap='toInfo'  >
   
@@ -76,7 +76,7 @@
   
   </view> 
 
-  <view class='user_help_layout' style='margin-bottom:60px;'  bindtap='toHelp'>
+  <view class='user_help_layout'  bindtap='toHelp'>
   
     <image src='../Resources/ic_user_yue.png' mode='scaleToFill' class='user_help_image'></image>
 

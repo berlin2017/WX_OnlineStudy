@@ -307,12 +307,21 @@ Page({
         success: function (res) {
           console.log(res);
           wx.hideLoading();
-          wx.showToast({
-            title: '修改成功',
-          })
-          wx.navigateBack({
-            
-          })
+          if(res.data.msg==1){
+            wx.showToast({
+              title: '修改成功',
+            })
+            setTimeout(function () {
+              wx.navigateBack({
+
+              })
+            }, 1000);
+          }else{
+            wx.showToast({
+              title: res.data.data.data,
+            })
+          }
+         
         },
         fail: function (res) {
           console.log(res);
@@ -333,12 +342,21 @@ Page({
         success: function (res) {
           console.log(res);
           wx.hideLoading();
-          wx.showToast({
-            title: '修改成功',
-          })
-          wx.navigateBack({
+          if (res.data.msg == 1) {
+            wx.showToast({
+              title: '修改成功',
+            })
+            setTimeout(function () {
+              wx.navigateBack({
 
-          })
+              })
+            }, 1000);
+          } else {
+            wx.showToast({
+              title: res.data.data.data,
+            })
+          }
+
         },
         fail: function (res) {
           console.log(res);

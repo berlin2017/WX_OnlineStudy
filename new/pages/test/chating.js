@@ -24,6 +24,7 @@ Page({
     showInvite: false,
     call_type: 0,
     calling: false,
+    frontCamera: true,
   },
 
   onHide: function () {
@@ -56,6 +57,15 @@ Page({
         calling: false
       });
     }
+  },
+
+  switchCamera:function(){
+    var pushcontext = wx.createLivePusherContext('camera-push1')
+    this.data.frontCamera = !this.data.frontCamera;
+    this.setData({
+      frontCamera: this.data.frontCamera
+    })
+    pushcontext.switchCamera();
   },
 
   endCall: function () {
@@ -209,24 +219,32 @@ Page({
           that.setData({
             chatToLogo: res.data.student_info.pic,
             toNickName: res.data.student_info.realname,
-            title: res.data.teacher_info.realname,
             loginAccountLogo: res.data.teacher_info.pic,
             selfPlay: res.data.teacher_info.play,
             selfPush: res.data.teacher_info.push,
             otherPlay: res.data.student_info.play,
             otherPush: res.data.student_info.push,
           });
+          if (res.data.student_info.realname){
+            that.setData({
+              title: res.data.student_info.realname
+            });
+          }
         } else {
           that.setData({
             chatToLogo: res.data.teacher_info.pic,
             toNickName: res.data.teacher_info.realname,
-            title: res.data.student_info.realname,
             loginAccountLogo: res.data.student_info.pic,
             selfPlay: res.data.student_info.play,
             selfPush: res.data.student_info.push,
             otherPlay: res.data.teacher_info.play,
             otherPush: res.data.teacher_info.push,
           });
+          if (res.data.student_info.realname) {
+            that.setData({
+              title: res.data.teacher_info.realname
+            });
+          }
         }
 
         //发送视频通话
@@ -284,15 +302,17 @@ Page({
         'username': app.globalData.myUser.openId,
         'password': 'ah123456'
       }).onSuccess(function () {
-        wx.showToast({
-          title: '登录成功',
-        })
+        // wx.showToast({
+        //   title: '登录成功',
+        // })
+        console.log("登录成功");
       }).onFail(function (data) {
         //同上
         console.log(data);
-        wx.showToast({
-          title: '登录失败',
-        })
+        // wx.showToast({
+        //   title: '登录失败',
+        // })
+        console.log("登录失败");
       });
     }).onFail(function (data) {
       //TODO
@@ -307,6 +327,7 @@ Page({
     // wx.showLoading({
     //   title: '',
     // })
+    //实时消息监听
     app.globalData.jim.onMsgReceive(function (data) {
       console.log(data);
       var history = wx.getStorageSync(that.data.orderId);
@@ -336,7 +357,7 @@ Page({
 
         if (data.messages[index].from_username == that.data.toId) {
 
-          if (data.messages[index].content.msg_type === 'image') {
+          if (data.messages[index].content.msg_type === 'image' || data.messages[index].content.msg_type === 'file') {
             app.globalData.jim.getResource({
               'media_id': data.messages[index].content.msg_body.media_id,
             }).onSuccess(function (res) {
@@ -344,7 +365,7 @@ Page({
               //data.message 描述
               //data.url 资源临时访问路径
               data.messages[index].content.msg_body.media_id = res.url;
-              data.messages[index].ctime_ms = util.formatTime(new Date(data.messages[index].ctime_ms));
+              data.messages[index].content.create_time = util.formatTime(new Date(data.messages[index].content.create_time));
               history.push(data.messages[index]);
               wx.setStorage({
                 key: that.data.orderId,
@@ -429,7 +450,7 @@ Page({
                 calling: false
               });
             }
-            data.messages[index].ctime_ms = util.formatTime(new Date(data.messages[index].ctime_ms));
+            data.messages[index].content.create_time = util.formatTime(new Date(data.messages[index].content.create_time));
 
             history.push(data.messages[index]);
             wx.setStorage({
@@ -448,6 +469,34 @@ Page({
         }
       }
 
+    });
+
+    //离线消息监听
+    app.globalData.jim.onSyncConversation(function (data) {
+      console.log("离线消息");
+      console.log(data);
+      // data[]
+      // data[].msg_type 会话类型
+      // data[].from_appey 单聊有效
+      // data[].from_username 单聊有效
+      // data[].from_gid 群聊有效
+      // data[].unread_msg_count 消息未读数
+      // 消息已读回执状态，针对自己发的消息
+      // data[].receipt_msgs[]
+      // data[].receipt_msgs[].msg_id
+      // data[].receipt_msgs[].unread_count
+      // data[].receipt_msgs[].mtime
+      // 消息列表
+      // data[].msgs[]
+      // data[].msgs[].msg_id
+      // data[].msgs[].content
+      // data[].msgs[].msg_type
+      // data[].msgs[].ctime_ms
+      // data[].msgs[].need_receipt
+      // data[].msgs[].custom_notification.enabled
+      // data[].msgs[].custom_notification.title
+      // data[].msgs[].custom_notification.alert
+      // data[].msgs[].custom_notification.at_prefix
     });
 
   },
@@ -554,11 +603,12 @@ Page({
     })
     let audio = e.currentTarget.dataset.audio
     const audioContext = wx.createInnerAudioContext()
-    if (audio.ext === 'mp3') { // 小程序发送的
-      audioContext.src = audio.url
-    } else {
-      audioContext.src = audio.mp3Url
-    }
+    // if (audio.ext === 'mp3') { // 小程序发送的
+    //   audioContext.src = audio.url
+    // } else {
+    //   audioContext.src = audio.mp3Url
+    // }
+    audioContext.src = audio;
     audioContext.play()
     audioContext.onPlay(() => {
     })
@@ -1653,7 +1703,7 @@ Page({
           //data.message 描述
           //data.url 资源临时访问路径
           msg.content.msg_body.media_id = res.url
-          msg.ctime_ms = util.formatTime(new Date(msg.ctime_ms));
+          msg.content.create_time = util.formatTime(new Date(msg.content.create_time));
           history.push(msg);
           wx.setStorage({
             key: that.data.orderId,
@@ -1668,7 +1718,7 @@ Page({
           //data.message 描述
         });
       }else{
-        msg.ctime_ms = util.formatTime(new Date(msg.ctime_ms));
+        msg.content.create_time = util.formatTime(new Date(msg.content.create_time));
         history.push(msg);
         wx.setStorage({
           key: that.data.orderId,

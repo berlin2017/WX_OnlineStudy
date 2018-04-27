@@ -1,6 +1,9 @@
 /* pages/teacher/orderDetail.wxss */
 @import '../common/title.wxss';
 @import '../common/berlin.wxss';
+page{
+  background-color:#268746;
+}
 
 .header_icon {
   width: 40px;

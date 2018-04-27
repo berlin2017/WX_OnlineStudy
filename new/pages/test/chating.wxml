@@ -1,4 +1,4 @@
-<view class='main_container' catchtap='chatingWrapperClick' style='height:100%;'>
+<view class='main_container' catchtap='chatingWrapperClick'>
 
   <include src='../common/title' />
 
@@ -22,8 +22,8 @@
       <!-- 消息记录 -->
       <view class='record-wrapper' id="recordWrapper">
         <view wx:for="{{messageArr}}" wx:for-item="message" wx:key="{{message.time}}" id='item_{{index}}'>
-          <view class='record-item-time-wrapper' wx:if="{{message.ctime_ms}}">
-            <text class='record-item-time'>{{message.ctime_ms}}</text>
+          <view class='record-item-time-wrapper' wx:if="{{message.content.create_time}}">
+            <text class='record-item-time'>{{message.content.create_time}}</text>
           </view>
           <view wx:if="{{message.from_username != toId}}" class='record-chatting-item self' style='justify-content: {{message.type === "tip" ? "center" : "flex-end"}}' data-message="{{message}}" bindlongpress='showEditorMenu'>
 
@@ -40,11 +40,12 @@
 
             <view wx:if="{{message.content.msg_type === 'file'}}" class='audio-wrapper' data-audio="{{message.content.msg_body.media_id}}" catchtap='playAudio' style='background-color:rgb(128,161,213);color: #000;'>
               <image src='{{iconBase64Map.iconVoiceWhite}}' class='image'></image>
-              <text class='text'>{{message.audio.dur / 1000 << 1 >> 1}}''</text>
+              <!-- <text class='text'>{{message.audio.dur / 1000 << 1 >> 1}}''</text> -->
+              <text class='text'>(((</text>
             </view>
 
-            <image wx:if="{{message.content.msg_type === 'image'}}" src='{{message.content.msg_body.media_id}}' class='record-chatting-item-text' style='width:{{parseInt(message.content.msg_body.width)/10}}px;height:{{parseInt(message.content.msg_body.height)/10}}px' bindtap='previewImage'
-              data-src='{{message.content.msg_body.media_id}}'></image>
+            <image wx:if="{{message.content.msg_type === 'image'}}" src='{{message.content.msg_body.media_id}}' class='record-chatting-item-text' style='width:{{parseInt(message.content.msg_body.width)/10}}px;height:{{parseInt(message.content.msg_body.height)/10}}px'
+              bindtap='previewImage' data-src='{{message.content.msg_body.media_id}}'></image>
 
             <rich-text nodes="{{message.nodes}}" wx:if="{{message.content.msg_type === 'text'}}" class='record-chatting-item-text'>{{message.content.msg_body.text}}</rich-text>
 
@@ -63,18 +64,19 @@
 
             <view wx:if="{{message.content.msg_type === 'video'}}" data-video="{{message.video}}" catchtap='requestFullScreenVideo' class='small-video-wrapper'>
               <view class='video-triangle'></view>
-              <view style='color: #000;'>{{message.video.dur / 1000
-                << 1>> 1}}''</view>
+              <!-- <view style='color: #000;'>{{message.video.dur / 1000
+                << 1>> 1}}''</view> -->
             </view>
 
             <view wx:if="{{message.content.msg_type === 'file'}}" data-audio="{{message.content.msg_body.media_id}}" catchtap='playAudio' class='audio-wrapper'>
               <image src='{{iconBase64Map.iconVoiceGrey}}' class='image'></image>
-              <text class='text' style='color:#000;'>{{message.audio.dur / 1000 << 1 >> 1}}''</text>
+              <!-- <text class='text' style='color:#000;'>{{message.audio.dur / 1000 << 1 >> 1}}''</text> -->
+              <text class='text' style='color:#000;'>)))</text>
             </view>
 
             <rich-text wx:if="{{message.content.msg_type === 'text'}}" class='record-chatting-item-text' style='color:#000;background-color:#fff;'>{{message.content.msg_body.text}}</rich-text>
-            <image wx:if="{{message.content.msg_type === 'image'}}" src='{{message.content.msg_body.media_id}}' class='record-chatting-item-text' style='width:{{parseInt(message.content.msg_body.width)/10}}px;height:{{parseInt(message.content.msg_body.height)/10}}px' bindtap='previewImage'
-              data-src='{{message.content.msg_body.media_id}}'></image>
+            <image wx:if="{{message.content.msg_type === 'image'}}" src='{{message.content.msg_body.media_id}}' class='record-chatting-item-text' style='width:{{parseInt(message.content.msg_body.width)/10}}px;height:{{parseInt(message.content.msg_body.height)/10}}px'
+              bindtap='previewImage' data-src='{{message.content.msg_body.media_id}}'></image>
             <rich-text wx:if="{{message.content.msg_type === 'tip'}}" class='tip-rich-text'>{{message.text}}</rich-text>
           </view>
 
@@ -191,14 +193,33 @@
 </view>
 
 
-<view style="width:100%;height: 100%; background-color: black;z-index:1000000000;position:absolute;top:0px;" wx:if='{{calling}}'>
-  <view style="width:100%;height:100%;">
-    <live-player style="width:100%;height:100%; position:absolute;" id="video-livePlayer" mode="live" min-cache="1" max-cache="3" autoplay="true" src="{{otherPlay}}" bindstatechange="onPlayEvent" bindfullscreenchange="onFullScreenChange" enable-camera='{{call_type==1}}'>
+<view style="width:100%;height: 100%; background-color: black;z-index:1000000000;position:fixed;top:0px;display:flex;" wx:if='{{calling}}'>
 
+  <view style="width:100%;height:100%;" wx:if='{{call_type == 1}}' class='video_call'>
+    <live-player style="width:100%;height:100%; position:absolute;" id="video-livePlayer" mode="live" min-cache="1" max-cache="3" autoplay="true" src="{{otherPlay}}" bindstatechange="onPlayEvent" bindfullscreenchange="onFullScreenChange">
+
+      <cover-image src='../Resources/camera_switch.png' class='end_call' style='width:40px;height:40px;border-radius:20px;position:absolute;bottom:50px;left:100rpx;' bindtap='switchCamera'></cover-image>
+      <cover-view style='position:absolute;bottom:20px;width:100%;text-align:center;'>
+
+        <cover-image src='../Resources/uncall.png' class='end_call' style='width:60px;height:60px;border-radius:30px;margin-left:auto;margin-right:auto;' bindtap='cancelCall'></cover-image>
+        <cover-view style='font-size:13px;color:white;margin-left:auto;margin-right:auto;line-height:20px; '>取消</cover-view>
+      </cover-view>
+
+      <cover-view style="width:150px;height: 240px; background-color: black;" wx:if='{{call_type==1}}'>
+        <cover-view style="width:100%;height:100%; position:relative;">
+          <live-pusher style="width:100%; height: 100%;" id="camera-push1" waiting-image="https://mc.qcloudimg.com/static/img/daeed8616ac5df256c0591c22a65c4d3/pause_publish.jpg" url="{{selfPush}}" enable-camera='true' autopush="true" bindstatechange="onPushEvent">
+          </live-pusher>
+        </cover-view>
+      </cover-view>
+    </live-player>
+
+  </view>
+
+  <view style="width:100%;height:100%;" wx:if='{{call_type == 0}}' class='audio_call'>
+    <live-player style="width:0px;height:0px; position:absolute;" id="video-livePlayer" mode="live" min-cache="1" max-cache="3" autoplay="true" src="{{otherPlay}}" bindstatechange="onPlayEvent" bindfullscreenchange="onFullScreenChange">
 
       <cover-view class='top_layout' style='position:absolute;top:40px;display:flex;width:100%;' wx:if='{{call_type !=1 }} '>
         <cover-image src='{{chatToLogo}}' class='call_logo' style='width:60px;height:60px;margin-left:20px;'></cover-image>
-        <!-- <cover-image src='../Resources/default-icon.png ' class='call_logo ' wx:if='{{!chatToLogo}} ' style='width:60px;height:60px;margin-left:20px;float:left; '></cover-image> -->
         <cover-view style='margin-left:15px;'>
           <cover-view class='call_nickname ' style='font-size:17px;color:white; '>{{toNickName}}</cover-view>
           <cover-view class='call_tip ' style='font-size:13px;color:white;margin-top:10px;'>通话中...</cover-view>
@@ -211,23 +232,27 @@
         <cover-view style='font-size:13px;color:white;margin-left:auto;margin-right:auto; '>取消</cover-view>
       </cover-view>
 
-
-       <cover-view style="width:150px;height: 240px; background-color: black;" wx:if='{{call_type==1}}'>
+      <cover-view style="width:0px;height: 0px; background-color: black;" wx:if='{{call_type==0}}'>
         <cover-view style="width:100%;height:100%; position:relative;">
-          <live-pusher style="width:100%; height: 100%;" id="camera-push" waiting-image="https://mc.qcloudimg.com/static/img/daeed8616ac5df256c0591c22a65c4d3/pause_publish.jpg" url="{{selfPush}}" enable-camera='{{call_type==1}} ' autopush="true" bindstatechange="onPushEvent">
-          </live-pusher>
-
-
-        </cover-view>
-      </cover-view> 
-
-       <cover-view style="width:0px;height: 0px; background-color: black;" wx:if='{{call_type==0}}'>
-        <cover-view style="width:100%;height:100%; position:relative;">
-          <live-pusher style="width:100%; height: 100%;" id="camera-push" waiting-image="https://mc.qcloudimg.com/static/img/daeed8616ac5df256c0591c22a65c4d3/pause_publish.jpg" url="{{selfPush}}" enable-camera='{{call_type==1}} ' autopush="true" bindstatechange="onPushEvent">
+          <live-pusher style="width:100%; height: 100%;" id="camera-push" waiting-image="https://mc.qcloudimg.com/static/img/daeed8616ac5df256c0591c22a65c4d3/pause_publish.jpg" url="{{selfPush}}" enable-camera='false' autopush="true" bindstatechange="onPushEvent">
           </live-pusher>
         </cover-view>
-      </cover-view> 
-
+      </cover-view>
     </live-player>
+
+    <view class='top_layout' style='position:absolute;top:40px;display:flex;width:100%;' wx:if='{{call_type !=1 }} '>
+      <image src='{{chatToLogo}}' class='call_logo' style='width:60px;height:60px;margin-left:20px;'></image>
+      <view style='margin-left:15px;'>
+        <view class='call_nickname ' style='font-size:17px;color:white; '>{{toNickName}}</view>
+        <view class='call_tip ' style='font-size:13px;color:white;margin-top:10px;'>通话中...</view>
+      </view>
+
+    </view>
+
+    <view style='position:absolute;bottom:20px;width:100%;text-align:center;'>
+      <image src='../Resources/uncall.png' class='end_call' style='width:60px;height:60px;border-radius:30px;margin-left:auto;margin-right:auto;' bindtap='cancelCall'></image>
+      <view style='font-size:13px;color:white;margin-left:auto;margin-right:auto; '>取消</view>
+    </view>
   </view>
+
 </view>

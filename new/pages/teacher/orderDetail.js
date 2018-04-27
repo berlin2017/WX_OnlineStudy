@@ -113,7 +113,7 @@ Page({
         btn_text = '立即评价';
         break;
     }
-    if (this.data.order.msg == 1) {
+    if (this.data.order.msg == 1 && (this.data.order.state == 0 || this.data.order.state == 1)) {
       color = '#7647a0';
       btn_text = '抢单';
     }

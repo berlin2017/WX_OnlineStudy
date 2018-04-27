@@ -100,7 +100,7 @@ Page({
               //data.message 描述
             });
           }
-          data.messages[index].ctime_ms = util.formatTime(new Date(data.messages[index].ctime_ms));
+          data.messages[index].content.create_time = util.formatTime(new Date(data.messages[index].content.create_time));
           var msgs = history.concat(data.messages);
           wx.setStorage({
             key: data.messages[index].content.msg_body.extras.orderId,
