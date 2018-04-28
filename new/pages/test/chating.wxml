@@ -197,13 +197,21 @@
 
   <view style="width:100%;height:100%;" wx:if='{{call_type == 1}}' class='video_call'>
     <live-player style="width:100%;height:100%; position:absolute;" id="video-livePlayer" mode="live" min-cache="1" max-cache="3" autoplay="true" src="{{otherPlay}}" bindstatechange="onPlayEvent" bindfullscreenchange="onFullScreenChange">
+         
+        
+        <!-- <cover-view class='bottom_text'>翻转</cover-view> -->
 
-      <cover-image src='../Resources/camera_switch.png' class='end_call' style='width:40px;height:40px;border-radius:20px;position:absolute;bottom:50px;left:100rpx;' bindtap='switchCamera'></cover-image>
-      <cover-view style='position:absolute;bottom:20px;width:100%;text-align:center;'>
+      <!-- <cover-view bindtap='switchCamera'>
+       <cover-image src='../Resources/camera_switch.png' class='end_call' style='width:40px;height:40px;border-radius:20px;position:absolute;bottom:50px;left:100rpx;' ></cover-image>
+      </cover-view> -->
+     
+       <cover-view style='position:absolute;bottom:20px;width:100%;text-align:center;'> 
+
+       <cover-image class="bottom_button" src="../Resources/camera_switch.png" bindtap='switchCamera'></cover-image>
 
         <cover-image src='../Resources/uncall.png' class='end_call' style='width:60px;height:60px;border-radius:30px;margin-left:auto;margin-right:auto;' bindtap='cancelCall'></cover-image>
         <cover-view style='font-size:13px;color:white;margin-left:auto;margin-right:auto;line-height:20px; '>取消</cover-view>
-      </cover-view>
+       </cover-view> 
 
       <cover-view style="width:150px;height: 240px; background-color: black;" wx:if='{{call_type==1}}'>
         <cover-view style="width:100%;height:100%; position:relative;">

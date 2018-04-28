@@ -18,6 +18,7 @@ Page({
     currentSubject:0,
     allSubjects:[],
     userInfo:null,
+    teacher:null,
   },
 
   changeGrade:function(e){
@@ -51,7 +52,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+  
   },
 
   /**
@@ -160,7 +161,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-   
+    let pages = getCurrentPages();
+    let currPage = pages[pages.length - 1];
+      this.setData({//将携带的参数赋值
+        teacher: currPage.data.teacher,
+      });
   },
 
   /**
@@ -259,23 +264,29 @@ Page({
       title: '',
     })
     var that = this;
+    var params = {
+      'nianji_id': that.data.grades[that.data.currentGrade].id,
+      'kemu_id': that.data.subjects[that.data.currentSubject].kemu_id,
+      'price': price,
+      'beizhu': remark,
+      'openId': app.globalData.myUser.openId,
+      'form_id': e.detail.formId,
+    };
+    if(that.data.teacher){
+      params.teacher_openid = that.data.teacher.openid;
+      params.directional = 1;
+      params.state = 2;
+    }
     wx.uploadFile({
       url: 'https://weixin.ywkedu.com/App/student_indent',
       filePath: that.data.image,
       name: 'pic',
-      formData: {
-        'nianji_id': that.data.grades[that.data.currentGrade].id,
-        'kemu_id': that.data.subjects[that.data.currentSubject].kemu_id,
-        'price':price,
-        'beizhu':remark,
-        'openId':app.globalData.myUser.openId,
-        'form_id':e.detail.formId,
-      },
+      formData: params,
       success: function (res) {
         res = JSON.parse(res.data);
         console.log(res);
         wx.hideLoading();
-        if (!res.msg == 'ok' && !res.msg == '0') {
+        if (res.msg != 'ok' && res.msg != '0') {
           wx.showToast({
             title: res.data,
           })

@@ -1,8 +1,8 @@
 @import '../common/berlin.wxss';
 
 .swip{
-  width: 100%;
-  height: 240px;
+  width: 750rpx;
+  height: 422rpx;
 }
 
 .slide-image{

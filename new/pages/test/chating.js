@@ -29,7 +29,7 @@ Page({
 
   onHide: function () {
     console.log('onhide');
-    // this.endCall();
+    this.endCall();
     app.globalData.isInChatPage = false;
     wx.setKeepScreenOn({
       keepScreenOn: false,
@@ -60,6 +60,7 @@ Page({
   },
 
   switchCamera:function(){
+    console.log('切换摄像头');
     var pushcontext = wx.createLivePusherContext('camera-push1')
     this.data.frontCamera = !this.data.frontCamera;
     this.setData({
@@ -214,6 +215,13 @@ Page({
       },
       success: function (res) {
         console.log(res);
+        if (res.data.teacher_info.pic || res.data.teacher_info.pic=='') {
+          res.data.teacher_info.pic = res.data.teacher_info.avatarUrl
+        }
+
+        if (res.data.student_info.pic || res.data.student_info.pic=='') {
+          res.data.student_info.pic = res.data.student_info.avatarUrl
+        }
         wx.hideLoading();
         if (that.data.user_type == 1) {
           that.setData({
@@ -230,6 +238,8 @@ Page({
               title: res.data.student_info.realname
             });
           }
+
+         
         } else {
           that.setData({
             chatToLogo: res.data.teacher_info.pic,

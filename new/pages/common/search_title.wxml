@@ -2,7 +2,7 @@
   <button wx:if='{{leftText!=null}}'  class='back_text' bindtap='back'>{{leftText}}</button>
 
 
-     <input class='search_title_input' placeholder='请输入老师姓名' confirm-type='search' bindinput='bindinput'></input> 
+     <input class='search_title_input' placeholder='请输入老师姓名' confirm-type='search' bindconfirm='search'></input> 
 
 
 </view>

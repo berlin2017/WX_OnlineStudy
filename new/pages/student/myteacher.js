@@ -44,18 +44,22 @@ Page({
       // teachers: []
     });
     console.log(e.detail.value);
-    this.search();
   },
 
-  search:function(){
+
+  search: function (e) {
     var that = this;
     wx.showLoading({
       title: '',
     })
     wx.request({
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
       url: 'https://weixin.ywkedu.com/App/search_teacher',
       data: {
-        'name': that.data.inputVal
+        'name': e.detail.value
       },
       success: function (res) {
         that.setData({
@@ -65,6 +69,7 @@ Page({
       },
     })
   },
+
 
   toDetail:function(e){
     var index = e.currentTarget.dataset.index;

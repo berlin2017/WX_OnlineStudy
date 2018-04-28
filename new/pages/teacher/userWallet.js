@@ -126,7 +126,12 @@ Page({
   },
 
   commit:function(e){
-  
+    if(parseInt(e)<100){
+      wx.showToast({
+        title: '最低体现100元',
+      })
+      return;
+    }
 
     wx.showLoading({
       title: '',

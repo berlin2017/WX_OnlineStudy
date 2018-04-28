@@ -7,6 +7,8 @@
     <input class='send_input' placeholder='找老师' confirm-type='search' bindtap='toSearch'></input>
   </view>
 
+  <view wx:if='{{teacher}}' style='margin:10px;'>已选老师:{{teacher.realname}}</view>
+
   <view style='width: 94%;margin: 0px auto;display: flex;flex-direction: column;'>
     <text class='form_title'>课程需求</text>
   </view>

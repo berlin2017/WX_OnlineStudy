@@ -7,13 +7,12 @@
 
       <view wx:for='{{teachers}}' class='item_layout' bindtap='toDetail' data-index='{{index}}'>
       
-        <image class='item_image' src='{{item.image}}' mode='scaleToFill'></image>
+        <image class='item_image' src='{{item.pic == "null" ? item.avatarUrl : item.pic}}' mode='scaleToFill'></image>
 
-        <view class='item_text'>
+        <view class='item_text' >
+           <text class='item_name'>{{item.realname}}</text>
 
-          <text class='item_name'>{{item.name}}</text>
-
-          <text class='item_info'>{{item.info}}</text> 
+           <text class='item_info'>{{item.nianji_kemu_name}}</text>   
 
         </view>
 

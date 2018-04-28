@@ -1,7 +1,9 @@
 <!--pages/teacher/agreement.wxml-->
 <view class='main_container'>
   <include src='../common/title'/>
-  <view class='content'>
-    {{content}}
+  <view class='content' style='width:94%;margin-left:auto;margin-right:auto;'>
+  <import src="../..//wxParse/wxParse.wxml"/>
+<template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+    <!-- {{content}} -->
   </view>
 </view>

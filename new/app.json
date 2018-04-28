@@ -1,9 +1,10 @@
 {
   "pages": [
+    
     "pages/loading/loading",
       "pages/test/chating",
     "pages/test/videoCall2",
-      
+      "pages/teacher/agreement",
  
   
     "pages/test/videoCall",
@@ -50,7 +51,7 @@
     "pages/teacher/myStudent",
     "pages/teacher/studentDetail",
    
-    "pages/teacher/agreement",
+   
 
     "pages/teacher/order",
     "pages/teacher/finishedClass",

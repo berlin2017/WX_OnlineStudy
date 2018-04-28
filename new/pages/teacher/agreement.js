@@ -1,4 +1,5 @@
 // pages/teacher/agreement.js
+var WxParse = require('../../wxParse/wxParse.js');
 Page({
 
   /**
@@ -32,6 +33,7 @@ Page({
         that.setData({
           content:res.data.content
         });
+        WxParse.wxParse('article', 'html', res.data.content, that, 5);
       },
     })
   },
