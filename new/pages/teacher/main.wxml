@@ -25,7 +25,7 @@
             <view class='user_name'>{{item.student_name}}</view>
           </view>
           <view class='user_money'>{{item.price}}豆</view>
-          <view class='item_time'>{{item.create_time}}</view>
+          <view class='item_time'>{{item.time}}</view>
         </view>
 
       </view>

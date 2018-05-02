@@ -105,6 +105,9 @@ Page({
         for (var i = 0; i < res.data.length; i++) {
           var item = res.data[i];
           item.time = util.formatTime(new Date(parseInt(item.time) * 1000));
+          if(item.type==1&&item.zeng_money>0){
+            item.allMoney = parseInt(item.money)+ parseInt(item.zeng_money)
+          }
           array.push(item);
         }
         that.setData({

@@ -75,6 +75,10 @@ Page({
   },
 
   finish:function(e){
+    if (this.data.order.directional == '1'){
+      this.reject();
+      return;
+    }
     var that = this;
     wx.showLoading({
       title: '',
@@ -98,6 +102,45 @@ Page({
     })
   },
 
+  reject: function (e) {
+    var that = this;
+    wx.showLoading({
+      title: '',
+    })
+    wx.request({
+      url: 'https://weixin.ywkedu.com/App/pick_no',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        indent_id: that.data.id,
+        price: that.data.order.price
+      },
+      success: function (res) {
+        console.log(res);
+        wx.hideLoading();
+        // that.sendMsg(e,1);
+        if(res.data.msg == 1){
+          wx.showToast({
+            title: '已拒绝',
+          })
+          setTimeout(function () {
+            wx.navigateBack({
+              
+            })
+          }, 1000);
+        }else{
+          wx.showToast({
+            title: res.data.data.data,
+          })
+        }
+        
+        
+      },
+    })
+  },
+
 
   update: function () {
     var color = null;
@@ -116,6 +159,11 @@ Page({
     if (this.data.order.msg == 1 && (this.data.order.state == 0 || this.data.order.state == 1)) {
       color = '#7647a0';
       btn_text = '抢单';
+    }
+
+    if (this.data.order.state == '2' && this.data.order.directional == '1'){
+      color = '#7647a0';
+      btn_text = '确认接单';
     }
     this.setData({
       order: this.data.order,
@@ -186,7 +234,7 @@ Page({
         that.confirmOrder(e);
       }
       
-    } else if (that.data.order.state == '2') {
+    } else if (that.data.order.state == '2' && that.data.order.directional == '0') {
       wx.navigateTo({
         url: '../test/chating' + '?id=' + that.data.order.student_openid + '&type=1' + '&orderId=' + that.data.id,
       })
@@ -195,7 +243,52 @@ Page({
       wx.navigateTo({
         url: 'comment' + '?id=' + that.data.order.teachers[0].openid + '&indent_id=' + that.data.id,
       })
+    } else if (that.data.order.directional == '1'){
+      that.acceptOrder();
     }
+  },
+
+  acceptOrder:function(){
+    var that = this;
+    wx.showLoading({
+      title: '',
+    })
+
+    wx.request({
+      url: 'https://weixin.ywkedu.com/App/pick_yes',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        indent_id: that.data.id,
+      },
+      success: function (res) {
+        wx.hideLoading();
+        console.log(res);
+        if (res.data.msg == 1) {
+          wx.showToast({
+            title: '确认成功',
+          })
+          setTimeout(function () {
+            that.requestDetail();
+            // that.sendMsg(e, 0);
+          }, 1000);
+
+        } else {
+          wx.showToast({
+            title: res.data.data,
+          })
+        }
+
+      },
+      fail: function () {
+        wx.hideLoading();
+        wx.showToast({
+          title: '请求失败',
+        })
+      },
+    })
   },
  
 
@@ -226,7 +319,7 @@ Page({
           setTimeout(function(){
             that.requestDetail();
             // that.sendMsg(e, 0);
-          },2000);
+          },1000);
          
         } else {
           wx.showToast({

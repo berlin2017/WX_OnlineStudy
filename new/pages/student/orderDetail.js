@@ -165,14 +165,18 @@ Page({
   update:function(){
     var color = null;
     var btn_text = null;
+    var that = this;
     switch (this.data.order.state) {
       case '0':
         color = '#7647a0';
         btn_text = '加价并发布';
         break;
       case '2':
-        color = '#7647a0';
-        btn_text = '进入聊天室';
+        if (that.data.order.directional == '0'){
+          color = '#7647a0';
+          btn_text = '进入聊天室';
+      }
+      
         break;
       case '3':
         color = 'orangered';

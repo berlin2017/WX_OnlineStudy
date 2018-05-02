@@ -48,7 +48,7 @@
 .score {
   position: absolute;
   right: 20px;
-  top: 110px;
+  top: 80px;
   color: white;
   height: 60px;
   width: 60px;

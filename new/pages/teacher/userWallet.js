@@ -126,9 +126,23 @@ Page({
   },
 
   commit:function(e){
-    if(parseInt(e)<100){
+    if (parseInt(e.detail.value.money)<100){
       wx.showToast({
-        title: '最低体现100元',
+        title: '最低100元',
+      })
+      return;
+    }
+
+    if (parseInt(e.detail.value.money) % 100 !=0) {
+      wx.showToast({
+        title: '金额为100倍数',
+      })
+      return;
+    }
+
+    if (e.detail.value.account || e.detail.value.account == '') {
+      wx.showToast({
+        title: '请填写账户',
       })
       return;
     }
@@ -169,6 +183,12 @@ Page({
         console.log(res);
       },
     })
+  },
+
+  dismiss:function(){
+    this.setData({
+      isShowDialog:false
+    });
   },
 
 })

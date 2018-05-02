@@ -193,8 +193,9 @@ Page({
   },
 
   toSend:function(){
+    var that = this;
     wx.navigateTo({
-      url: 'sendQuestion',
+      url: 'sendQuestion?openid=' + that.data.detail.openid+'&name='+that.data.detail.realname,
     })
   }
 

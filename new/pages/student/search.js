@@ -7,9 +7,42 @@ Page({
   data: {
     title: '搜索',
     title_bg: '#7647a0',
-    leftText:'Cancel',
     teachers: [],
+    inputShowed: false,
+    inputVal: ""
   },
+
+  showInput: function () {
+    this.setData({
+      inputShowed: true
+    });
+  },
+  hideInput: function () {
+    this.setData({
+      inputVal: "",
+      inputShowed: false,
+      // teachers: [
+
+      // ],
+    });
+  },
+  clearInput: function () {
+    this.setData({
+      inputVal: "",
+      // teachers: [
+
+      // ],
+    });
+  },
+  inputTyping: function (e) {
+    console.log(e);
+    this.setData({
+      inputVal: e.detail.value,
+      // teachers: []
+    });
+    console.log(e.detail.value);
+  },
+
 
   /**
    * 生命周期函数--监听页面加载

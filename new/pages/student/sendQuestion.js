@@ -18,7 +18,7 @@ Page({
     currentSubject:0,
     allSubjects:[],
     userInfo:null,
-    teacher:null,
+    teacher:{},
   },
 
   changeGrade:function(e){
@@ -52,7 +52,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    var that = this;
+    that.data.teacher.realname = options.name;
+    that.data.teacher.openid = options.openid;
+    that.setData({
+      teacher:that.data.teacher
+    });
   },
 
   /**

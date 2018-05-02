@@ -1,5 +1,5 @@
 /* pages/student/search.wxss */
-@import "../common/search_title.wxss";
+@import '../common/title.wxss';
 
 .item_layout {
   width: 100%;

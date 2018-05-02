@@ -171,4 +171,4 @@
 
 </view>
 
-<view class='bottom_btn' bindtap='toSend' style='display:none;'>发送订单</view>
+<view class='bottom_btn' bindtap='toSend' >发送订单</view>
