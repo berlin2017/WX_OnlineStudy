@@ -140,9 +140,16 @@ Page({
       return;
     }
 
-    if (e.detail.value.account || e.detail.value.account == '') {
+    if (!e.detail.value.account || e.detail.value.account == '') {
       wx.showToast({
         title: '请填写账户',
+      })
+      return;
+    }
+
+    if (parseInt(e.detail.value.money) > parseInt(this.data.money)) {
+      wx.showToast({
+        title: '余额不足',
       })
       return;
     }
