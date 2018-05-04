@@ -144,6 +144,7 @@ Page({
     app.globalData.userType = 1;
     wx.showLoading({
       title: '',
+      mask: true,
     })
     wx.request({
       method: 'POST',

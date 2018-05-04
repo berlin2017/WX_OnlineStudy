@@ -38,6 +38,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '',
+      mask: true,
     })
     wx.request({
       url: 'https://weixin.ywkedu.com/App/student_indentXQ',
@@ -82,6 +83,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '',
+      mask: true,
     })
     wx.request({
       url: 'https://weixin.ywkedu.com/App/class_is_over',
@@ -106,6 +108,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '',
+      mask: true,
     })
     wx.request({
       url: 'https://weixin.ywkedu.com/App/pick_no',
@@ -252,6 +255,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '',
+      mask: true,
     })
 
     wx.request({
@@ -296,6 +300,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '',
+      mask: true,
     })
 
     wx.request({
@@ -347,6 +352,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '',
+      mask: true,
     })
     wx.request({
       url: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx72667dd95df8c05d&secret=d91961063b0948f5607319523f2376b8',
@@ -404,6 +410,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '',
+      mask: true,
     })
     wx.request({
       url: 'https://weixin.ywkedu.com/App/update_premium',

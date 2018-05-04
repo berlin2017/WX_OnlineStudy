@@ -53,6 +53,7 @@ Page({
   requestInfo: function () {
     wx.showLoading({
       title: '',
+      mask: true,
     })
     var that = this;
     wx.request({

@@ -30,7 +30,7 @@
     
       <image class='header_arrow2' src='../Resources/right_arrow.png'></image>
 
-      <view class='user_money_number'>￥{{userInfo.account ? userInfo.account : 0.0}}</view>
+      <view class='user_money_number'>{{userInfo.account ? userInfo.account : 0.0}}优豆</view>
 
     </view> 
   

@@ -51,6 +51,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '',
+      mask: true,
     })
     wx.request({
       method: 'POST',
@@ -97,6 +98,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '',
+      mask: true,
     })
     wx.request({
       url: 'https://weixin.ywkedu.com/App/teacher_list',

@@ -25,6 +25,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '',
+      mask: true,
     })
     wx.request({
       url: 'https://weixin.ywkedu.com/App/slide',
@@ -104,6 +105,7 @@ Page({
   requestInfo: function () {
     wx.showLoading({
       title: '',
+      mask: true,
     })
     var that = this;
     wx.request({

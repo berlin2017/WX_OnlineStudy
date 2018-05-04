@@ -58,6 +58,7 @@ Page({
   requestInfo:function(){
     wx.showLoading({
       title: '',
+      mask: true,
     })
     var that = this;
     wx.request({
@@ -268,6 +269,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '',
+      mask: true,
     })
     var params = {};
     e.detail.value.area_id = that.data.userInfo.area[e.detail.value.area_id].id;
@@ -305,9 +307,10 @@ Page({
         name: 'pic',
         formData:params,
         success: function (res) {
+          res = JSON.parse(res.data);
           console.log(res);
           wx.hideLoading();
-          if(res.data.msg==1){
+          if(res.msg==1){
             wx.showToast({
               title: '修改成功',
             })
@@ -318,7 +321,7 @@ Page({
             }, 1000);
           }else{
             wx.showToast({
-              title: res.data.data.data,
+              title: res.data.data,
             })
           }
          
@@ -340,9 +343,10 @@ Page({
         url: 'https://weixin.ywkedu.com/App/add_stuInfo',
         data: params,
         success: function (res) {
+          res = JSON.parse(res.data);
           console.log(res);
           wx.hideLoading();
-          if (res.data.msg == 1) {
+          if (res.msg == 1) {
             wx.showToast({
               title: '修改成功',
             })
@@ -353,7 +357,7 @@ Page({
             }, 1000);
           } else {
             wx.showToast({
-              title: res.data.data.data,
+              title: res.data.data,
             })
           }
 

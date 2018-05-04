@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    title:'发布题目',
+    title:'发布辅导需求',
     title_bg:'#7647a0',
     image:'',
     chosed:false,
@@ -52,12 +52,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this;
-    that.data.teacher.realname = options.name;
-    that.data.teacher.openid = options.openid;
-    that.setData({
-      teacher:that.data.teacher
-    });
+    if(options.openid){
+      var that = this;
+      that.data.teacher.realname = options.name;
+      that.data.teacher.openid = options.openid;
+      that.setData({
+        teacher: that.data.teacher
+      });
+    }
   },
 
   /**
@@ -70,6 +72,7 @@ Page({
   requestInfo: function () {
     wx.showLoading({
       title: '',
+      mask: true,
     })
     var that = this;
     wx.request({
@@ -99,6 +102,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '',
+      mask: true,
     })
     wx.request({
       method: 'POST',
@@ -124,6 +128,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '',
+      mask: true,
     })
     wx.request({
       url: 'https://weixin.ywkedu.com/App/grade',
@@ -267,6 +272,7 @@ Page({
     }
     wx.showLoading({
       title: '',
+      mask: true,
     })
     var that = this;
     var params = {
@@ -277,7 +283,7 @@ Page({
       'openId': app.globalData.myUser.openId,
       'form_id': e.detail.formId,
     };
-    if(that.data.teacher){
+    if (that.data.teacher && that.data.teacher != [] && that.data.teacher.openid){
       params.teacher_openid = that.data.teacher.openid;
       params.directional = 1;
       params.state = 2;

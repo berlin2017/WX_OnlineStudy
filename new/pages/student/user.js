@@ -42,6 +42,7 @@ Page({
   requestInfo: function () {
     wx.showLoading({
       title: '',
+      mask: true,
     })
     var that = this;
     wx.request({
@@ -68,6 +69,7 @@ Page({
   getUser:function(){
     wx.showLoading({
       title: '',
+      mask: true,
     })
     var that = this;
     wx.request({
@@ -176,9 +178,10 @@ Page({
   sign:function(){
     wx.showLoading({
       title: '',
+      mask: true,
     })
     var that = this;
-    var num = Math.floor(Math.random() * 5 + 1);
+    var num = Math.floor(Math.random() * 2 + 1);
     wx.request({
       header: {
         'content-type': 'application/x-www-form-urlencoded'

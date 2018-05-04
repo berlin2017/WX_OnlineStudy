@@ -66,6 +66,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '',
+      mask: true,
     })
     wx.request({
       method: 'POST',
@@ -128,6 +129,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '',
+      mask: true,
     })
     wx.request({
       url: 'https://weixin.ywkedu.com/App/grade',
@@ -532,6 +534,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '',
+      mask: true,
     })
     wx.request({
       url: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx72667dd95df8c05d&secret=d91961063b0948f5607319523f2376b8',
@@ -636,6 +639,7 @@ Page({
     
     wx.showLoading({
       title: '',
+      mask: true,
     })
     console.log(params);
     wx.request({
@@ -691,6 +695,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '',
+      mask: true,
     })
     wx.uploadFile({
       url: 'https://weixin.ywkedu.com/App/register_pic',
@@ -731,6 +736,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '',
+      mask: true,
     })
     wx.uploadFile({
       url: 'https://weixin.ywkedu.com/App/register_pic',
@@ -768,6 +774,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '',
+      mask: true,
     })
     wx.uploadFile({
       url: 'https://weixin.ywkedu.com/App/register_pic',

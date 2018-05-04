@@ -10,5 +10,5 @@
 
   <image class='home_send' src='../Resources/ic_student_home.png' ></image>
 
-  <button class='home_send_btn' bindtap='toSend'>发布题目</button>
+  <button class='home_send_btn' bindtap='toSend'>发布辅导需求</button>
 </view>

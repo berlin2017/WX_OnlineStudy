@@ -83,6 +83,7 @@ Page({
   requestList:function(){
     wx.showLoading({
       title: '',
+      mask: true,
     })
     var that = this;
     app.globalData.jim.getConversation().onSuccess(function (data) {

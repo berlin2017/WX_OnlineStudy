@@ -92,6 +92,7 @@ Page({
     }
     wx.showLoading({
       title: '',
+      mask: true,
     })
     wx.request({
       url: request_url,

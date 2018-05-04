@@ -192,6 +192,7 @@ Page({
   requestUserInfo: function (e) {
     wx.showLoading({
       title: '',
+      mask: true,
     })
     var that = this;
     var stu_id = null;
@@ -215,11 +216,11 @@ Page({
       },
       success: function (res) {
         console.log(res);
-        if (res.data.teacher_info.pic || res.data.teacher_info.pic=='') {
+        if (!res.data.teacher_info.pic || res.data.teacher_info.pic == '' || res.data.teacher_info.pic == 'null') {
           res.data.teacher_info.pic = res.data.teacher_info.avatarUrl
         }
 
-        if (res.data.student_info.pic || res.data.student_info.pic=='') {
+        if (!res.data.student_info.pic || res.data.student_info.pic == '' || res.data.student_info.pic == '') {
           res.data.student_info.pic = res.data.student_info.avatarUrl
         }
         wx.hideLoading();
@@ -1357,6 +1358,7 @@ Page({
   sendBigEmoji(val) {
     wx.showLoading({
       title: '发送中...',
+      mask: true,
     })
     let self = this
     let catalog = ''
@@ -1543,6 +1545,7 @@ Page({
     }
     wx.showLoading({
       title: '发送中...',
+      mask: true,
     })
     let tempFilePath = res.tempFilePath
     let self = this
@@ -1751,6 +1754,7 @@ Page({
   sendVideoToNos(res) {
     wx.showLoading({
       title: '发送中...',
+      mask: true,
     })
     // {duration,errMsg,height,size,tempFilePath,width}
     let self = this
@@ -1806,6 +1810,7 @@ Page({
   sendImageToNOS(res) {
     wx.showLoading({
       title: '发送中...',
+      mask: true,
     })
     let self = this
     let tempFilePaths = res.tempFilePaths

@@ -35,6 +35,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '',
+      mask: true,
     })
     wx.request({
       method: 'POST',
@@ -61,6 +62,7 @@ confirm:function(e){
   var that = this;
   wx.showLoading({
     title: '',
+    mask: true,
   })
   wx.request({
     method: 'POST',

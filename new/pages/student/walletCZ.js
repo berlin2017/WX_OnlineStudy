@@ -25,6 +25,7 @@ Page({
   onReady: function () {
     wx.showLoading({
       title: '',
+      mask: true,
     })
     var that = this;
     wx.request({
@@ -99,6 +100,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '',
+      mask: true,
     })
     wx.login({
       success: result => {
@@ -151,6 +153,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '',
+      mask: true,
     })
     wx.request({
       url: 'https://weixin.ywkedu.com/App/zhifu_order',
