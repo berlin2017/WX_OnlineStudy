@@ -16,10 +16,10 @@
 
        <view class='mobile_text'>{{userInfo.userInfo.tel}}</view>
 
-      <view style='display:none;'>
-       <view class='grade_text'>{{userInfo.grade}}</view>
-
-       <view class='grade_text'>{{userInfo.className}}</view>
+      <view wx:if='{{enable == 1||enable == 2}}'>
+       <view class='grade_text' wx:if='{{enable == 1}}'>审核中</view>
+        <view class='grade_text' wx:if='{{enable == 2}}'>冻结中</view>
+       <!-- <view class='grade_text'>{{userInfo.className}}</view> -->
 
       </view>
 

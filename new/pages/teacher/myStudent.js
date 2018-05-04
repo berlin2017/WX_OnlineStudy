@@ -9,7 +9,7 @@ Page({
   data: {
     title_bg: '#268746',
     title: '我的学生',
-    leftText: '',
+    leftText: null,
     students: [
     ],
     inputShowed: false,

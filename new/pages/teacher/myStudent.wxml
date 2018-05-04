@@ -36,7 +36,7 @@
 
         <view class='item_subject'>年级:{{item.ninaji_name}}</view>
 
-        <view class='item_subject'>学校:{{item.school_name}}</view>
+        <view class='item_subject' style='height:40px;'>学校:{{item.school_name}}</view>
 
         <!-- <view class='item_subject'>备注:{{item.info}}</view> -->
 

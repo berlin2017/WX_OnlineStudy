@@ -11,21 +11,21 @@ Page({
     },
     option_height: 0,
     wxUser:{},
-    enable:false,
+    enable:0,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if(options.enable!= 1){
+    if (options.enable != 1 && options.enable != 2){
       this.setData({
-        enable: true
+        enable: options.enable
       })
       template.tabbar("tabBar", 3, this)//0表示第一个tabbar
     }else{
       this.setData({
-        enable:false
+        enable: options.enable
       })
     }
     

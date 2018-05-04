@@ -664,13 +664,13 @@ Page({
             },2000);
           }else{
             wx.showToast({
-              title: '注册成功,请等待审核',
+              title: '注册成功，正在审核中',
             })
             setTimeout(function(){
               wx.redirectTo({
                 url: '../teacher/user?enable=1',
               })
-            },2000);
+            },3000);
            
           }
          

@@ -163,7 +163,7 @@ Page({
             url: '../teacher/main',
           })
           // wx.navigateTo({
-          //   url: '../teacher/user?enable=1',
+          //   url: '../teacher/user?enable=2',
           // })
         } else if (res.data.msg == 0) {
           wx.showToast({
@@ -177,11 +177,11 @@ Page({
 
         } else if (res.data.msg == 2) {
           wx.showToast({
-            title: '账户被冻结,请联系管理员',
+            title: '账户冻结中…',
           })
           setTimeout(function () {
             wx.navigateTo({
-              url: '../teacher/user?en1able=1',
+              url: '../teacher/user?enable=2',
             })
           }, 1000);
 
