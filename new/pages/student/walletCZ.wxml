@@ -9,9 +9,9 @@
       <view class="{{selectIndex== index ? 'item_layout_on' : 'item_layout'}}">
         <view class='item_value'>{{item.cz_money}}</view>
 
-        <view class='item_name'>元</view>
+        <view class='item_name'>优豆</view>
 
-        <view class='item_remark' wx:if='{{item.zs_money>0}}'>赠送{{item.zs_money}}元</view>
+        <view class='item_remark' wx:if='{{item.zs_money>0}}'>赠送{{item.zs_money}}优豆</view>
       </view>
     </view>
 

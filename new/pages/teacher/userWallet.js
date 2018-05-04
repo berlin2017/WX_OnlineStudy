@@ -128,7 +128,7 @@ Page({
   commit:function(e){
     if (parseInt(e.detail.value.money)<100){
       wx.showToast({
-        title: '最低100元',
+        title: '最低100优豆',
       })
       return;
     }
