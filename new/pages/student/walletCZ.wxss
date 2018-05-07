@@ -27,23 +27,26 @@
 
 .item_value{
   line-height: 30px;
-  padding-top: 20px;
-  padding-left: 20px;
-  padding-bottom: 20px;
+
+  /* padding-left: 20px; */
+  /* padding-bottom: 20px; */
   text-align: center;
   color: #7647a0;
-  float: left;
+  /* float: left; */
   font-size: 21px;
   /* width: 100%; */
 }
 
 .item_name{
   color: #7647a0;
-  float: right;
-  line-height: 20px;
-  margin-right: 10px;
+  /* float: right; */
+  margin-left: 3px;
+  line-height: 30px;
+  /* margin-right: 10px; */
   text-align: center;
   margin-top: 25px;
+  font-size:13px;
+
 }
 
 .item_remark{

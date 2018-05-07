@@ -25,7 +25,7 @@ function tabbarinit() {
    
     {
       current: 0,
-      "pagePath": "user",
+      "pagePath": "user?enable=0",
       "text": "我的",
       "iconPath": "../Resources/ic_tab_user.png",
       "selectedIconPath": "../Resources/ic_tab_user_light.png"

@@ -663,14 +663,22 @@ Page({
               })
             },2000);
           }else{
-            wx.showToast({
-              title: '注册成功，正在审核中',
+            // wx.showToast({
+            //   title: '注册成功，正在审核中',
+            // })
+            // setTimeout(function(){
+             
+            // },3000);
+
+            wx.showModal({
+              title: '提示',
+              content: '尊敬的老师，感谢您的注册！请耐心等待平台审核，待通过审核之后您会收到我们的提醒，祝您好运！',
+              success: function (res) {
+                wx.redirectTo({
+                  url: '../teacher/user?enable=1',
+                })
+              }
             })
-            setTimeout(function(){
-              wx.redirectTo({
-                url: '../teacher/user?enable=1',
-              })
-            },3000);
            
           }
          

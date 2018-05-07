@@ -7,10 +7,12 @@
 
     <view class='zan-col zan-col-8' wx:for='{{moneys}}' style=' margin-top:20px;width:33.3333%;float:left;box-sizing:border-box;' bindtap='changeIndex' data-index='{{index}}'>
       <view class="{{selectIndex== index ? 'item_layout_on' : 'item_layout'}}">
-        <view class='item_value'>{{item.cz_money}}</view>
+      <view style='text-align:center; margin-top: 20px;'>
+      <text class='item_value'>{{item.cz_money}}</text>
 
-        <view class='item_name'>优豆</view>
-
+        <text class='item_name'>优豆</text>
+      </view>
+        
         <view class='item_remark' wx:if='{{item.zs_money>0}}'>赠送{{item.zs_money}}优豆</view>
       </view>
     </view>

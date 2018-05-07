@@ -8,7 +8,7 @@ Page({
   data: {
     title_bg:'#7647a0',
     title:'我的老师',
-    canBack: false,
+    noBack: true,
     teachers: [
       ],
     inputShowed: false,

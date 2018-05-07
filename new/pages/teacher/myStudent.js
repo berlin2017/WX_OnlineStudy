@@ -10,6 +10,7 @@ Page({
     title_bg: '#268746',
     title: '我的学生',
     leftText: null,
+    noBack:true,
     students: [
     ],
     inputShowed: false,

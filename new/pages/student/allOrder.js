@@ -8,7 +8,7 @@ Page({
    */
   data: {
     title: '我的订单',
-    canBack:false,
+    noBack:true,
     inputShowed: false,
     inputVal: "",
     orders:[],

@@ -33,7 +33,10 @@
     
       <image class='header_arrow2' src='../Resources/right_arrow.png'></image>
 
-      <view class='user_money_number'>￥{{userInfo.account}}</view>
+       <view class='user_money_number'>
+        <text style='display:block;line-height:60px;float:left;'>{{userInfo.account ? userInfo.account : 0.0}}</text>
+        <text style='font-size:13px;display:block;line-height:60px;float:left;margin-left:5px;'>优豆</text>
+      </view>
 
     </view> 
   

@@ -10,7 +10,7 @@ Page({
   data: {
     title_bg: '#268746',
     title: '我的订单',
-    canBack: false,
+    noBack: true,
     inputShowed: false,
     inputVal: "",
     orders: [
