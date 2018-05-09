@@ -27,17 +27,39 @@ Page({
     frontCamera: true,
   },
 
+  onShow: function () {
+    this.reloadMsg();
+    app.globalData.isInChatPage = true;
+    if (!app.globalData.jim || !app.globalData.jim.isInit() || !app.globalData.jim.isLogin()) {
+      this.initJpush();
+    }
+    this.requestUserInfo();
+    // wx.setKeepScreenOn({
+    //   keepScreenOn: true,
+    // })
+  },
+
   onHide: function () {
     console.log('onhide');
-    this.endCall();
+    this.setData({
+      showInvite: false,
+      showCall: false,
+      calling: false
+    });
     app.globalData.isInChatPage = false;
-    wx.setKeepScreenOn({
-      keepScreenOn: false,
-    })
+    // wx.setKeepScreenOn({
+    //   keepScreenOn: false,
+    // })
   },
 
   onUnload() {
-
+    console.log("onUnload");
+    this.setData({
+      showInvite: false,
+      showCall: false,
+      calling: false
+    });
+    app.globalData.isInChatPage = false;
   },
   /**
    * 生命周期函数--监听页面加载
@@ -276,20 +298,11 @@ Page({
     })
   },
 
-
-  onShow: function () {
-    this.reloadMsg();
-    app.globalData.isInChatPage = true;
-    if (!app.globalData.jim || !app.globalData.jim.isInit() || !app.globalData.jim.isLogin()) {
-      this.initJpush();
-    }
-    this.requestUserInfo();
-    wx.setKeepScreenOn({
-      keepScreenOn: true,
-    })
-  },
-
   initJpush: function () {
+    wx.showLoading({
+      title: '',
+      mask:true,
+    })
     var that = this;
     //jpush
     var jim = new JMessage({
@@ -317,6 +330,7 @@ Page({
         //   title: '登录成功',
         // })
         console.log("登录成功");
+        wx.hideLoading();
       }).onFail(function (data) {
         //同上
         console.log(data);
@@ -324,6 +338,8 @@ Page({
         //   title: '登录失败',
         // })
         console.log("登录失败");
+        wx.hideLoading();
+        that.initJpush();
       });
     }).onFail(function (data) {
       //TODO
@@ -350,6 +366,19 @@ Page({
       var array = [];
       for (var index in data.messages) {
         if (!app.globalData.isInChatPage) {
+          if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '发起视频通话') {
+            console.log('发起视频通话');
+            wx.navigateTo({
+              url: '../test/chating' + '?id=' + data.messages[0].content.from_id + '&type=' + app.globalData.userType + '&orderId=' + data.messages[index].content.msg_body.extras.orderId + '&call_type=1',
+            })
+            return;
+          } else if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '发起语音通话') {
+            console.log('发起语音通话');
+            wx.navigateTo({
+              url: '../test/chating' + '?id=' + data.messages[0].content.from_id + '&type=' + app.globalData.userType + '&orderId=' + data.messages[index].content.msg_body.extras.orderId + '&call_type=0',
+            })
+            return;
+          }
           wx.showModal({
             title: '新消息',
             content: '来自' + data.messages[0].content.from_name + '是否查看',
@@ -1950,8 +1979,9 @@ Page({
     return false
   },
   back: function () {
+    app.globalData.isInChatPage = false;
     wx.navigateBack({
-
+      
     })
   },
 })

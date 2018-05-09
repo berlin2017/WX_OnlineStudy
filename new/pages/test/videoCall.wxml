@@ -1,16 +1,116 @@
-<!--pages/play/play.wxml-->
-<view style="width:100%;height: 100%; background-color: black;"> 
-  <view style="width:100%;height:100%; position:relative;">  
-    <live-player
-      style="width:100%;height:100%; position:absolute;"
-      id="video-livePlayer"
-      mode="live"
-      min-cache="1"
-      max-cache="3"
-      autoplay= "true"
-      src="rtmp://live.hkstv.hk.lxdns.com/live/hks" 
-      bindstatechange="onPlayEvent"
-      bindfullscreenchange="onFullScreenChange"> 
-     </live-player>  
-   </view>  
-</view>  
+
+<view class='invite_layout' style='width:100%;height:100%;position:fixed;top:0px;z-index:1000000;background:gray;' wx:if='{{showCall}}'>
+
+  <view class='top_layout' style='margin-top:40px;display:relative;'>
+    <image src='{{chatToLogo}}' class='call_logo' wx:if='{{chatToLogo}}' style='width:60px;height:60px;margin-left:20px;float:left;'></image>
+    <image src='../Resources/default-icon.png' class='call_logo' wx:if='{{!chatToLogo}}' style='width:60px;height:60px;margin-left:20px;float:left;'></image>
+    <view style='float:left;margin-left:15px;'>
+      <view class='call_nickname' style='font-size:17px;color:white;'>{{toNickName}}</view>
+      <view class='call_tip' style='font-size:13px;color:white;'>正在等待对方接受邀请</view>
+    </view>
+
+  </view>
+
+  <view class='bottom_layout' style='bottom:20px;display:absolute;position:fixed;text-align:center;width:100%;'>
+    <image src='../Resources/uncall.png' class='end_call' style='width:60px;height:60px;border-radius:30px;' bindtap='cancelCall'></image>
+    <view class='cancel_text' style='font-size:13px;color:white;'>取消</view>
+  </view>
+</view>
+
+
+<view class='invited_layout' style='width:100%;height:100%;position:fixed;top:0px;z-index:1000000;background:gray;' wx:if='{{showInvite}}'>
+
+  <view class='top_layout' style='margin-top:40px;display:relative;'>
+    <image src='{{chatToLogo}}' class='call_logo' wx:if='{{chatToLogo}}' style='width:60px;height:60px;margin-left:20px;float:left;'></image>
+    <image src='../Resources/default-icon.png' class='call_logo' wx:if='{{!chatToLogo}}' style='width:60px;height:60px;margin-left:20px;float:left;'></image>
+    <view style='float:left;margin-left:15px;'>
+      <view class='call_nickname' style='font-size:17px;color:white;'>{{toNickName}}</view>
+      <view class='call_tip' style='font-size:13px;color:white;'>{{call_type == 0 ? "邀请你进行语音通话" : "邀请你进行视频通话"}}</view>
+    </view>
+
+  </view>
+
+  <view class='bottom_layout' style='bottom:20px;display:absolute;position:fixed;text-align:center;left:20px;'>
+    <image src='../Resources/uncall.png' class='end_call' style='width:60px;height:60px;border-radius:30px;' bindtap='cancelInvite'></image>
+    <view class='cancel_text' style='font-size:13px;color:white;'>取消</view>
+  </view>
+
+  <view class='bottom_layout' style='bottom:20px;display:absolute;position:fixed;text-align:center;right:20px;'>
+    <image src='../Resources/call_accept.png' class='end_call' style='width:40px;height:40px;background:green;border-radius:30px;padding:10px;' bindtap='acceptInvite'></image>
+    <view class='cancel_text' style='font-size:13px;color:white;'>接听</view>
+  </view>
+
+</view>
+
+
+<view style="width:100%;height: 100%; background-color: black;z-index:1000000000;position:fixed;top:0px;display:flex;" wx:if='{{calling}}'>
+
+  <view style="width:100%;height:100%;" wx:if='{{call_type == 1}}' class='video_call'>
+    <live-player style="width:100%;height:100%; position:absolute;" id="video-livePlayer" mode="live" min-cache="1" max-cache="3" autoplay="true" src="{{otherPlay}}" bindstatechange="onPlayEvent" bindfullscreenchange="onFullScreenChange">
+         
+        
+        <!-- <cover-view class='bottom_text'>翻转</cover-view> -->
+
+      <!-- <cover-view bindtap='switchCamera'>
+       <cover-image src='../Resources/camera_switch.png' class='end_call' style='width:40px;height:40px;border-radius:20px;position:absolute;bottom:50px;left:100rpx;' ></cover-image>
+      </cover-view> -->
+     
+       <cover-view style='position:absolute;bottom:20px;width:100%;text-align:center;'> 
+
+       <cover-image class="bottom_button" src="../Resources/camera_switch.png" bindtap='switchCamera'></cover-image>
+
+        <cover-image src='../Resources/uncall.png' class='end_call' style='width:60px;height:60px;border-radius:30px;margin-left:auto;margin-right:auto;' bindtap='cancelCall'></cover-image>
+        <cover-view style='font-size:13px;color:white;margin-left:auto;margin-right:auto;line-height:20px; '>取消</cover-view>
+       </cover-view> 
+
+      <cover-view style="width:150px;height: 240px; background-color: black;" wx:if='{{call_type==1}}'>
+        <cover-view style="width:100%;height:100%; position:relative;">
+          <live-pusher style="width:100%; height: 100%;" id="camera-push1" waiting-image="https://mc.qcloudimg.com/static/img/daeed8616ac5df256c0591c22a65c4d3/pause_publish.jpg" url="{{selfPush}}" enable-camera='true' autopush="true" bindstatechange="onPushEvent">
+          </live-pusher>
+        </cover-view>
+      </cover-view>
+    </live-player>
+
+  </view>
+
+  <view style="width:100%;height:100%;" wx:if='{{call_type == 0}}' class='audio_call'>
+    <live-player style="width:0px;height:0px; position:absolute;" id="video-livePlayer" mode="live" min-cache="1" max-cache="3" autoplay="true" src="{{otherPlay}}" bindstatechange="onPlayEvent" bindfullscreenchange="onFullScreenChange">
+
+      <cover-view class='top_layout' style='position:absolute;top:40px;display:flex;width:100%;' wx:if='{{call_type !=1 }} '>
+        <cover-image src='{{chatToLogo}}' class='call_logo' style='width:60px;height:60px;margin-left:20px;'></cover-image>
+        <cover-view style='margin-left:15px;'>
+          <cover-view class='call_nickname ' style='font-size:17px;color:white; '>{{toNickName}}</cover-view>
+          <cover-view class='call_tip ' style='font-size:13px;color:white;margin-top:10px;'>通话中...</cover-view>
+        </cover-view>
+
+      </cover-view>
+
+      <cover-view style='position:absolute;bottom:20px;width:100%;text-align:center;'>
+        <cover-image src='../Resources/uncall.png' class='end_call' style='width:60px;height:60px;border-radius:30px;margin-left:auto;margin-right:auto;' bindtap='cancelCall'></cover-image>
+        <cover-view style='font-size:13px;color:white;margin-left:auto;margin-right:auto; '>取消</cover-view>
+      </cover-view>
+
+      <cover-view style="width:0px;height: 0px; background-color: black;" wx:if='{{call_type==0}}'>
+        <cover-view style="width:100%;height:100%; position:relative;">
+          <live-pusher style="width:100%; height: 100%;" id="camera-push" waiting-image="https://mc.qcloudimg.com/static/img/daeed8616ac5df256c0591c22a65c4d3/pause_publish.jpg" url="{{selfPush}}" enable-camera='false' autopush="true" bindstatechange="onPushEvent">
+          </live-pusher>
+        </cover-view>
+      </cover-view>
+    </live-player>
+
+    <view class='top_layout' style='position:absolute;top:40px;display:flex;width:100%;' wx:if='{{call_type !=1 }} '>
+      <image src='{{chatToLogo}}' class='call_logo' style='width:60px;height:60px;margin-left:20px;'></image>
+      <view style='margin-left:15px;'>
+        <view class='call_nickname ' style='font-size:17px;color:white; '>{{toNickName}}</view>
+        <view class='call_tip ' style='font-size:13px;color:white;margin-top:10px;'>通话中...</view>
+      </view>
+
+    </view>
+
+    <view style='position:absolute;bottom:20px;width:100%;text-align:center;'>
+      <image src='../Resources/uncall.png' class='end_call' style='width:60px;height:60px;border-radius:30px;margin-left:auto;margin-right:auto;' bindtap='cancelCall'></image>
+      <view style='font-size:13px;color:white;margin-left:auto;margin-right:auto; '>取消</view>
+    </view>
+  </view>
+
+</view>

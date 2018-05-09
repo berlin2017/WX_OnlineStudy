@@ -84,6 +84,7 @@ App({
 
 
     jim.onDisconnect(function () {
+      var that = this;
       var new_time = Date.parse(new Date());
       var new_random_str = "022cd9fd995849b";
       var new_s = "appkey=" + "20a1f8331c8e462116c4d24e" + "&timestamp=" + time + "&random_str=" + random_str + "&key=fc92fd7140c3e9b228d368fb"
@@ -94,7 +95,30 @@ App({
         "signature": new_signature,
         "timestamp": new_time,
         "flag": 1,
-      })
+      }).onSuccess(function (data) {
+        //TODO
+        console.log('im初始化成功');
+        that.globalData.jim = jim;
+        jim.login({
+          'username': that.globalData.myUser.openId,
+          'password': 'ah123456'
+        }).onSuccess(function () {
+          // wx.showToast({
+          //   title: '登录成功',
+          // })
+          console.log("登录成功");
+        }).onFail(function (data) {
+          //同上
+          console.log(data);
+          // wx.showToast({
+          //   title: '登录失败',
+          // })
+          console.log("登录失败");
+        });
+      }).onFail(function (data) {
+        //TODO
+        console.log('im初始化失败');
+      });  
     });
   },
 

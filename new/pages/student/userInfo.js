@@ -267,6 +267,12 @@ Page({
   commit:function(e){
     console.log(e.detail.value);
     var that = this;
+    if (!e.detail.value.tel||e.detail.value.tel == '') {
+      wx.showToast({
+        title: '手机不能为空',
+      })
+      return;
+    }
     wx.showLoading({
       title: '',
       mask: true,
@@ -343,7 +349,7 @@ Page({
         url: 'https://weixin.ywkedu.com/App/add_stuInfo',
         data: params,
         success: function (res) {
-          res = JSON.parse(res.data);
+          res = res.data;
           console.log(res);
           wx.hideLoading();
           if (res.msg == 1) {
