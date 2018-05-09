@@ -34,9 +34,9 @@ Page({
       this.initJpush();
     }
     this.requestUserInfo();
-    // wx.setKeepScreenOn({
-    //   keepScreenOn: true,
-    // })
+    wx.setKeepScreenOn({
+      keepScreenOn: true,
+    })
   },
 
   onHide: function () {
@@ -47,9 +47,9 @@ Page({
       calling: false
     });
     app.globalData.isInChatPage = false;
-    // wx.setKeepScreenOn({
-    //   keepScreenOn: false,
-    // })
+    wx.setKeepScreenOn({
+      keepScreenOn: false,
+    })
   },
 
   onUnload() {
@@ -60,6 +60,9 @@ Page({
       calling: false
     });
     app.globalData.isInChatPage = false;
+    wx.setKeepScreenOn({
+      keepScreenOn: false,
+    })
   },
   /**
    * 生命周期函数--监听页面加载
