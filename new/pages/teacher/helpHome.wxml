@@ -8,8 +8,11 @@
       <view class='item_title'>{{item.title}}</view>
       <image class='item_arrow' src='{{item.showDetail ? "../Resources/arrow_on.png" : "../Resources/arrow_down.png"}}'></image>
       </view>
-
-      <view class='item_answer' wx:if='{{item.showDetail}}'>{{item.content}}</view>
+    <import src="../..//wxParse/wxParse.wxml"/>
+   
+       <view class='item_answer' wx:if='{{item.showDetail}}'>
+         <template is="wxParse" data="{{wxParseData:item.article.nodes}}" />
+       </view> 
 
     </view>
   </view>

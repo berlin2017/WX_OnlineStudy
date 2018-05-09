@@ -1,4 +1,5 @@
 // pages/teacher/helpHome.js
+var WxParse = require('../../wxParse/wxParse.js');
 Page({
 
   /**
@@ -42,6 +43,11 @@ Page({
       },
       success: function (res) {
         console.log(res);
+        for(var index in res.data){
+          var str = 'article' + index;
+          WxParse.wxParse(str, 'html', res.data[index].content, that, 5);
+          res.data[index].article = that.data[str];
+        }
         wx.hideLoading();
         that.setData({
           questions:res.data
