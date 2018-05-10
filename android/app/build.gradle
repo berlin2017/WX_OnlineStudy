@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'channel'
 
 android {
     compileSdkVersion 26
@@ -10,14 +11,58 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    configurations.all {
+        resolutionStrategy.force 'com.android.support:support-annotations:27.1.1'
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('/Users/ahxmt/Desktop/WX_OnlineStudy/android/keyStore')
+            storePassword '123456'
+            keyAlias 'studyonline'
+            keyPassword '123456'
+            v1SigningEnabled true
+            v2SigningEnabled false
+        }
+    }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    configurations.all {
-        resolutionStrategy.force 'com.android.support:support-annotations:27.1.1'
+
+    channel{
+        //指定渠道文件
+//        channelFile = file("/Users/ahxmt/Desktop/WX_OnlineStudy/channel.txt")
+        //多渠道包的输出目录，默认为new File(project.buildDir,"channel")
+        baseOutputDir = new File(project.buildDir,"channelApk")
+        //多渠道包的命名规则，默认为：${appName}-${versionName}-${versionCode}-${flavorName}-${buildType}
+        apkNameFormat ='${appName}-${versionName}-${versionCode}-${flavorName}-${buildType}'
+        //快速模式：生成渠道包时不进行校验（速度可以提升10倍以上，默认为false）
+        isFastMode = false
+        //buildTime的时间格式，默认格式：yyyyMMdd-HHmmss
+        buildTimeDateFormat = 'yyyyMMdd-HH:mm:ss'
+        //低内存模式（仅针对V2签名，默认为false）：只把签名块、中央目录和EOCD读取到内存，不把最大头的内容块读取到内存，在手机上合成APK时，可以使用该模式
+        lowMemory = false
+    }
+
+
+
+    flavorDimensions "default"
+    productFlavors{
+
+        productA{
+            dimension "default"
+            applicationId "com.berlin.studyonline";
+        }
+
+        productB{
+            dimension "default"
+            applicationId "com.berlin.studyonline2";
+        }
     }
 }
 
@@ -30,4 +75,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     compile 'com.tsy:myokhttp:1.1.4'
     compile 'com.ashokvarma.android:bottom-navigation-bar:2.0.4'
+    api 'com.leon.channel:helper:2.0.0'
 }

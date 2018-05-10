@@ -125,7 +125,13 @@ Page({
         }else{
           wx.showToast({
             title: '请先完善资料',
+            duration:2000
           })
+          setTimeout(function(){
+            wx.navigateTo({
+              url: 'userInfo',
+            })
+          },2000)
         }
       },
       fail: function (res) {
