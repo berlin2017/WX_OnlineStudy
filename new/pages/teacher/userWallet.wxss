@@ -3,3 +3,8 @@
 @import '../common/title.wxss';
 
 @import '../common/berlin.wxss';
+
+.info_text{
+  width:94%;display:block;clear:both;margin-left:auto;margin-right:auto;margin-top:20px;padding-top:20px;font-size:13px;
+  color: #8f8f94;
+}

@@ -25,6 +25,13 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    
+  },
+
+  /**
+  * 生命周期函数--监听页面显示
+  */
+  onShow: function () {
     var that = this;
     if (!app.globalData.res) {
       wx.getUserInfo({
@@ -32,17 +39,44 @@ Page({
           // 可以将 res 发送给后台解码出 unionId
           app.globalData.userInfo = res.userInfo
           app.globalData.res = res
-          this.init(app.globalData.res);
+          that.init(app.globalData.res);
         },
-        fail: res=>{
+        fail: res => {
           console.log(res);
-          that.onReady();
+          that.requestAuth();
         }
       })
-    }else{
-      this.init(app.globalData.res);
+    } else {
+      that.init(app.globalData.res);
     }
-    
+  },
+
+  requestAuth:function(){
+    var that = this
+    if (wx.openSetting) {
+      wx.openSetting({
+        success: function (res) {
+          //尝试再次登录
+          wx.getUserInfo({
+            success: res => {
+              // 可以将 res 发送给后台解码出 unionId
+              app.globalData.userInfo = res.userInfo
+              app.globalData.res = res
+              that.init(app.globalData.res);
+            },
+            fail: res => {
+              console.log(res);
+              that.requestAuth();
+            }
+          })
+        }
+      })
+    } else {
+      wx.showModal({
+        title: '授权提示',
+        content: '小程序需要您的微信授权才能使用哦~ 错过授权页面的处理方法：删除小程序->重新搜索进入->点击授权按钮'
+      })
+    }
   },
 
   initJpush:function(){
@@ -252,11 +286,6 @@ Page({
 
   
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  },
 
   /**
    * 生命周期函数--监听页面隐藏
