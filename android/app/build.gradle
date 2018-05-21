@@ -76,4 +76,5 @@ dependencies {
     compile 'com.tsy:myokhttp:1.1.4'
     compile 'com.ashokvarma.android:bottom-navigation-bar:2.0.4'
     api 'com.leon.channel:helper:2.0.0'
+    compile 'com.koushikdutta.async:androidasync:2.+'
 }

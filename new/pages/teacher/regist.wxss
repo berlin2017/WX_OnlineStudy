@@ -19,15 +19,21 @@
 .item_name{
   float: left;
   line-height: 40px;
-  text-align: center;
+  text-align: left;
+  width: 30%;
   color: gray;
 }
 
 .item_right{
   height: 40px;
   float: right;
+  width: 60%;
   text-align: right;
   color: black;
+}
+
+.item_right_input{
+  height: 40px;
 }
 
 .item_value{

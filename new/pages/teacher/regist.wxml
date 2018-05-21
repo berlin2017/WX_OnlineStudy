@@ -12,22 +12,26 @@
       <view class='item_layout'>
 
         <view class='item_name'>姓名:</view>
-        <input placeholder='请输入姓名' class='item_right' name='realname' value='{{userInfo.info.realname}}'></input>
-
+        <view class='item_right'>
+          <input placeholder='请输入姓名' class='item_right_input' name='realname' value='{{userInfo.info.realname}}'></input>
+        </view>
       </view>
 
       <view class='item_layout'>
 
         <view class='item_name'>手机:</view>
-        <input placeholder='请输入手机号码' class='item_right' name='tel' value='{{userInfo.info.tel}}'></input>
+        <view class='item_right'>
+          <input placeholder='请输入手机号码' class='item_right_input' name='tel' value='{{userInfo.info.tel}}'></input>
+        </view>
 
       </view>
 
       <view class='item_layout'>
 
         <view class='item_name'>身份证:</view>
-        <input placeholder='请输入身份证号码' class='item_right' name='idnumber' value='{{userInfo.info.idnumber}}'></input>
-
+        <view class='item_right'>
+          <input placeholder='请输入身份证号码' class='item_right_input' name='idnumber' value='{{userInfo.info.idnumber}}'></input>
+        </view>
       </view>
 
 
@@ -58,15 +62,17 @@
       <view class='item_layout'>
 
         <view class='item_name'>毕业学校:</view>
-        <input placeholder='请输入毕业学校' class='item_right' name='biye_school' value='{{userInfo.info.biye_school}}'></input>
-
+        <view class='item_right'>
+          <input placeholder='请输入毕业学校' class='item_right_input' name='biye_school' value='{{userInfo.info.biye_school}}'></input>
+        </view>
       </view>
 
-        <view class='item_layout'>
+      <view class='item_layout'>
 
         <view class='item_name'>教学年龄:</view>
-        <input placeholder='请输入教学年龄' class='item_right' name='age' type='number' value='{{userInfo.info.teaching}}'></input>
-
+        <view class='item_right'>
+          <input placeholder='请输入教学年龄' class='item_right_input' name='age' type='number' value='{{userInfo.info.teaching}}'></input>
+        </view>
       </view>
 
       <view class='item_layout' bindtap='showSubject'>
@@ -144,14 +150,14 @@
 
 
       <checkbox-group name='agreement'>
-        <checkbox style='margin:10px;float:left;'  value='1' checked='{{userInfo.info.id ? true :false}}'>
+        <checkbox style='margin:10px;float:left;' value='1' checked='{{userInfo.info.id ? true :false}}'>
           <view bindtap='toAgreement'>点击查看注册协议</view>
         </checkbox>
       </checkbox-group>
 
       <button class='bottom_layout' form-type='submit' wx:if='{{regist_type=="1"}}'>更新</button>
 
-       <button class='bottom_layout' form-type='submit'  wx:if='{{regist_type=="0"}}'>注册</button>
+      <button class='bottom_layout' form-type='submit' wx:if='{{regist_type=="0"}}'>注册</button>
 
     </form>
 
