@@ -298,9 +298,17 @@ Page({
         console.log(res);
         wx.hideLoading();
         if (res.msg != 'ok' && res.msg != '0') {
+         
           wx.showToast({
             title: res.data,
           })
+          if (res.msg == '2') {
+            setTimeout(function () {
+              wx.navigateTo({
+                url: 'walletCZ',
+              })
+            }, 1000);
+          }
           return;
         }
         wx.showToast({

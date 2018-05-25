@@ -120,3 +120,5 @@
     </view>
   </form>
 </view>
+
+<view style='color:white;font-size:11px;width:80%;margin-left:auto;margin-right:auto;'>* 请下拉刷新查看订单详情</view>
