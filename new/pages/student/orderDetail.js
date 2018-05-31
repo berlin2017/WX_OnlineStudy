@@ -11,10 +11,11 @@ Page({
     btn_color: null,
     btn_text: null,
     order: {},
-    isShowDialog:false,
-    id:null,
-    jiajiaInfo:{},
-    currentIndex:0,
+    isShowDialog: false,
+    id: null,
+    jiajiaInfo: {},
+    currentIndex: 0,
+    showChat: false,
   },
 
   /**
@@ -22,7 +23,7 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      id:options.id
+      id: options.id
     });
   },
 
@@ -30,10 +31,10 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    
+
   },
 
-  requestDetail:function(){
+  requestDetail: function () {
     var that = this;
     wx.showLoading({
       title: '',
@@ -45,17 +46,24 @@ Page({
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
-      data:{
-        indent_id:that.data.id
+      data: {
+        indent_id: that.data.id
       },
       success: function (res) {
         console.log(res);
         wx.hideLoading();
-        if (res.data.info.start_time){
+        if (res.data.info.start_time) {
           res.data.info.start_time = util.formatTime(new Date(parseInt(res.data.info.start_time) * 1000));
         }
 
         if (res.data.info.end_time) {
+
+          if (Date.parse(new Date()) - parseInt(res.data.info.end_time) * 1000 < 7 * 24 * 3600 * 1000) {
+            that.setData({
+              showChat: true
+            });
+          }
+          res.data.info.end_time_value = res.data.info.end_time;
           res.data.info.end_time = util.formatTime(new Date(parseInt(res.data.info.end_time) * 1000));
         }
         that.setData({
@@ -110,14 +118,14 @@ Page({
       },
       success: function (res) {
         wx.hideLoading();
-        if(res.data.msg == 1){
+        if (res.data.msg == 1) {
           wx.showToast({
             title: '取消成功',
           })
           wx.navigateBack({
-            
+
           })
-        }else{
+        } else {
           wx.showToast({
             title: '取消失败',
           })
@@ -126,14 +134,14 @@ Page({
     })
   },
 
-  previewImage:function(){
+  previewImage: function () {
     var that = this;
     wx.previewImage({
       urls: [that.data.order.indent_pic],
     })
   },
 
-  comfirm:function(){
+  comfirm: function () {
     var that = this;
     wx.showLoading({
       title: '',
@@ -166,7 +174,7 @@ Page({
     })
   },
 
-  update:function(){
+  update: function () {
     var color = null;
     var btn_text = null;
     var that = this;
@@ -176,17 +184,18 @@ Page({
         btn_text = '加价并发布';
         break;
       case '2':
-        if (that.data.order.directional == '0'){
+        if (that.data.order.directional == '0') {
           color = '#7647a0';
           btn_text = '进入聊天室';
-      }
-      
+        }
+
         break;
       case '3':
         color = 'orangered';
         btn_text = '立即评价';
         break;
     }
+    
     this.setData({
       order: this.data.order,
       btn_color: color,
@@ -220,7 +229,7 @@ Page({
    */
   onPullDownRefresh: function () {
     this.setData({
-      currentIndex:0
+      currentIndex: 0
     });
     this.requestDetail();
     wx.stopPullDownRefresh();
@@ -244,28 +253,37 @@ Page({
 
     })
   },
-  jump:function(e){
+  jump: function (e) {
     var that = this;
-    if (that.data.order.state == '0'){
+    if (that.data.order.state == '0') {
       // wx.navigateTo({
       //   url: 'sendQuestion',
       // })
       that.requestJiaJia();
     } else if (that.data.order.state == '1') {
 
-    }else if (that.data.order.state == '2') {
+    } else if (that.data.order.state == '2') {
       wx.navigateTo({
-        url: '../test/chating' + '?id=' + that.data.order.teachers[0].openid + '&type=2'+'&orderId=' + that.data.id,
+        url: '../test/chating' + '?id=' + that.data.order.teachers[0].openid + '&type=2' + '&orderId=' + that.data.id,
       })
-    }else if (that.data.order.state == '3'){
-  
+    } else if (that.data.order.state == '3') {
+      if (that.data.showChat) {
         wx.navigateTo({
-          url: 'comment' + '?id=' + that.data.order.teachers[0].openid +'&indent_id=' + that.data.id,
-      })
-    } 
+          url: '../test/chating' + '?id=' + that.data.order.student_openid + '&type=1' + '&orderId=' + that.data.id,
+        })
+      }
+    }
+
   },
 
-  confirmTeacher:function(e){
+  comment:function(){
+    var that = this;
+    wx.navigateTo({
+      url: 'comment' + '?id=' + that.data.order.teachers[0].openid + '&indent_id=' + that.data.id,
+    })
+  },
+
+  confirmTeacher: function (e) {
     var that = this;
     wx.showLoading({
       title: '',
@@ -281,7 +299,7 @@ Page({
       data: {
         indent_id: that.data.id,
         teacher_openid: teacherid,
-        form_id:e.detail.formId,
+        form_id: e.detail.formId,
       },
       success: function (res) {
         console.log(res);
@@ -307,8 +325,8 @@ Page({
       },
     })
   },
-  
-  sendMsg:function(e,id){
+
+  sendMsg: function (e, id) {
     var that = this;
     wx.showLoading({
       title: '',
@@ -316,7 +334,7 @@ Page({
     })
     wx.request({
       url: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx72667dd95df8c05d&secret=d91961063b0948f5607319523f2376b8',
-      success:function(res){
+      success: function (res) {
         var token = res.data.access_token;
         var d = {
           touser: id,
@@ -343,16 +361,16 @@ Page({
           },
           color: '#ccc',
           emphasis_keyword: 'keyword1.DATA'
-        }  
+        }
         wx.request({
-          url: 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token='+token,
-          method:'POST',
-          data:d,
+          url: 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=' + token,
+          method: 'POST',
+          data: d,
           success: function (res) {
             wx.hideLoading();
             console.log(res);
           },
-          fail:function(res){
+          fail: function (res) {
             wx.hideLoading();
             console.log(res);
           },
@@ -361,19 +379,19 @@ Page({
     })
   },
 
-  commit:function(e){
+  commit: function (e) {
     var money = e.detail.value.money_input;
     console.log(money);
-  
+
 
     var that = this;
-    if (!money){
+    if (!money) {
       wx.showToast({
         title: '请填写金额',
       })
       return;
     }
-    if (!that.data.jiajiaInfo.min_money || that.data.jiajiaInfo.min_money==0){
+    if (!that.data.jiajiaInfo.min_money || that.data.jiajiaInfo.min_money == 0) {
       that.data.jiajiaInfo.min_money = 5;
     }
 
@@ -383,24 +401,24 @@ Page({
       })
       return;
     }
-   
+
     wx.showLoading({
       title: '',
       mask: true,
     })
     wx.request({
       url: 'https://weixin.ywkedu.com/App/update_premium',
-      method:'POST',
-      header:{
+      method: 'POST',
+      header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
-      data:{
+      data: {
         indent_id: that.data.id,
         price: parseInt(that.data.order.price),
         jiajia: parseInt(money),
       },
-      success:function(res){
-        if(res.data.msg == 1){
+      success: function (res) {
+        if (res.data.msg == 1) {
           wx.showToast({
             title: '加价成功',
           })
@@ -408,13 +426,13 @@ Page({
             isShowDialog: false
           });
           that.requestDetail();
-        }else{
+        } else {
           wx.showToast({
             title: res.data.data,
           })
         }
       },
-      fail:function(){
+      fail: function () {
         wx.showToast({
           title: '请求失败',
         })
@@ -422,20 +440,20 @@ Page({
     })
   },
 
-  dismiss:function(){
+  dismiss: function () {
     this.setData({
       isShowDialog: false
     });
   },
 
-  radioChange:function(e){
+  radioChange: function (e) {
     this.setData({
-      currentIndex:e.detail.value
+      currentIndex: e.detail.value
     });
   },
-  
 
-  toTeacherDetail:function(e){
+
+  toTeacherDetail: function (e) {
     var index = e.currentTarget.dataset.index;
     var teacher = this.data.order.teachers[index];
     wx.navigateTo({

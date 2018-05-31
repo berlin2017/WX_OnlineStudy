@@ -82,14 +82,16 @@
         </view>
         <image style='width:100%;height:200px;' mode='scaleToFill' src='{{order.indent_pic}}' bindtap='previewImage'></image>
 
-        <view style='padding-left:20px;color:gray;width:100%;display:flex;' wx:if='{{order.beizhu}}'>
-          <view style='float:left;'>备注:</view>
+        <view style='padding-left:20px;color:gray;display:flex;' wx:if='{{order.beizhu}}'>
+          <view style='float:left;width:60px;font-size:15px;'>备注:</view>
           <view style='margin-left:10px;color:orangered;float:left;'>{{order.beizhu}}</view>
         </view>
 
 
         <form name='test' report-submit bindsubmit='jump'>
           <button style='height:40px;border-radius:20px;background:{{btn_color}};color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{order.state=="2" && order.directional=="0"}}' form-type='submit'>{{btn_text}}</button>
+
+            <button style='height:40px;border-radius:20px;background:{{btn_color}};color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{showChat}}' form-type='submit'>{{btn_text}}</button>
 
            <button style='height:40px;border-radius:20px;background:{{btn_color}};color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{order.directional=="1"}}' form-type='submit'>{{btn_text}}</button>
 

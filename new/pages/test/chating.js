@@ -28,7 +28,7 @@ Page({
   },
 
   onShow: function () {
-    this.reloadMsg();
+  
     app.globalData.isInChatPage = true;
     if (!app.globalData.jim || !app.globalData.jim.isInit() || !app.globalData.jim.isLogin()) {
       this.initJpush();
@@ -46,34 +46,6 @@ Page({
       that.handlerMessage(data);
     });
 
-    //离线消息监听
-    app.globalData.jim.onSyncConversation(function (data) {
-      console.log("离线消息");
-      console.log(data);
-      that.handlerMessage(data);
-      // data[]
-      // data[].msg_type 会话类型
-      // data[].from_appey 单聊有效
-      // data[].from_username 单聊有效
-      // data[].from_gid 群聊有效
-      // data[].unread_msg_count 消息未读数
-      // 消息已读回执状态，针对自己发的消息
-      // data[].receipt_msgs[]
-      // data[].receipt_msgs[].msg_id
-      // data[].receipt_msgs[].unread_count
-      // data[].receipt_msgs[].mtime
-      // 消息列表
-      // data[].msgs[]
-      // data[].msgs[].msg_id
-      // data[].msgs[].content
-      // data[].msgs[].msg_type
-      // data[].msgs[].ctime_ms
-      // data[].msgs[].need_receipt
-      // data[].msgs[].custom_notification.enabled
-      // data[].msgs[].custom_notification.title
-      // data[].msgs[].custom_notification.alert
-      // data[].msgs[].custom_notification.at_prefix
-    });
   },
 
   onHide: function () {
@@ -119,6 +91,33 @@ Page({
         calling: false
       });
     }
+    this.reloadMsg();
+    var that = this;
+    // var timer = setInterval(function(){
+    //   if (!app.globalData.jim || !app.globalData.jim.isInit() || !app.globalData.jim.isLogin()) {
+    //     wx.redirectTo({
+    //       url: 'chating',
+    //     })
+    //   }
+    // },2000);
+  },
+
+  onReady: function () {
+    //离线消息监听
+    app.globalData.jim.onSyncConversation(function (data) {
+      console.log("离线消息");
+      console.log(data);
+      this.handlerMessage(data);
+    });
+
+    // 离线消息同步监听
+    app.globalData.jim.onSyncConversation((data) => {
+      // 限制只触发一次
+      console.log("离线消息");
+      console.log(data);
+      this.handlerMessage(data);
+    });
+
   },
 
   switchCamera:function(){
@@ -389,10 +388,7 @@ Page({
 
   },
 
-  onReady: function () {
-    
-
-  },
+  
 
   handlerMessage:function(data){
     var that = this;
@@ -571,12 +567,44 @@ Page({
     if(history){
       var array = JSON.parse(history);
       console.log(array);
-      that.setData({
-        messageArr: array,
-      });
-      that.scrollToBottom();
+      that.handleSource(array);
     }
    
+  },
+
+  handleSource: function (data) {
+    var that = this;
+    for(var i in data){
+      (function (index) {//index为循环中传入的参数 
+        if (data[index].content.msg_type === 'image' || data[index].content.msg_type === 'file') {
+          app.globalData.jim.getResource({
+            'media_id': data[index].content.msg_body.media_id,
+          }).onSuccess(function (res) {
+            //data.code 返回码
+            //data.message 描述
+            //data.url 资源临时访问路径
+            data[index].content.msg_body.media_id = res.url;
+            that.setData({
+              messageArr: data,
+            });
+            that.scrollToBottom();
+            that.handerSource(data);
+            console.log('------总消息-----');
+            console.log(history);
+          }).onFail(function (res) {
+            //data.code 返回码
+            //data.message 描述
+          });
+        }else{
+          that.scrollToBottom();
+          that.setData({
+            messageArr: data,
+          });
+        }
+      })(i); 
+     
+    }
+  
   },
 
 
@@ -1211,7 +1239,8 @@ Page({
           'target_username': self.data.toId,
           'target_nickname': self.data.toNickName,
           'appkey': '20a1f8331c8e462116c4d24e',
-          'image': tempFilePaths //设置图片参数
+          'image': tempFilePaths, //设置图片参数，
+          'extras': { orderId: that.data.orderId },
         }).onSuccess(function (data, msg) {
           //TODO
           console.log("发送成功");
@@ -1242,7 +1271,8 @@ Page({
           'target_username': self.data.toId,
           'target_nickname': self.data.toNickName,
           'appkey': '20a1f8331c8e462116c4d24e',
-          'file': res.tempFilePath
+          'file': res.tempFilePath,
+          'extras': { orderId: that.data.orderId },
         }).onSuccess(function (data, msg) {
           //TODO
           console.log("发送成功");
@@ -1611,6 +1641,7 @@ Page({
       'target_nickname': self.data.toNickName,
       'file': tempFilePath,
       'appkey': '20a1f8331c8e462116c4d24e',
+      'extras': { orderId: that.data.orderId },
     }).onSuccess(function (data, msg) {
       //data.code 返回码
       //data.message 描述
@@ -1762,45 +1793,9 @@ Page({
     } else {
       history = JSON.parse(history);
     }
-    if (msg.target_name == that.data.toId) {
-
-      if (msg.content.msg_type === 'image' || msg.content.msg_type === 'file') {
-        app.globalData.jim.getResource({
-          'media_id': msg.content.msg_body.media_id,
-        }).onSuccess(function (res) {
-          //data.code 返回码
-          //data.message 描述
-          //data.url 资源临时访问路径
-          msg.content.msg_body.media_id = res.url
-          msg.content.create_time = util.formatTime(new Date(msg.content.create_time));
-          history.push(msg);
-          wx.setStorage({
-            key: that.data.orderId,
-            data: JSON.stringify(history),
-          })
-          that.setData({
-            messageArr: history,
-          });
-          that.scrollToBottom();
-        }).onFail(function (res) {
-          //data.code 返回码
-          //data.message 描述
-        });
-      }else{
-        msg.content.create_time = util.formatTime(new Date(msg.content.create_time));
-        history.push(msg);
-        wx.setStorage({
-          key: that.data.orderId,
-          data: JSON.stringify(history),
-        })
-        that.setData({
-          messageArr: history,
-        });
-        that.scrollToBottom();
-      }
-     
-
-    }
+    msg.content.create_time = util.formatTime(new Date(msg.content.create_time));
+    history.push(msg);
+    that.handleSource(history);
    
   },
 

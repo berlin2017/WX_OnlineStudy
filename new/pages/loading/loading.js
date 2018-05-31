@@ -3,13 +3,14 @@ var app = getApp();
 var TIME = 1000;
 var JMessage = require('../../jpush/jmessage-wxapplet-sdk-1.4.0.min.js')
 var md5 = require('../../jpush/md5.js')
+var util = require('../../utils/util.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    showButton:false,
+    showButton: false,
   },
 
   /**
@@ -17,7 +18,7 @@ Page({
    */
   onLoad: function (options) {
 
-
+    
 
   },
 
@@ -25,7 +26,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    
+
   },
 
   /**
@@ -44,7 +45,7 @@ Page({
         fail: res => {
           console.log(res);
           that.setData({
-            showButton:true
+            showButton: true
           });
         }
       })
@@ -53,7 +54,7 @@ Page({
     }
   },
 
-  onGetUserinfo:function(){
+  onGetUserinfo: function () {
     wx.getUserInfo({
       success: res => {
         // 可以将 res 发送给后台解码出 unionId
@@ -112,7 +113,7 @@ Page({
   //   }
   // },
 
-  initJpush:function(){
+  initJpush: function () {
     var that = this;
     //jpush
     var jim = new JMessage({
@@ -138,10 +139,49 @@ Page({
       console.log('im初始化失败');
       that.initJpush();
     });
-    
+
+    jim.onDisconnect(function () {
+      console.log("一掉线");
+      var that = this;
+      var new_time = Date.parse(new Date());
+      var new_random_str = "022cd9fd995849b";
+      var new_s = "appkey=" + "20a1f8331c8e462116c4d24e" + "&timestamp=" + time + "&random_str=" + random_str + "&key=fc92fd7140c3e9b228d368fb"
+      var new_signature = md5.hexMD5(new_s);
+      jim.init({
+        "appkey": "20a1f8331c8e462116c4d24e",
+        "random_str": new_random_str,
+        "signature": new_signature,
+        "timestamp": new_time,
+        "flag": 1,
+      }).onSuccess(function (data) {
+        //TODO
+        console.log('im初始化成功');
+        that.globalData.jim = jim;
+        jim.login({
+          'username': that.globalData.myUser.openId,
+          'password': 'ah123456'
+        }).onSuccess(function () {
+          // wx.showToast({
+          //   title: '登录成功',
+          // })
+          console.log("登录成功");
+        }).onFail(function (data) {
+          //同上
+          console.log(data);
+          // wx.showToast({
+          //   title: '登录失败',
+          // })
+          console.log("登录失败");
+        });
+      }).onFail(function (data) {
+        //TODO
+        console.log('im初始化失败');
+      });
+    });
+
   },
 
-  regist:function(){
+  regist: function () {
     app.globalData.jim.register({
       'username': result.data.openId,
       'password': 'ah123456',
@@ -228,7 +268,7 @@ Page({
           },
           success: function (result) {
             console.log(result);
-            if (!result.data.openId){
+            if (!result.data.openId) {
               // setTimeout(function () {
               //   wx.redirectTo({
               //     url: '../main/main2',
@@ -237,14 +277,14 @@ Page({
 
 
               that.init();
-              console.log('iv:'+iv);
+              console.log('iv:' + iv);
               console.log('encryptedData:' + encryptedData);
               console.log('code:' + info.code);
               return;
             }
             app.globalData.myUser = result.data;
             console.log(app.globalData.jim.isInit());
-            if (!app.globalData.jim || !app.globalData.jim.isInit()){
+            if (!app.globalData.jim || !app.globalData.jim.isInit()) {
               that.initJpush();
             }
             app.globalData.jim.register({
@@ -263,22 +303,15 @@ Page({
                 wx.showToast({
                   title: '登录成功',
                 })
-                setTimeout(function () {
-                  wx.redirectTo({
-                    url: '../main/main2',
-                  })
-                }, TIME);
+                that.getMessage();
+
               }).onFail(function (data) {
                 //同上
                 console.log(data);
                 wx.showToast({
                   title: '登录失败',
                 })
-                setTimeout(function () {
-                  wx.redirectTo({
-                    url: '../main/main2',
-                  })
-                }, TIME);
+                that.toMain();
               });
             }).onFail(function (data) {
               // 同上
@@ -290,24 +323,16 @@ Page({
                   wx.showToast({
                     title: '登录成功',
                   })
-                  setTimeout(function () {
-                    wx.redirectTo({
-                      url: '../main/main2',
-                    })
-                  }, TIME);
+                  that.getMessage();
                 }).onFail(function (data) {
                   //同上
                   console.log(data);
                   wx.showToast({
                     title: '登录失败',
                   })
-                  setTimeout(function () {
-                    wx.redirectTo({
-                      url: '../main/main2',
-                    })
-                  }, TIME);
+                  that.toMain();
                 });
-              }else{
+              } else {
                 console.log('注册失败');
               }
             });
@@ -317,8 +342,71 @@ Page({
     })
   },
 
-  
+  toMain: function () {
+    setTimeout(function () {
+      wx.redirectTo({
+        url: '../main/main2',
+      })
+    }, TIME);
+  },
 
+  getMessage: function () {
+    var that = this;
+    app.globalData.jim.onSyncConversation(function (data) {
+      console.log("离线消息");
+      console.log(data);
+      that.handlerMessage(data);
+    });
+  },
+
+  handlerMessage: function (data) {
+    var that = this;
+    wx.clearStorageSync();
+    if (data.length == 0) {
+      that.toMain();
+      return;
+    }
+
+    that.handleText(data);
+
+  },
+
+
+
+  handleText: function (data) {
+    var that = this;
+    for (var index2 in data) {
+      for (var index in data[index2].msgs) {
+        var item = data[index2].msgs[index];
+        try {
+          if (!item.content.hasOwnProperty("msg_body") || !item.content.msg_body.extras || !item.content.msg_body.extras.hasOwnProperty("orderId")) {
+            continue;
+          }
+        } catch (e) {
+          continue;
+        }
+
+        var orderId = item.content.msg_body.extras.orderId;
+        item.from_username = item.content.from_id;
+        if (orderId) {
+          var history = wx.getStorageSync(orderId);
+          if (!history || history == '') {
+            history = [];
+          } else {
+            history = JSON.parse(history);
+          }
+          item.content.create_time = util.formatTime(new Date(item.content.create_time));
+
+          history.push(item);
+          wx.setStorageSync(orderId, JSON.stringify(history));
+          console.log('------订单' + orderId + '总消息-----');
+          console.log(history);
+
+        }
+      }
+      that.toMain();
+    }
+  },
 
   /**
    * 生命周期函数--监听页面隐藏

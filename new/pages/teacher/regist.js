@@ -585,7 +585,7 @@ Page({
 
 
   commit: function (form_data){
-    this.sendMsg(form_data);
+    // this.sendMsg(form_data);
     var that = this;
     var params = {};
     var request_url = 'https://weixin.ywkedu.com/App/register';

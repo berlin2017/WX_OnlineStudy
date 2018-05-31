@@ -3,7 +3,7 @@
 <view class='main_container' style='margin-bottom:50px;'>
 
   <view class='top_layout'>
-  <image class='back' src='../Resources/ic_back.png' bindtap='back'></image>
+  <image class='back' src='../Resources/ic_back.png' bindtap='back' style=' top: 30px;'></image>
     <image src='{{detail.pic == "null" ? detail.avatarUrl : detail.pic}}' class='image' mode='sacleToFill'></image>
 
 
@@ -14,7 +14,7 @@
 
       <text class='info'>辅导科目:{{detail.nianji_kemu_name}}</text>
 
-      <text class='score'>{{detail.teacher_score ? detail.teacher_score : 10}}</text>
+      <text class='score' style='display:none;'>{{detail.teacher_score ? detail.teacher_score : 10}}</text>
 
     </view>
 
@@ -127,7 +127,7 @@
 
     <view style='display:flex;display: block;width:100%;background:white;'>
       <view style='float:left;margin-left:10px;line-height:40px;'>好评率:
-        <text style='color:#268746'>100%</text>
+        <text style='color:#268746'>{{detail.teacher_score ? detail.teacher_score : 100}}%</text>
       </view>
       <view style='float:right;margin-right:10px;line-height:40px'>
         <text style='color:#268746'>{{comments.studentNum.commentsNum}}</text>条评论</view>

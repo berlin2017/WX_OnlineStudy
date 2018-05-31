@@ -18,7 +18,7 @@
 
         <text class='info'>辅导科目:{{detail.teacher_info.nianji_kemu_name}}</text>
 
-        <text class='score'>{{detail.teacher_info.score ? detail.teacher_info.score : 10}}</text>
+        <text class='score' style='display:none;'>{{detail.teacher_info.score ? detail.teacher_info.score : 10}}</text>
 
       </view>
 

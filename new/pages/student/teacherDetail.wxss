@@ -13,7 +13,6 @@
 .back{
   width: 24px;
   height: 24px;
-  top: 30px;
   position:absolute;
   left:10px;
 }

@@ -16,6 +16,7 @@ Page({
     btn_color: null,
     btn_text: null,
     id: null,
+    showChat:false,
   },
 
   /**
@@ -58,7 +59,16 @@ Page({
         }
 
         if (res.data.info.end_time) {
+          console.log(new Date().getTime);
+          console.log(parseInt(res.data.info.end_time) * 1000);
+          if (Date.parse(new Date()) - parseInt(res.data.info.end_time) * 1000 < 7 * 24 * 3600 * 1000) {
+            that.setData({
+              showChat: true
+            });
+          }
+          res.data.info.end_time_value = res.data.info.end_time;
           res.data.info.end_time = util.formatTime(new Date(parseInt(res.data.info.end_time) * 1000));
+          
         }
         that.setData({
           order: res.data.info
@@ -159,6 +169,12 @@ Page({
         btn_text = '立即评价';
         break;
     }
+    if (this.data.order.end_time) {
+      if (Date.parse(new Date()) - parseInt(this.data.order.end_time_value) * 1000 < 7 * 24 * 3600 * 1000) {
+        color = '#7647a0';
+        btn_text = '进入聊天室';
+      }
+    }
     if (this.data.order.msg == 1 && (this.data.order.state == 0 || this.data.order.state == 1)) {
       color = '#7647a0';
       btn_text = '抢单';
@@ -248,6 +264,11 @@ Page({
       })
     } else if (that.data.order.directional == '1'){
       that.acceptOrder();
+    }
+    if(that.data.showChat){
+      wx.navigateTo({
+        url: '../test/chating' + '?id=' + that.data.order.student_openid + '&type=1' + '&orderId=' + that.data.id,
+      })
     }
   },
 

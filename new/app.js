@@ -83,9 +83,11 @@ App({
       console.log('im初始化失败');
     });  
     this.globalData.jim = jim;
+  
 
 
     jim.onDisconnect(function () {
+      console.log("一掉线");
       var that = this;
       var new_time = Date.parse(new Date());
       var new_random_str = "022cd9fd995849b";
