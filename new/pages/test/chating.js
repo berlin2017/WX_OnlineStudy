@@ -102,22 +102,17 @@ Page({
     // },2000);
   },
 
-  onReady: function () {
-    //离线消息监听
+  getMessage: function () {
+    var that = this;
     app.globalData.jim.onSyncConversation(function (data) {
       console.log("离线消息");
       console.log(data);
-      this.handlerMessage(data);
+      that.handlerMessage(data);
     });
+  },
 
-    // 离线消息同步监听
-    app.globalData.jim.onSyncConversation((data) => {
-      // 限制只触发一次
-      console.log("离线消息");
-      console.log(data);
-      this.handlerMessage(data);
-    });
-
+  onReady: function () {
+  
   },
 
   switchCamera:function(){
@@ -388,18 +383,13 @@ Page({
 
   },
 
-  
 
   handlerMessage:function(data){
+    console.log(data);
     var that = this;
-    var history = wx.getStorageSync(that.data.orderId);
-    if (!history || history == '') {
-      history = [];
-    } else {
-      history = JSON.parse(history);
-    }
-    var array = [];
+   
     for (var index in data.messages) {
+      that.addOtherMsg(data.messages[index]);
       if (!app.globalData.isInChatPage) {
         if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '发起视频通话') {
           console.log('发起视频通话');
@@ -457,11 +447,7 @@ Page({
             //data.url 资源临时访问路径
             data.messages[index].content.msg_body.media_id = res.url;
             data.messages[index].content.create_time = util.formatTime(new Date(data.messages[index].content.create_time));
-            history.push(data.messages[index]);
-            wx.setStorage({
-              key: that.data.orderId,
-              data: JSON.stringify(history),
-            })
+            that.data.messageArr.push(data.messages[index]);
             that.setData({
               messageArr: history,
             });
@@ -542,18 +528,12 @@ Page({
             });
           }
           data.messages[index].content.create_time = util.formatTime(new Date(data.messages[index].content.create_time));
-
-          history.push(data.messages[index]);
-          wx.setStorage({
-            key: that.data.orderId,
-            data: JSON.stringify(history),
-          })
+          that.data.messageArr.push(data.messages[index]);
           that.setData({
-            messageArr: history,
+            messageArr: that.data.messageArr,
           });
           that.scrollToBottom();
-          console.log('------总消息-----');
-          console.log(history);
+          
 
         }
 
@@ -561,15 +541,74 @@ Page({
     }
   },
 
+  addOtherMsg:function(msg){
+    var that = this;
+    var history = wx.getStorageSync("allMessage");
+    if (!history || history == '') {
+      history = [];
+    }
+
+    if (history.length == 0 || !that.hasOldMsg(history, msg.from_username)) {
+      var item = {};
+      item.form_appkey = "20a1f8331c8e462116c4d24e";
+      item.from_username = msg.from_username;
+      item.msg_type = 3;
+      // var message = {};
+      // message.content = msg.content;
+      item.msgs = [msg];
+      history.push(msg);
+    } else {
+      for (var index in history) {
+        if (history[index].from_username == msg.from_username) {
+          var item = history[index].msgs[0];
+          item.content = msg.content;
+          history[index].msgs.push(item);
+        }
+      }
+    }
+
+    wx.setStorageSync("allMessage", history);
+  },
+
+
   reloadMsg: function () {
     var that = this;
-    var history = wx.getStorageSync(that.data.orderId);
-    if(history){
-      var array = JSON.parse(history);
-      console.log(array);
-      that.handleSource(array);
+    var history = wx.getStorage({
+      key: 'allMessage',
+      success: function(res) {
+        console.log(res);
+        if(res.data.length>0){
+          that.getOrderMsg(res.data);
+        }
+      },
+    });   
+  },
+
+  getOrderMsg:function(data){
+    var that = this;
+    for(var item of data){
+      if(item.from_username == that.data.toId){
+        var array = new Array();
+        if(item.msgs.length == 0){
+          continue;
+        }
+        for (var item2 of item.msgs) {
+          try{
+            if (item2.content.msg_body.extras.orderId == that.data.orderId) {
+              item2.content.create_time = util.formatTime(new Date(item2.content.create_time));
+              array.push(item2);
+            }
+          }catch(e){
+
+          }
+        }
+        that.setData({
+          messageArr: array,
+        });
+        that.scrollToBottom();
+        that.handleSource(array);
+      }
     }
-   
   },
 
   handleSource: function (data) {
@@ -587,18 +626,15 @@ Page({
             that.setData({
               messageArr: data,
             });
-            that.scrollToBottom();
-            that.handerSource(data);
-            console.log('------总消息-----');
-            console.log(history);
+            try{
+              that.handerSource(data);
+            }catch(e){
+
+            }
+            
           }).onFail(function (res) {
             //data.code 返回码
             //data.message 描述
-          });
-        }else{
-          that.scrollToBottom();
-          that.setData({
-            messageArr: data,
           });
         }
       })(i); 
@@ -1626,6 +1662,7 @@ Page({
    * 发送语音消息
    */
   sendAudioMsg(res) {
+    var that = this;
     if (!app.globalData.jim || !app.globalData.jim.isInit() || !app.globalData.jim.isLogin()) {
       this.initJpush();
     }
@@ -1787,16 +1824,48 @@ Page({
 
   addSelfMsg: function (msg) {
     var that = this;
-    var history = wx.getStorageSync(that.data.orderId);
+    msg.content.create_time = util.formatTime(new Date(msg.content.create_time));
+    that.data.messageArr.push(msg);
+    that.setData({
+      messageArr:that.data.messageArr
+    });
+    that.scrollToBottom();
+
+    var history = wx.getStorageSync("allMessage");
     if (!history || history == '') {
       history = [];
-    } else {
-      history = JSON.parse(history);
     }
-    msg.content.create_time = util.formatTime(new Date(msg.content.create_time));
-    history.push(msg);
-    that.handleSource(history);
+    if (history.length == 0 || !that.hasOldMsg(history, that.data.toId)){
+      var item = {};
+      item.form_appkey = "20a1f8331c8e462116c4d24e";
+      item.from_username = that.data.toId;
+      item.msg_type = 3;
+      // var message = {};
+      // message.content = msg.content;
+      item.msgs = [msg];
+      history.push(msg);
+    }else{
+     for(var index in history){
+       if (history[index].from_username == that.data.toId){
+          var item = history[index].msgs[0];
+          item.content = msg.content;
+          history[index].msgs.push(item);
+        }
+     }
+    }
+    wx.setStorageSync("allMessage", history);
    
+  },
+
+  hasOldMsg:function(data,id){
+    var that = this;
+    var has = false;
+    for (var item of data) {
+      if(item.from_username == id){
+        has = true;
+      }
+    }
+    return has;
   },
 
   /**

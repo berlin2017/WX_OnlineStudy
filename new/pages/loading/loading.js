@@ -352,11 +352,33 @@ Page({
 
   getMessage: function () {
     var that = this;
+    app.globalData.jim.getConversation().onSuccess(function (data) {
+      //data.code 返回码
+      //data.message 描述
+      //data.conversations[] 会话列表，属性如下示例
+      //data.conversations[0].extras 附加字段
+      //data.conversations[0].unread_msg_count 消息未读数
+      //data.conversations[0].name  会话名称
+      //data.conversations[0].appkey  appkey(单聊)
+      //data.conversations[0].username  用户名(单聊)
+      //data.conversations[0].nickname  用户昵称(单聊)
+      //data.conversations[0].avatar  头像 media_id 
+      //data.conversations[0].mtime 会话最后的消息时间戳
+      //data.conversations[0].gid 群 id(群聊)
+      //data.conversations[0].type  会话类型(3 代表单聊会话类型，4 代表群聊会话类型)
+      console.log("会话列表");
+      console.log(data);
+    }).onFail(function (data) {
+      //data.code 返回码
+      //data.message 描述
+    });
     app.globalData.jim.onSyncConversation(function (data) {
       console.log("离线消息");
       console.log(data);
-      that.handlerMessage(data);
+      wx.setStorageSync("allMessage", data);
+      that.toMain();
     });
+    // that.toMain();
   },
 
   handlerMessage: function (data) {
@@ -393,14 +415,14 @@ Page({
           if (!history || history == '') {
             history = [];
           } else {
-            history = JSON.parse(history);
+            history = history;
           }
           item.content.create_time = util.formatTime(new Date(item.content.create_time));
 
           history.push(item);
-          wx.setStorageSync(orderId, JSON.stringify(history));
-          console.log('------订单' + orderId + '总消息-----');
-          console.log(history);
+          wx.setStorageSync(orderId, history);
+          // console.log('------订单' + orderId + '总消息-----');
+          // console.log(history);
 
         }
       }

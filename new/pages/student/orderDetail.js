@@ -269,7 +269,7 @@ Page({
     } else if (that.data.order.state == '3') {
       if (that.data.showChat) {
         wx.navigateTo({
-          url: '../test/chating' + '?id=' + that.data.order.student_openid + '&type=1' + '&orderId=' + that.data.id,
+          url: '../test/chating' + '?id=' + that.data.order.teacher_openid + '&type=2' + '&orderId=' + that.data.id,
         })
       }
     }

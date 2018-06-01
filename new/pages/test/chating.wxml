@@ -25,7 +25,7 @@
           <view class='record-item-time-wrapper' wx:if="{{message.content.create_time}}">
             <text class='record-item-time'>{{message.content.create_time}}</text>
           </view>
-          <view wx:if="{{message.from_username != toId}}" class='record-chatting-item self' style='justify-content: {{message.type === "tip" ? "center" : "flex-end"}}' data-message="{{message}}" bindlongpress='showEditorMenu'>
+          <view wx:if="{{message.from_username != toId &&  message.content.from_id!= toId}}" class='record-chatting-item self' style='justify-content: {{message.type === "tip" ? "center" : "flex-end"}}' data-message="{{message}}" bindlongpress='showEditorMenu'>
 
             <view wx:if="{{message.content.msg_type === 'geo'}}" data-geo='{{message.geo}}' class='small-map-wrapper' catchtap='fullScreenMap'>
               <image src="{{iconBase64Map.iconMap}}" class='small-geo-img'></image>
@@ -53,7 +53,7 @@
             <image wx:if="{{message.content.msg_type !== 'tip'}}" src='{{loginAccountLogo}}' catchtap='switchToMyTab' class='record-chatting-item-img'></image>
           </view>
 
-          <view wx:if="{{message.from_username === toId}}" class='record-chatting-item other' style='justify-content: {{message.content.msg_type === "tip" ? "center" : "flex-start"}}' data-message="{{message}}" bindlongpress='showEditorMenu'>
+          <view wx:if="{{message.from_username === toId || message.content.from_id== toId}}" class='record-chatting-item other' style='justify-content: {{message.content.msg_type === "tip" ? "center" : "flex-start"}}' data-message="{{message}}" bindlongpress='showEditorMenu'>
             <image wx:if="{{message.content.msg_type !== 'tip'}}" catchtap='switchPersonCard' src='{{chatToLogo}}' class='record-chatting-item-img'></image>
             <text wx:if="{{message.content.msg_type !== 'tip'}}" class='left-triangle'></text>
 
