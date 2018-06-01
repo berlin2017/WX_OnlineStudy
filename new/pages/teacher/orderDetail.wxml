@@ -88,12 +88,14 @@
         </view>
 
 
+ <button style='height:40px;border-radius:20px;background:{{btn_color}};color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{showChat}}' bindtap='toChat'>{{btn_text}}</button>
+
+ 
+
         <form name='test' report-submit bindsubmit='jump'>
           <button style='height:40px;border-radius:20px;background:{{btn_color}};color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{order.state=="2" && order.directional=="0"}}' form-type='submit'>{{btn_text}}</button>
 
-            <button style='height:40px;border-radius:20px;background:{{btn_color}};color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{showChat}}' form-type='submit'>{{btn_text}}</button>
-
-           <button style='height:40px;border-radius:20px;background:{{btn_color}};color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{order.directional=="1"}}' form-type='submit'>{{btn_text}}</button>
+            <button style='height:40px;border-radius:20px;background:{{btn_color}};color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{order.directional=="1"}}' form-type='submit'>{{btn_text}}</button>
 
            <button style='height:40px;border-radius:20px;background:{{btn_color}};color:white;width:90%;margin-left:auto;margin-right:auto;margin-top:10px;text-align:center;line-height:40px;' wx:if='{{order.msg=="1"&&order.state=="0"}}' form-type='submit'>{{btn_text}}</button>
 

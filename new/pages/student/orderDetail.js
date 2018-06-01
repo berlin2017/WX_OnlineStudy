@@ -267,13 +267,16 @@ Page({
         url: '../test/chating' + '?id=' + that.data.order.teachers[0].openid + '&type=2' + '&orderId=' + that.data.id,
       })
     } else if (that.data.order.state == '3') {
-      if (that.data.showChat) {
-        wx.navigateTo({
-          url: '../test/chating' + '?id=' + that.data.order.teacher_openid + '&type=2' + '&orderId=' + that.data.id,
-        })
-      }
+      
     }
 
+  },
+
+  toChat:function(){
+    var that = this;
+    wx.navigateTo({
+      url: '../test/chating' + '?id=' + that.data.order.teacher_openid + '&type=2' + '&orderId=' + that.data.id,
+    })
   },
 
   comment:function(){

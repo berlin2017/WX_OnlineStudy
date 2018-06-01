@@ -265,11 +265,13 @@ Page({
     } else if (that.data.order.directional == '1'){
       that.acceptOrder();
     }
-    if(that.data.showChat){
-      wx.navigateTo({
-        url: '../test/chating' + '?id=' + that.data.order.student_openid + '&type=1' + '&orderId=' + that.data.id,
-      })
-    }
+  },
+
+  toChat:function(){
+    var that = this;
+    wx.navigateTo({
+      url: '../test/chating' + '?id=' + that.data.order.student_openid + '&type=1' + '&orderId=' + that.data.id,
+    })
   },
 
   acceptOrder:function(){
