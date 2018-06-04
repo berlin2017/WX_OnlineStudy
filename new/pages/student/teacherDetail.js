@@ -100,7 +100,8 @@ Page({
       },
       success: function (res) {
         console.log(res);
-        res.data.teacher_score = parseFloat(res.data.teacher_score)*10;
+        var score = parseFloat(res.data.teacher_score) * 10;
+        res.data.teacher_score = score.toFixed(2);
         that.setData({
           detail: res.data
         });
