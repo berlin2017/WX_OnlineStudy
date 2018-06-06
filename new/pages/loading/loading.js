@@ -17,8 +17,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-    
+    var that = this;
+    if (!app.globalData.res) {
+      that.setData({
+        showButton: true
+      });
+    } else {
+      that.wxLogin();
+    }
 
   },
 
@@ -33,87 +39,146 @@ Page({
   * 生命周期函数--监听页面显示
   */
   onShow: function () {
-    var that = this;
-    if (!app.globalData.res) {
-      wx.getUserInfo({
-        success: res => {
-          // 可以将 res 发送给后台解码出 unionId
-          app.globalData.userInfo = res.userInfo
-          app.globalData.res = res
-          that.init(app.globalData.res);
-        },
-        fail: res => {
-          console.log(res);
-          that.setData({
-            showButton: true
-          });
-        }
-      })
-    } else {
-      that.init(app.globalData.res);
-    }
+    
   },
 
   onGetUserinfo: function () {
+    wx.showLoading({
+      title: '',
+      mask:true,
+    })
+    var that = this;
     wx.getUserInfo({
       success: res => {
         // 可以将 res 发送给后台解码出 unionId
         app.globalData.userInfo = res.userInfo
         app.globalData.res = res
-        that.init(app.globalData.res);
+        that.wxLogin();
       }
     })
   },
 
-  // auth:function(){
-  //   var that = this
-  //   wx.authorize({
-  //     scope: 'scope.userInfo',
-  //     success() {
-  //       wx.getUserInfo({
-  //         success: res => {
-  //           // 可以将 res 发送给后台解码出 unionId
-  //           this.globalData.userInfo = res.userInfo
-  //           this.globalData.res = res
-  //           that.init(app.globalData.res);
-  //         }
+  // initJpush: function () {
+  //   var that = this;
+  //   //jpush
+  //   var jim = new JMessage({
+  //     // debug : true
+  //   });
+  //   var time = Date.parse(new Date());
+  //   var random_str = "022cd9fd995849b";
+  //   var s = "appkey=" + "20a1f8331c8e462116c4d24e" + "&timestamp=" + time + "&random_str=" + random_str + "&key=fc92fd7140c3e9b228d368fb"
+  //   var signature = md5.hexMD5(s);
+  //   jim.init({
+  //     "appkey": "20a1f8331c8e462116c4d24e",
+  //     "random_str": random_str,
+  //     "signature": signature,
+  //     "timestamp": time,
+  //     "flag": 1,
+  //   }).onSuccess(function (data) {
+  //     //TODO
+  //     console.log('im初始化成功');
+  //     app.globalData.jim = jim;
+  //     that.init();
+  //   }).onFail(function (data) {
+  //     //TODO
+  //     console.log('im初始化失败');
+  //     that.initJpush();
+  //   });
+
+  //   jim.onDisconnect(function () {
+  //     console.log("一掉线");
+  //     var that = this;
+  //     var new_time = Date.parse(new Date());
+  //     var new_random_str = "022cd9fd995849b";
+  //     var new_s = "appkey=" + "20a1f8331c8e462116c4d24e" + "&timestamp=" + time + "&random_str=" + random_str + "&key=fc92fd7140c3e9b228d368fb"
+  //     var new_signature = md5.hexMD5(new_s);
+  //     jim.init({
+  //       "appkey": "20a1f8331c8e462116c4d24e",
+  //       "random_str": new_random_str,
+  //       "signature": new_signature,
+  //       "timestamp": new_time,
+  //       "flag": 1,
+  //     }).onSuccess(function (data) {
+  //       //TODO
+  //       console.log('im初始化成功');
+  //       that.globalData.jim = jim;
+  //       jim.login({
+  //         'username': that.globalData.myUser.openId,
+  //         'password': 'ah123456'
+  //       }).onSuccess(function () {
+  //         // wx.showToast({
+  //         //   title: '登录成功',
+  //         // })
+  //         console.log("登录成功");
+  //       }).onFail(function (data) {
+  //         //同上
+  //         console.log(data);
+  //         // wx.showToast({
+  //         //   title: '登录失败',
+  //         // })
+  //         console.log("登录失败");
+  //       });
+  //     }).onFail(function (data) {
+  //       //TODO
+  //       console.log('im初始化失败');
+  //     });
+  //   });
+
+  // },
+
+  // regist: function () {
+  //   var that = this;
+  //   app.globalData.jim.register({
+  //     'username': result.data.openId,
+  //     'password': 'ah123456',
+  //     'is_md5': false,
+  //     'nickname': app.globalData.userInfo.nickName,
+  //     'media_id': app.globalData.userInfo.avatarUrl,
+  //   }).onSuccess(function (data) {
+  //     //data.code 返回码
+  //     //data.message 描述
+  //     app.globalData.jim.login({
+  //       'username': result.data.openId,
+  //       'password': 'ah123456'
+  //     }).onSuccess(function () {
+  //       wx.showToast({
+  //         title: '登录成功',
   //       })
-  //     },
-  //     fail(e){
-  //       console.log(e);
-  //     },
-  //   })
-  // },
-
-  // requestAuth:function(){
-  //   var that = this
-  //   if (wx.openSetting) {
-  //     wx.openSetting({
-  //       success: function (res) {
-  //         //尝试再次登录
-  //         wx.getUserInfo({
-  //           success: res => {
-  //             // 可以将 res 发送给后台解码出 unionId
-  //             app.globalData.userInfo = res.userInfo
-  //             app.globalData.res = res
-  //             that.init(app.globalData.res);
-  //           },
-  //           fail: res => {
-  //             console.log(res);
-  //             // that.requestAuth();
-  //           }
+  //       that.toMain();
+  //     }).onFail(function (data) {
+  //       //同上
+  //       console.log(data);
+  //       wx.showToast({
+  //         title: '登录失败',
+  //       })
+  //       that.toMain();
+  //     });
+  //   }).onFail(function (data) {
+  //     // 同上
+  //     if (data.code == 882002) {
+  //       app.globalData.jim.login({
+  //         'username': result.data.openId,
+  //         'password': 'ah123456'
+  //       }).onSuccess(function () {
+  //         wx.showToast({
+  //           title: '登录成功',
   //         })
-  //       }
-  //     })
-  //   } else {
-  //     wx.showModal({
-  //       title: '授权提示',
-  //       content: '小程序需要您的微信授权才能使用哦~ 错过授权页面的处理方法：删除小程序->重新搜索进入->点击授权按钮'
-  //     })
-  //   }
+  //         that.toMain();
+  //       }).onFail(function (data) {
+  //         //同上
+  //         console.log(data);
+  //         wx.showToast({
+  //           title: '登录失败',
+  //         })
+  //         that.toMain();
+  //       });
+  //     } else {
+  //       console.log('注册失败');
+  //     }
+  //   });
   // },
 
-  initJpush: function () {
+  initJMessage:function(){
     var that = this;
     //jpush
     var jim = new JMessage({
@@ -132,217 +197,182 @@ Page({
     }).onSuccess(function (data) {
       //TODO
       console.log('im初始化成功');
-      app.globalData.jim = jim;
-      that.init();
+      that.data.jim = jim;
+      that.registeJMessage(app.globalData.myUser.openId, app.globalData.userInfo.nickName, app.globalData.userInfo.avatarUrl);
     }).onFail(function (data) {
       //TODO
       console.log('im初始化失败');
-      that.initJpush();
-    });
-
-    jim.onDisconnect(function () {
-      console.log("一掉线");
-      var that = this;
-      var new_time = Date.parse(new Date());
-      var new_random_str = "022cd9fd995849b";
-      var new_s = "appkey=" + "20a1f8331c8e462116c4d24e" + "&timestamp=" + time + "&random_str=" + random_str + "&key=fc92fd7140c3e9b228d368fb"
-      var new_signature = md5.hexMD5(new_s);
-      jim.init({
-        "appkey": "20a1f8331c8e462116c4d24e",
-        "random_str": new_random_str,
-        "signature": new_signature,
-        "timestamp": new_time,
-        "flag": 1,
-      }).onSuccess(function (data) {
-        //TODO
-        console.log('im初始化成功');
-        that.globalData.jim = jim;
-        jim.login({
-          'username': that.globalData.myUser.openId,
-          'password': 'ah123456'
-        }).onSuccess(function () {
-          // wx.showToast({
-          //   title: '登录成功',
-          // })
-          console.log("登录成功");
-        }).onFail(function (data) {
-          //同上
-          console.log(data);
-          // wx.showToast({
-          //   title: '登录失败',
-          // })
-          console.log("登录失败");
-        });
-      }).onFail(function (data) {
-        //TODO
-        console.log('im初始化失败');
-      });
-    });
-
-  },
-
-  regist: function () {
-    app.globalData.jim.register({
-      'username': result.data.openId,
-      'password': 'ah123456',
-      'is_md5': false,
-      'nickname': app.globalData.userInfo.nickName,
-      'media_id': app.globalData.userInfo.avatarUrl,
-    }).onSuccess(function (data) {
-      //data.code 返回码
-      //data.message 描述
-      app.globalData.jim.login({
-        'username': result.data.openId,
-        'password': 'ah123456'
-      }).onSuccess(function () {
-        wx.showToast({
-          title: '登录成功',
-        })
-        setTimeout(function () {
-          wx.redirectTo({
-            url: '../main/main2',
-          })
-        }, TIME);
-      }).onFail(function (data) {
-        //同上
-        console.log(data);
-        wx.showToast({
-          title: '登录失败',
-        })
-        setTimeout(function () {
-          wx.redirectTo({
-            url: '../main/main2',
-          })
-        }, TIME);
-      });
-    }).onFail(function (data) {
-      // 同上
-      if (data.code == 882002) {
-        app.globalData.jim.login({
-          'username': result.data.openId,
-          'password': 'ah123456'
-        }).onSuccess(function () {
-          wx.showToast({
-            title: '登录成功',
-          })
-          setTimeout(function () {
-            wx.redirectTo({
-              url: '../main/main2',
-            })
-          }, TIME);
-        }).onFail(function (data) {
-          //同上
-          console.log(data);
-          wx.showToast({
-            title: '登录失败',
-          })
-          setTimeout(function () {
-            wx.redirectTo({
-              url: '../main/main2',
-            })
-          }, TIME);
-        });
-      } else {
-        console.log('注册失败');
-      }
+      that.initJMessage();
     });
   },
 
-  init: function () {
+  wxLogin:function(){
     var that = this;
-    var iv = app.globalData.res.iv;
-    var encryptedData = app.globalData.res.encryptedData;
     wx.login({
       success: info => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        wx.request({
-          header: {
-            'content-type': 'application/x-www-form-urlencoded'
-          },
-          method: 'POST',
-          url: 'https://weixin.ywkedu.com/App/code',
-          data: {
-            'code': info.code,
-            'encryptedData': encryptedData,
-            'iv': iv
-          },
-          success: function (result) {
-            console.log(result);
-            if (!result.data.openId) {
-              // setTimeout(function () {
-              //   wx.redirectTo({
-              //     url: '../main/main2',
-              //   })
-              // }, TIME);
-
-
-              that.init();
-              console.log('iv:' + iv);
-              console.log('encryptedData:' + encryptedData);
-              console.log('code:' + info.code);
-              return;
-            }
-            app.globalData.myUser = result.data;
-            console.log(app.globalData.jim.isInit());
-            if (!app.globalData.jim || !app.globalData.jim.isInit()) {
-              that.initJpush();
-            }
-            app.globalData.jim.register({
-              'username': result.data.openId,
-              'password': 'ah123456',
-              'is_md5': false,
-              'nickname': app.globalData.userInfo.nickName,
-              'media_id': app.globalData.userInfo.avatarUrl,
-            }).onSuccess(function (data) {
-              //data.code 返回码
-              //data.message 描述
-              app.globalData.jim.login({
-                'username': result.data.openId,
-                'password': 'ah123456'
-              }).onSuccess(function () {
-                wx.showToast({
-                  title: '登录成功',
-                })
-                that.getMessage();
-
-              }).onFail(function (data) {
-                //同上
-                console.log(data);
-                wx.showToast({
-                  title: '登录失败',
-                })
-                that.toMain();
-              });
-            }).onFail(function (data) {
-              // 同上
-              if (data.code == 882002) {
-                app.globalData.jim.login({
-                  'username': result.data.openId,
-                  'password': 'ah123456'
-                }).onSuccess(function () {
-                  wx.showToast({
-                    title: '登录成功',
-                  })
-                  that.getMessage();
-                }).onFail(function (data) {
-                  //同上
-                  console.log(data);
-                  wx.showToast({
-                    title: '登录失败',
-                  })
-                  that.toMain();
-                });
-              } else {
-                console.log('注册失败');
-              }
-            });
-          },
-        })
+        that.selfLogin(info);
       }
     })
   },
 
+  selfLogin:function(info){
+    var that = this;
+    wx.request({
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      method: 'POST',
+      url: 'https://weixin.ywkedu.com/App/code',
+      data: {
+        'code': info.code,
+        'encryptedData': app.globalData.res.encryptedData,
+        'iv': app.globalData.res.iv
+      },
+      success:function(result){
+        console.log(result);
+        if (!result.data.openId) {
+          console.log('iv:' + app.globalData.res.iv);
+          console.log('encryptedData:' + app.globalData.res.encryptedData);
+          console.log('code:' + info.code);
+          wx.showToast({
+            title: '登录失败,请重试',
+          })
+        }else{
+          app.globalData.myUser = result.data;
+          // that.initJMessage();
+          that.toMain();
+        }
+      }
+    });
+  },
+
+  registeJMessage:function(username,nickName,avatarUrl){
+    var that = this;
+    that.data.jim.register({
+      'username': username,
+      'password': 'ah123456',
+      'is_md5': false,
+      'nickname': nickName,
+      'media_id': avatarUrl,
+    }).onSuccess(function (data) {
+      that.loginJMessage(username);
+    }).onFail(function (data) {
+        // 同上
+        if (data.code == 882002) {
+          that.loginJMessage(username);
+        } else {
+          console.log('注册失败');
+        }
+      });
+  },
+
+  loginJMessage: function (username){
+    var that = this;
+    that.data.jim.login({
+      'username': username,
+      'password': 'ah123456'
+    }).onSuccess(function () {
+      wx.showToast({
+        title: '登录成功',
+      })
+      that.toMain();
+    }).onFail(function (data) {
+      //同上
+      console.log(data);
+      that.loginJMessage(username);
+
+    });
+  },
+
+  // init: function () {
+  //   var that = this;
+  //   var iv = app.globalData.res.iv;
+  //   var encryptedData = app.globalData.res.encryptedData;
+  //   wx.login({
+  //     success: info => {
+  //       // 发送 res.code 到后台换取 openId, sessionKey, unionId
+  //       wx.request({
+  //         header: {
+  //           'content-type': 'application/x-www-form-urlencoded'
+  //         },
+  //         method: 'POST',
+  //         url: 'https://weixin.ywkedu.com/App/code',
+  //         data: {
+  //           'code': info.code,
+  //           'encryptedData': encryptedData,
+  //           'iv': iv
+  //         },
+  //         success: function (result) {
+  //           console.log(result);
+  //           if (!result.data.openId) {
+  //             that.init();
+  //             console.log('iv:' + iv);
+  //             console.log('encryptedData:' + encryptedData);
+  //             console.log('code:' + info.code);
+  //             return;
+  //           }
+  //           app.globalData.myUser = result.data;
+  //           console.log(app.globalData.jim.isInit());
+  //           if (!app.globalData.jim || !app.globalData.jim.isInit()) {
+  //             that.initJpush();
+  //           }
+  //           app.globalData.jim.register({
+  //             'username': result.data.openId,
+  //             'password': 'ah123456',
+  //             'is_md5': false,
+  //             'nickname': app.globalData.userInfo.nickName,
+  //             'media_id': app.globalData.userInfo.avatarUrl,
+  //           }).onSuccess(function (data) {
+  //             //data.code 返回码
+  //             //data.message 描述
+  //             app.globalData.jim.login({
+  //               'username': result.data.openId,
+  //               'password': 'ah123456'
+  //             }).onSuccess(function () {
+  //               wx.showToast({
+  //                 title: '登录成功',
+  //               })
+  //               that.getMessage();
+
+  //             }).onFail(function (data) {
+  //               //同上
+  //               console.log(data);
+  //               wx.showToast({
+  //                 title: '登录失败',
+  //               })
+  //               that.toMain();
+  //             });
+  //           }).onFail(function (data) {
+  //             // 同上
+  //             if (data.code == 882002) {
+  //               app.globalData.jim.login({
+  //                 'username': result.data.openId,
+  //                 'password': 'ah123456'
+  //               }).onSuccess(function () {
+  //                 wx.showToast({
+  //                   title: '登录成功',
+  //                 })
+  //                 that.getMessage();
+  //               }).onFail(function (data) {
+  //                 //同上
+  //                 console.log(data);
+  //                 wx.showToast({
+  //                   title: '登录失败',
+  //                 })
+  //                 that.toMain();
+  //               });
+  //             } else {
+  //               console.log('注册失败');
+  //             }
+  //           });
+  //         },
+  //       })
+  //     }
+  //   })
+  // },
+
   toMain: function () {
+    wx.hideLoading();
     setTimeout(function () {
       wx.redirectTo({
         url: '../main/main2',
@@ -352,26 +382,6 @@ Page({
 
   getMessage: function () {
     var that = this;
-    app.globalData.jim.getConversation().onSuccess(function (data) {
-      //data.code 返回码
-      //data.message 描述
-      //data.conversations[] 会话列表，属性如下示例
-      //data.conversations[0].extras 附加字段
-      //data.conversations[0].unread_msg_count 消息未读数
-      //data.conversations[0].name  会话名称
-      //data.conversations[0].appkey  appkey(单聊)
-      //data.conversations[0].username  用户名(单聊)
-      //data.conversations[0].nickname  用户昵称(单聊)
-      //data.conversations[0].avatar  头像 media_id 
-      //data.conversations[0].mtime 会话最后的消息时间戳
-      //data.conversations[0].gid 群 id(群聊)
-      //data.conversations[0].type  会话类型(3 代表单聊会话类型，4 代表群聊会话类型)
-      console.log("会话列表");
-      console.log(data);
-    }).onFail(function (data) {
-      //data.code 返回码
-      //data.message 描述
-    });
     app.globalData.jim.onSyncConversation(function (data) {
       console.log("离线消息");
       console.log(data);
@@ -430,38 +440,4 @@ Page({
     }
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

@@ -1,6 +1,10 @@
 // pages/main/main2.js
 var app = getApp();
 var util = require('../../utils/util.js');
+var TIME = 1000;
+var JMessage = require('../../jpush/jmessage-wxapplet-sdk-1.4.0.min.js')
+var md5 = require('../../jpush/md5.js')
+
 Page({
 
   /**
@@ -72,7 +76,7 @@ Page({
     // wx.showLoading({
     //   title: '',
     // })
-    app.globalData.jim.onMsgReceive(function (data) {
+    that.data.jim.onMsgReceive(function (data) {
       console.log(data);
 
       for (var index in data.messages) {
@@ -140,7 +144,7 @@ Page({
   },
 
   toTeacherMain: function () {
-    this.intMsgReceive(1);
+    this.initJMessage();
     app.globalData.userType = 1;
     wx.showLoading({
       title: '',
@@ -203,10 +207,76 @@ Page({
 
   toStudentMain: function () {
     app.globalData.userType = 2;
-    this.intMsgReceive(2);
+    this.initJMessage();
     wx.switchTab({
       url: '../student/main',
     })
-  }
+  },
+
+  initJMessage: function () {
+    var that = this;
+    //jpush
+    var jim = new JMessage({
+      // debug : true
+    });
+    var time = Date.parse(new Date());
+    var random_str = "022cd9fd995849b";
+    var s = "appkey=" + "20a1f8331c8e462116c4d24e" + "&timestamp=" + time + "&random_str=" + random_str + "&key=fc92fd7140c3e9b228d368fb"
+    var signature = md5.hexMD5(s);
+    jim.init({
+      "appkey": "20a1f8331c8e462116c4d24e",
+      "random_str": random_str,
+      "signature": signature,
+      "timestamp": time,
+      "flag": 1,
+    }).onSuccess(function (data) {
+      //TODO
+      console.log('im初始化成功');
+      that.data.jim = jim;
+      that.registeJMessage(app.globalData.myUser.openId, app.globalData.userInfo.nickName, app.globalData.userInfo.avatarUrl);
+    }).onFail(function (data) {
+      //TODO
+      console.log('im初始化失败');
+      that.initJMessage();
+    });
+  },
+
+  registeJMessage: function (username, nickName, avatarUrl) {
+    var that = this;
+    that.data.jim.register({
+      'username': username,
+      'password': 'ah123456',
+      'is_md5': false,
+      'nickname': nickName,
+      'media_id': avatarUrl,
+    }).onSuccess(function (data) {
+      that.loginJMessage(username);
+    }).onFail(function (data) {
+      // 同上
+      if (data.code == 882002) {
+        that.loginJMessage(username);
+      } else {
+        console.log('注册失败');
+      }
+    });
+  },
+
+  loginJMessage: function (username) {
+    var that = this;
+    that.data.jim.login({
+      'username': username,
+      'password': 'ah123456'
+    }).onSuccess(function () {
+      wx.showToast({
+        title: '登录成功',
+      })
+      that.intMsgReceive();
+    }).onFail(function (data) {
+      //同上
+      console.log(data);
+      that.loginJMessage(username);
+
+    });
+  },
 
 })

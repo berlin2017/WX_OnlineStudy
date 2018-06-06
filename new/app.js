@@ -10,72 +10,9 @@ App({
 
   onShow: function () {
     console.log("app进入前台");
-    if (!this.globalData.jim || !this.globalData.jim.isInit()) {
-      this.initJpush();
-    }
-    if (!this.globalData.jim || !this.globalData.jim.isLogin()) {
-      this.login();
-    }
   },
   
-  login:function(){
-    var that = this;
-    if (!that.globalData.myUser){
-      return;
-    }
-    that.jim.login({
-      'username': that.globalData.myUser.openId,
-      'password': 'ah123456'
-    }).onSuccess(function () {
-      // wx.showToast({
-      //   title: '登录成功',
-      // })
-      console.log("登录成功");
-    }).onFail(function (data) {
-      //同上
-      console.log(data);
-      // wx.showToast({
-      //   title: '登录失败',
-      // })
-      console.log("登录失败");
-    });
-  },
-
-  initJpush:function(){
-    var that = this;
-    //jpush
-    var jim = new JMessage({
-      // debug : true
-    });
-    var time = Date.parse(new Date());
-    var random_str = "022cd9fd995849b";
-    var s = "appkey=" + "20a1f8331c8e462116c4d24e" + "&timestamp=" + time + "&random_str=" + random_str + "&key=fc92fd7140c3e9b228d368fb"
-    var signature = md5.hexMD5(s);
-    jim.init({
-      "appkey": "20a1f8331c8e462116c4d24e",
-      "random_str": random_str,
-      "signature": signature,
-      "timestamp": time,
-      "flag": 1,
-    }).onSuccess(function (data) {
-      //TODO
-      console.log('im初始化成功');
-    }).onFail(function (data) {
-      //TODO
-      console.log('im初始化失败');
-    });
-    that.globalData.jim = jim;
-
-    jim.onDisconnect(function () {
-      if (!that.globalData.jim || !that.globalData.jim.isInit()) {
-        that.initJpush();
-      }
-      if (!that.globalData.jim || !that.globalData.jim.isLogin()) {
-        that.login();
-      }
-    });
-  },
-
+  
   onLaunch: function () {
     // 展示本地存储能力
     // qcloud.setLoginUrl(config.url + 'getwxinfo');
@@ -87,51 +24,7 @@ App({
         console.log(res);
         
       }
-    })
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          console.log("app已经授权");
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              // 可以将 res 发送给后台解码出 unionId
-              this.globalData.userInfo = res.userInfo
-              this.globalData.res = res
-
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
-              }
-              console.log(res);
-            }
-          })
-        }else{
-          console.log("app里授权");
-          wx.authorize({
-            scope: 'scope.userInfo',
-            success(){
-              wx.getUserInfo({
-                success: res => {
-                  // 可以将 res 发送给后台解码出 unionId
-                  this.globalData.userInfo = res.userInfo
-                  this.globalData.res = res
-
-                  // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-                  // 所以此处加入 callback 以防止这种情况
-                  if (this.userInfoReadyCallback) {
-                    this.userInfoReadyCallback(res)
-                  }
-                }
-              })
-            }
-          })
-        }
-      }
-    })
-  
+    })  
   },
 
 
