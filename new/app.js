@@ -34,6 +34,7 @@ App({
     jim:null,
     userInfo: null,
     userType:2,
+    jim:null,
   }  
 
 })

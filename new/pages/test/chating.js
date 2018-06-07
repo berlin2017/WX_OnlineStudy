@@ -32,10 +32,6 @@ Page({
     wx.setKeepScreenOn({
       keepScreenOn: true,
     })
-    var that = this;
-    wx.showLoading({
-      title: '',
-    })
     this.initJMessage();
   },
 
@@ -82,7 +78,6 @@ Page({
         calling: false
       });
     }
-    this.reloadMsg();
     this.requestUserInfo();
   },
 
@@ -90,8 +85,7 @@ Page({
 
   },
 
-  initJMessage:function(){
-    var that = this;
+  initJMessage: function (e) {
     wx.showLoading({
       title: '',
       mask: true,
@@ -113,37 +107,13 @@ Page({
       "flag": 1,
     }).onSuccess(function (data) {
       //TODO
-      console.log('im初始化成功');
-      jim.login({
-        'username': app.globalData.myUser.openId,
-        'password': 'ah123456'
-      }).onSuccess(function () {
-        // wx.showToast({
-        //   title: '登录成功',
-        // })
-        console.log("登录成功");
-       
-        wx.hideLoading();
-        jim.onSyncConversation(function (data) {
-          console.log("离线消息");
-          console.log(data);
-          wx.setStorageSync("allMessage", data);
-        });
-
-        jim.onMsgReceive(function (data) {
-          that.handlerMessage(data);
-        });
-
-      }).onFail(function (data) {
-        //同上
-        console.log(data);
-        // wx.showToast({
-        //   title: '登录失败',
-        // })
-        console.log("登录失败");
-        wx.hideLoading();
-        that.initJMessage();
+      that.setData({
+        aa: 'aa'
       });
+      console.log('im初始化成功');
+      app.globalData.jim = jim;
+   
+      that.loginJMessage(app.globalData.myUser.openId);
     }).onFail(function (data) {
       //TODO
       console.log('im初始化失败');
@@ -151,14 +121,58 @@ Page({
     });
   },
 
-
-
-  getMessage: function () {
+  loginJMessage: function (username) {
     var that = this;
-    app.globalData.jim.onSyncConversation(function (data) {
-      console.log("离线消息");
+    app.globalData.jim.login({
+      'username': username,
+      'password': 'ah123456'
+    }).onSuccess(function () {
+      wx.showToast({
+        title: '登录成功',
+      })
+      that.setData({
+        aa:'aa'
+      });
+      wx.hideLoading();
+      that.intMsgReceive2();
+      that.getMessage2();
+    }).onFail(function (data) {
+      //同上
       console.log(data);
+      that.loginJMessage(username);
+
+    });
+  },
+
+  intMsgReceive2(){
+    var that = this;
+    app.globalData.jim.onMsgReceive(function (data) {
       that.handlerMessage(data);
+    });
+  },
+
+  loadHistory:function(data){
+    
+  },
+
+
+  getMessage2: function () {
+    wx.showLoading({
+      title: '',
+      mask:true,
+    });
+
+    var that = this;
+    that.setData({
+      aa: 'a'
+    });
+    app.globalData.jim.onSyncConversation(function (data1) {
+      wx.hideLoading();
+      console.log("离线消息");
+      console.log(data1);
+      if (data1.length > 0) {
+        that.getOrderMsg2(data1);
+      }
     });
   },
 
@@ -381,62 +395,9 @@ Page({
     })
   },
 
-  initJpush: function () {
-    wx.showLoading({
-      title: '',
-      mask:true,
-    })
-    var that = this;
-    //jpush
-    var jim = new JMessage({
-      // debug : true
-    });
-    var time = Date.parse(new Date());
-    var random_str = "022cd9fd995849b";
-    var s = "appkey=" + "20a1f8331c8e462116c4d24e" + "&timestamp=" + time + "&random_str=" + random_str + "&key=fc92fd7140c3e9b228d368fb"
-    var signature = md5.hexMD5(s);
-    jim.init({
-      "appkey": "20a1f8331c8e462116c4d24e",
-      "random_str": random_str,
-      "signature": signature,
-      "timestamp": time,
-      "flag": 1,
-    }).onSuccess(function (data) {
-      //TODO
-      console.log('im初始化成功');
-      app.globalData.jim = jim;
-      app.globalData.jim.login({
-        'username': app.globalData.myUser.openId,
-        'password': 'ah123456'
-      }).onSuccess(function () {
-        // wx.showToast({
-        //   title: '登录成功',
-        // })
-        console.log("登录成功");
-        wx.hideLoading();
-      }).onFail(function (data) {
-        //同上
-        console.log(data);
-        // wx.showToast({
-        //   title: '登录失败',
-        // })
-        console.log("登录失败");
-        wx.hideLoading();
-        that.initJpush();
-      });
-    }).onFail(function (data) {
-      //TODO
-      console.log('im初始化失败');
-      that.initJpush();
-    });
-
-  },
-
-
   handlerMessage:function(data){
     console.log(data);
     var that = this;
-   
     for (var index in data.messages) {
       that.addOtherMsg(data.messages[index]);
       if (!app.globalData.isInChatPage) {
@@ -488,7 +449,7 @@ Page({
       if (data.messages[index].from_username == that.data.toId) {
 
         if (data.messages[index].content.msg_type === 'image' || data.messages[index].content.msg_type === 'file') {
-          app.globalData.jim.getResource({
+          that.data.jim.getResource({
             'media_id': data.messages[index].content.msg_body.media_id,
           }).onSuccess(function (res) {
             //data.code 返回码
@@ -620,24 +581,12 @@ Page({
   },
 
 
-  reloadMsg: function () {
+  getOrderMsg2:function(data1){
     var that = this;
-    var history = wx.getStorage({
-      key: 'allMessage',
-      success: function(res) {
-        console.log(res);
-        if(res.data.length>0){
-          that.getOrderMsg(res.data);
-        }
-      },
-    });   
-  },
-
-  getOrderMsg:function(data){
-    var that = this;
-    for(var item of data){
+    var array1 = new Array();
+    
+    for(var item of data1){
       if(item.from_username == that.data.toId){
-        var array = new Array();
         if(item.msgs.length == 0){
           continue;
         }
@@ -645,27 +594,30 @@ Page({
           try{
             if (item2.content.msg_body.extras.orderId == that.data.orderId) {
               item2.content.create_time = util.formatTime(new Date(item2.content.create_time));
-              array.push(item2);
+              var tmp_item = 1;
+              array1.push(tmp_item);
             }
           }catch(e){
 
           }
         }
-        that.setData({
-          messageArr: array,
-        });
-        that.scrollToBottom();
-        that.handleSource(array);
+        console.log(array1);
       }
     }
+
+    that.setData({
+      messageArr: array1,
+    });
+    that.scrollToBottom();
+    that.handleSource2(array1);
   },
 
-  handleSource: function (data) {
+  handleSource2: function (data) {
     var that = this;
     for(var i in data){
       (function (index) {//index为循环中传入的参数 
         if (data[index].content.msg_type === 'image' || data[index].content.msg_type === 'file') {
-          app.globalData.jim.getResource({
+          that.data.jim.getResource({
             'media_id': data[index].content.msg_body.media_id,
           }).onSuccess(function (res) {
             //data.code 返回码
@@ -675,11 +627,11 @@ Page({
             that.setData({
               messageArr: data,
             });
-            try{
-              that.handerSource(data);
-            }catch(e){
+            // try{
+            //   that.handerSource(data);
+            // }catch(e){
 
-            }
+            // }
             
           }).onFail(function (res) {
             //data.code 返回码
@@ -1304,9 +1256,7 @@ Page({
    * 选择相册图片
    */
   chooseImageToSend(e) {
-    if (!app.globalData.jim || !app.globalData.jim.isInit() || !app.globalData.jim.isLogin()) {
-      this.initJpush();
-    }
+
     var that = this;
     let type = e.currentTarget.dataset.type
     let self = this
@@ -1320,7 +1270,7 @@ Page({
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
       success: function (res) {
         var tempFilePaths = res.tempFilePaths[0]; //获取成功，读取文件路径
-        app.globalData.jim.sendSinglePic({
+        that.data.jim.sendSinglePic({
           'target_username': self.data.toId,
           'target_nickname': self.data.toNickName,
           'appkey': '20a1f8331c8e462116c4d24e',
@@ -1352,7 +1302,7 @@ Page({
       camera: 'back',
       success: function (res) {
         //sendGroupVedio(),sendChatroomVedio()类似
-        app.globalData.jim.sendSingleVedio({
+        self.data.jim.sendSingleVedio({
           'target_username': self.data.toId,
           'target_nickname': self.data.toNickName,
           'appkey': '20a1f8331c8e462116c4d24e',
@@ -1712,9 +1662,6 @@ Page({
    */
   sendAudioMsg(res) {
     var that = this;
-    if (!app.globalData.jim || !app.globalData.jim.isInit() || !app.globalData.jim.isLogin()) {
-      this.initJpush();
-    }
     wx.showLoading({
       title: '发送中...',
       mask: true,
@@ -1722,7 +1669,7 @@ Page({
     let tempFilePath = res.tempFilePath
     let self = this
     // console.log(tempFilePath)
-    app.globalData.jim.sendSingleFile({
+    that.data.jim.sendSingleFile({
       'target_username': self.data.toId,
       'target_nickname': self.data.toNickName,
       'file': tempFilePath,
@@ -1742,60 +1689,7 @@ Page({
       //同发送单聊文本
       wx.hideLoading()
     });
-    // app.globalData.jim.sendSingleFile({
-    //   target_username: self.data.chatTo,
-    //   type: 'audio',
-    //   file: tempFilePath,
-    //   appkey: '20a1f8331c8e462116c4d24e',
-    //   done: function (err, msg) {
-    //     wx.hideLoading()
-    //     // 判断错误类型，并做相应处理
-    //     if (self.handleErrorAfterSend(err)) {
-    //       return
-    //     }
-    //     // console.log(msg)
-    //     // 刷新界面
-    //     let displayTimeHeader = self.judgeOverTwoMinute(msg.time)
-    //     self.setData({
-    //       messageArr: [...self.data.messageArr, {
-    //         type: 'audio',
-    //         text: '',
-    //         time: msg.time,
-    //         sendOrReceive: 'send',
-    //         displayTimeHeader,
-    //         audio: msg.file
-    //       }]
-    //     })
-
-    //     // 存储到全局 并 存储到最近会话列表中
-    //     self.saveMsgToGlobalAndRecent(msg, {
-    //       from: msg.from,
-    //       to: msg.chatTo,
-    //       type: msg.type,
-    //       scene: msg.scene,
-    //       text: msg.text,
-    //       file: msg.file,
-    //       sendOrReceive: 'send',
-    //       displayTimeHeader
-    //     })
-    //     app.globalData.subscriber.emit('UPDATE_RECENT_CHAT', { account: msg.to, time: msg.time, text: msg.text, type: msg.type }, true)
-    //     // 滚动到底部
-    //     self.scrollToBottom()
-    //   }
-    // }).onSuccess(function (data, msg) {
-    //   //data.code 返回码
-    //   //data.message 描述
-    //   //data.msg_id 发送成功后的消息id
-    //   //data.ctime_ms 消息生成时间,毫秒
-    //   //data.appkey 用户所属 appkey
-    //   //data.target_username 用户名
-    //   //msg.content 发送成功消息体
-    //   wx.hideLoading()
-    //   self.addSelfMsg(msg);
-    // }).onFail(function (data) {
-    //   //同发送单聊文本
-    //   wx.hideLoading()
-    // });
+   
   },
   /**
    * 发送位置消息
@@ -1804,7 +1698,7 @@ Page({
     console.log(res);
     // 发送消息
     var that = this;
-    app.globalData.jim.sendSingleLocation({
+    that.data.jim.sendSingleLocation({
       'target_username': that.data.toId,
       'target_nickname': that.data.toNickName,
       'latitude': res.latitude,
@@ -1832,12 +1726,8 @@ Page({
    * 发送网络请求：发送文字
    */
   sendRequest(text) {
-
-    if (!app.globalData.jim || !app.globalData.jim.isInit() || !app.globalData.jim.isLogin()) {
-      this.initJpush();
-    }
     var that = this;
-    app.globalData.jim.sendSingleMsg({
+    that.data.jim.sendSingleMsg({
       'target_username': that.data.toId,
       'target_nickname': that.data.toNickName,
       'content': text,
@@ -1855,10 +1745,6 @@ Page({
       console.log(msg);
       that.setData({
         inputValue: ''
-      });
-      app.globalData.jim.updateConversation({
-        'appkey': '20a1f8331c8e462116c4d24e',
-        'username': that.data.toNickName,
       });
       that.addSelfMsg(msg);
     }).onFail(function (data) {

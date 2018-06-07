@@ -26,7 +26,6 @@ Page({
    */
   onReady: function () {
 
-
   },
 
   /**
@@ -82,35 +81,35 @@ Page({
       for (var index in data.messages) {
 
 
-        if (data.messages[index].from_username) {
+        // if (data.messages[index].from_username) {
 
-          var history = wx.getStorageSync(data.messages[index].from_username);
-          if (!history || history == '') {
-            history = [];
-          } else {
-            history = JSON.parse(history);
-          }
+        //   var history = wx.getStorageSync(data.messages[index].from_username);
+        //   if (!history || history == '') {
+        //     history = [];
+        //   } else {
+        //     history = JSON.parse(history);
+        //   }
 
-          if (data.messages[index].content.msg_type === 'image') {
-            app.globalData.jim.getResource({
-              'media_id': data.messages[index].content.msg_body.media_id,
-            }).onSuccess(function (res) {
-              //data.code 返回码
-              //data.message 描述
-              //data.url 资源临时访问路径
-              data.messages[index].content.msg_body.media_id = res.url
-            }).onFail(function (res) {
-              //data.code 返回码
-              //data.message 描述
-            });
-          }
-          data.messages[index].content.create_time = util.formatTime(new Date(data.messages[index].content.create_time));
-          var msgs = history.concat(data.messages);
-          wx.setStorage({
-            key: data.messages[index].content.msg_body.extras.orderId,
-            data: JSON.stringify(msgs),
-          })
-        }
+        //   if (data.messages[index].content.msg_type === 'image') {
+        //     app.globalData.jim.getResource({
+        //       'media_id': data.messages[index].content.msg_body.media_id,
+        //     }).onSuccess(function (res) {
+        //       //data.code 返回码
+        //       //data.message 描述
+        //       //data.url 资源临时访问路径
+        //       data.messages[index].content.msg_body.media_id = res.url
+        //     }).onFail(function (res) {
+        //       //data.code 返回码
+        //       //data.message 描述
+        //     });
+        //   }
+        //   data.messages[index].content.create_time = util.formatTime(new Date(data.messages[index].content.create_time));
+        //   var msgs = history.concat(data.messages);
+        //   wx.setStorage({
+        //     key: data.messages[index].content.msg_body.extras.orderId,
+        //     data: JSON.stringify(msgs),
+        //   })
+        // }
         if (data.messages[index].content.msg_type === 'text' && data.messages[index].content.msg_body.text === '发起视频通话') {
           console.log('发起视频通话');
           wx.navigateTo({
@@ -144,7 +143,6 @@ Page({
   },
 
   toTeacherMain: function () {
-    this.initJMessage();
     app.globalData.userType = 1;
     wx.showLoading({
       title: '',
@@ -207,13 +205,16 @@ Page({
 
   toStudentMain: function () {
     app.globalData.userType = 2;
-    this.initJMessage();
     wx.switchTab({
       url: '../student/main',
     })
   },
 
-  initJMessage: function () {
+  initJMessage: function (e) {
+    wx.showLoading({
+      title: '',
+      mask:true,
+    })
     var that = this;
     //jpush
     var jim = new JMessage({
@@ -233,15 +234,15 @@ Page({
       //TODO
       console.log('im初始化成功');
       that.data.jim = jim;
-      that.registeJMessage(app.globalData.myUser.openId, app.globalData.userInfo.nickName, app.globalData.userInfo.avatarUrl);
+      that.registeJMessage(app.globalData.myUser.openId, app.globalData.userInfo.nickName, app.globalData.userInfo.avatarUrl,e);
     }).onFail(function (data) {
       //TODO
       console.log('im初始化失败');
-      that.initJMessage();
+      that.initJMessage(e);
     });
   },
 
-  registeJMessage: function (username, nickName, avatarUrl) {
+  registeJMessage: function (username, nickName, avatarUrl,e) {
     var that = this;
     that.data.jim.register({
       'username': username,
@@ -250,18 +251,18 @@ Page({
       'nickname': nickName,
       'media_id': avatarUrl,
     }).onSuccess(function (data) {
-      that.loginJMessage(username);
+      that.loginJMessage(username,e);
     }).onFail(function (data) {
       // 同上
       if (data.code == 882002) {
-        that.loginJMessage(username);
+        that.loginJMessage(username,e);
       } else {
         console.log('注册失败');
       }
     });
   },
 
-  loginJMessage: function (username) {
+  loginJMessage: function (username,e) {
     var that = this;
     that.data.jim.login({
       'username': username,
@@ -271,6 +272,12 @@ Page({
         title: '登录成功',
       })
       that.intMsgReceive();
+      wx.hideLoading();
+      if(e.currentTarget.dataset.type == '1'){
+        that.toTeacherMain();
+      }else{
+        that.toStudentMain();
+      }
     }).onFail(function (data) {
       //同上
       console.log(data);
