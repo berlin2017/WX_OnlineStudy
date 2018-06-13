@@ -2,6 +2,7 @@
 var JMessage = require('./jpush/jmessage-wxapplet-sdk-1.4.0.min.js')
 var md5 = require('./jpush/md5.js')
 
+
 App({
 
   onHide:function(){

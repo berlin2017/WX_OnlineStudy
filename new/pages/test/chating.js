@@ -28,28 +28,15 @@ Page({
   },
 
   onShow: function () {
-    app.globalData.isInChatPage = true;
-    wx.setKeepScreenOn({
-      keepScreenOn: true,
-    })
-    this.initJMessage();
+  
   },
 
   onHide: function () {
-    console.log('onhide');
-    this.setData({
-      showInvite: false,
-      showCall: false,
-      calling: false
-    });
-    app.globalData.isInChatPage = false;
-    wx.setKeepScreenOn({
-      keepScreenOn: false,
-    })
+   
   },
 
   onUnload() {
-    console.log("onUnload");
+    console.log('onUnload');
     this.setData({
       showInvite: false,
       showCall: false,
@@ -79,6 +66,12 @@ Page({
       });
     }
     this.requestUserInfo();
+
+    app.globalData.isInChatPage = true;
+    wx.setKeepScreenOn({
+      keepScreenOn: true,
+    })
+    
   },
 
   onReady: function () {
@@ -118,6 +111,10 @@ Page({
       //TODO
       console.log('im初始化失败');
       that.initJMessage();
+    });
+    app.globalData.jim.onDisconnect(function(){
+      console.log('onDisconnect');
+      // that.initJMessage();
     });
   },
 
@@ -390,7 +387,7 @@ Page({
           });
           that.sendRequest('发起视频通话');
         }
-
+        that.initJMessage();
       },
     })
   },
@@ -449,7 +446,7 @@ Page({
       if (data.messages[index].from_username == that.data.toId) {
 
         if (data.messages[index].content.msg_type === 'image' || data.messages[index].content.msg_type === 'file') {
-          that.data.jim.getResource({
+          app.globalData.jim.getResource({
             'media_id': data.messages[index].content.msg_body.media_id,
           }).onSuccess(function (res) {
             //data.code 返回码
@@ -594,8 +591,7 @@ Page({
           try{
             if (item2.content.msg_body.extras.orderId == that.data.orderId) {
               item2.content.create_time = util.formatTime(new Date(item2.content.create_time));
-              var tmp_item = 1;
-              array1.push(tmp_item);
+              array1.push(item2);
             }
           }catch(e){
 
@@ -617,7 +613,7 @@ Page({
     for(var i in data){
       (function (index) {//index为循环中传入的参数 
         if (data[index].content.msg_type === 'image' || data[index].content.msg_type === 'file') {
-          that.data.jim.getResource({
+          app.globalData.jim.getResource({
             'media_id': data[index].content.msg_body.media_id,
           }).onSuccess(function (res) {
             //data.code 返回码
@@ -1270,7 +1266,7 @@ Page({
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
       success: function (res) {
         var tempFilePaths = res.tempFilePaths[0]; //获取成功，读取文件路径
-        that.data.jim.sendSinglePic({
+        app.globalData.jim.sendSinglePic({
           'target_username': self.data.toId,
           'target_nickname': self.data.toNickName,
           'appkey': '20a1f8331c8e462116c4d24e',
@@ -1302,7 +1298,7 @@ Page({
       camera: 'back',
       success: function (res) {
         //sendGroupVedio(),sendChatroomVedio()类似
-        self.data.jim.sendSingleVedio({
+        app.globalData.jim.sendSingleVedio({
           'target_username': self.data.toId,
           'target_nickname': self.data.toNickName,
           'appkey': '20a1f8331c8e462116c4d24e',
@@ -1669,7 +1665,7 @@ Page({
     let tempFilePath = res.tempFilePath
     let self = this
     // console.log(tempFilePath)
-    that.data.jim.sendSingleFile({
+    app.globalData.jim.sendSingleFile({
       'target_username': self.data.toId,
       'target_nickname': self.data.toNickName,
       'file': tempFilePath,
@@ -1698,7 +1694,7 @@ Page({
     console.log(res);
     // 发送消息
     var that = this;
-    that.data.jim.sendSingleLocation({
+    app.globalData.jim.sendSingleLocation({
       'target_username': that.data.toId,
       'target_nickname': that.data.toNickName,
       'latitude': res.latitude,
@@ -1727,7 +1723,7 @@ Page({
    */
   sendRequest(text) {
     var that = this;
-    that.data.jim.sendSingleMsg({
+    app.globalData.jim.sendSingleMsg({
       'target_username': that.data.toId,
       'target_nickname': that.data.toNickName,
       'content': text,

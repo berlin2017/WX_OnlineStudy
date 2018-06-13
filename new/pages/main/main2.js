@@ -75,7 +75,7 @@ Page({
     // wx.showLoading({
     //   title: '',
     // })
-    that.data.jim.onMsgReceive(function (data) {
+    app.globalData.jim.onMsgReceive(function (data) {
       console.log(data);
 
       for (var index in data.messages) {
@@ -233,7 +233,7 @@ Page({
     }).onSuccess(function (data) {
       //TODO
       console.log('im初始化成功');
-      that.data.jim = jim;
+      app.globalData.jim = jim;
       that.registeJMessage(app.globalData.myUser.openId, app.globalData.userInfo.nickName, app.globalData.userInfo.avatarUrl,e);
     }).onFail(function (data) {
       //TODO
@@ -244,7 +244,7 @@ Page({
 
   registeJMessage: function (username, nickName, avatarUrl,e) {
     var that = this;
-    that.data.jim.register({
+    app.globalData.jim.register({
       'username': username,
       'password': 'ah123456',
       'is_md5': false,
@@ -264,7 +264,7 @@ Page({
 
   loginJMessage: function (username,e) {
     var that = this;
-    that.data.jim.login({
+    app.globalData.jim.login({
       'username': username,
       'password': 'ah123456'
     }).onSuccess(function () {

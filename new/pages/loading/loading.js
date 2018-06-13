@@ -4,6 +4,7 @@ var TIME = 1000;
 var JMessage = require('../../jpush/jmessage-wxapplet-sdk-1.4.0.min.js')
 var md5 = require('../../jpush/md5.js')
 var util = require('../../utils/util.js');
+import JIMUtils from '../../utils/jimUtils.js'
 Page({
 
   /**
@@ -26,6 +27,7 @@ Page({
       that.wxLogin();
     }
 
+    new JIMUtils();
   },
 
   /**

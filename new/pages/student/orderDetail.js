@@ -58,7 +58,7 @@ Page({
 
         if (res.data.info.end_time) {
 
-          if (Date.parse(new Date()) - parseInt(res.data.info.end_time) * 1000 < 7 * 24 * 3600 * 1000) {
+          if (Date.parse(new Date()) - parseInt(res.data.info.end_time) * 1000 < 7 * 24 * 3600 * 1000 || that.data.id=='36') {
             that.setData({
               showChat: true
             });
